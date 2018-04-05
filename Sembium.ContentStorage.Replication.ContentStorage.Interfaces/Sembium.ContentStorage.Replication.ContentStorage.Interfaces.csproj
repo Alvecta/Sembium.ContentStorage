@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Sembium.ContentStorage.Replication.ContentStorage</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.Common.Interfaces\Sembium.ContentStorage.Replication.Common.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Sembium.ContentStorage.Storage.FileSystem</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Base.Classes\Sembium.ContentStorage.Storage.FileSystem.Base.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Interfaces.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

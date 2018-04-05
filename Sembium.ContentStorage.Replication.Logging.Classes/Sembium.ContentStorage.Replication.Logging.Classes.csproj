@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Sembium.ContentStorage.Replication.Logging</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.Logging.Interfaces\Sembium.ContentStorage.Replication.Logging.Interfaces.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.Replicator.Interfaces\Sembium.ContentStorage.Replication.Replicator.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

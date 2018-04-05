@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>ContentStorageReplicator</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.0.1" />
+    <PackageReference Include="Serilog" Version="2.6.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sembium.ContentStorage.Client.Classes\Sembium.ContentStorage.Client.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.ContentStorage.Classes\Sembium.ContentStorage.Replication.ContentStorage.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.FileSystem.Classes\Sembium.ContentStorage.Replication.FileSystem.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.Logging.Classes\Sembium.ContentStorage.Replication.Logging.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.Replicator.Classes\Sembium.ContentStorage.Replication.Replicator.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Base.Classes\Sembium.ContentStorage.Storage.FileSystem.Base.Classes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

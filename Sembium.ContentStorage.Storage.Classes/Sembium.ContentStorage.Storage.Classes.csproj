@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Sembium.ContentStorage.Storage</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sembium.ContentStorage.Common.Classes\Sembium.ContentStorage.Common.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.Interfaces\Sembium.ContentStorage.Storage.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
