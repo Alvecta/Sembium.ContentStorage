@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sembium.ContentStorage.Service.Classes\Sembium.ContentStorage.Service.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.AmazonS3.Classes\Sembium.ContentStorage.Storage.AmazonS3.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.AzureBlob.Classes\Sembium.ContentStorage.Storage.AzureBlob.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Classes\Sembium.ContentStorage.Storage.FileSystem.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Transfer.Classes\Sembium.ContentStorage.Storage.FileSystem.Transfer.Classes.csproj" />
+  </ItemGroup>
+
+</Project>

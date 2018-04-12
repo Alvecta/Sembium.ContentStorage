@@ -9,11 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
   </ItemGroup>
 
@@ -22,16 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sembium.ContentStorage.Common.Classes\Sembium.ContentStorage.Common.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Service.Classes\Sembium.ContentStorage.Service.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.AmazonS3.Classes\Sembium.ContentStorage.Storage.AmazonS3.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.AzureBlob.Classes\Sembium.ContentStorage.Storage.AzureBlob.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.Classes\Sembium.ContentStorage.Storage.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Base.Classes\Sembium.ContentStorage.Storage.FileSystem.Base.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Classes\Sembium.ContentStorage.Storage.FileSystem.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Transfer.Classes\Sembium.ContentStorage.Storage.FileSystem.Transfer.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Service.Library\Sembium.ContentStorage.Service.Library.csproj" />
   </ItemGroup>
-
 
   <ItemGroup>
     <DotNetCliToolReference Include="Amazon.ElasticBeanstalk.Tools" Version="1.1.3" />
