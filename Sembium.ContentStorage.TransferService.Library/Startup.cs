@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Sembium.ContentStorage.TransferService.WebApi
+namespace Sembium.ContentStorage.TransferService.Library
 {
     public class Startup
     {

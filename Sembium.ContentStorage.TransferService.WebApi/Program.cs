@@ -19,7 +19,7 @@ namespace Sembium.ContentStorage.TransferService.WebApi
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+                .UseStartup<Library.Startup>()
                 .Build();
     }
 }
