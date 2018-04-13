@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-
-    <PackageReference Include="AWSSDK.S3" Version="3.3.17.2" />
-    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.4" />
     <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="2.0.2" />
   </ItemGroup>
 
@@ -20,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sembium.ContentStorage.Client.Classes\Sembium.ContentStorage.Client.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Uploader.Library\Sembium.ContentStorage.Uploader.Library.csproj" />
   </ItemGroup>
 
 </Project>
