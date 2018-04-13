@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 using CommandLine.Text;
-using Sembium.ContentStorage.Replication.Replicator.Common;
+using Sembium.ContentStorage.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +25,8 @@ namespace Sembium.ContentStorage.Replication.Replicator.Main
                         );
 
                 help.AddPreOptionsLine(" ");
-                help.AddPreOptionsLine(string.Format("Usage: {0} --from Source --to Destination [--number number] [--log LogFileName]", Utils.GetExeName()));
-                help.AddPreOptionsLine(string.Format("   or: {0} --config ConfigFileName", Utils.GetExeName()));
+                help.AddPreOptionsLine(string.Format("Usage: {0} --from Source --to Destination [--number number] [--log LogFileName]", ExeUtils.GetExeName()));
+                help.AddPreOptionsLine(string.Format("   or: {0} --config ConfigFileName", ExeUtils.GetExeName()));
 
                 help.AddPostOptionsLine("");
                 help.AddPostOptionsLine("Endpoint type: dir (directory) | cs (content storage)");
@@ -35,7 +35,7 @@ namespace Sembium.ContentStorage.Replication.Replicator.Main
                 help.AddPostOptionsLine("  cs      : container_name token");
                 help.AddPostOptionsLine("");
 
-                help.AddPostOptionsLine(string.Format(@"Example: {0} -f cs TestContainer werlewkj32lwkejr324pfwer -t dir D:\Backup\TestContainer", Utils.GetExeName()));
+                help.AddPostOptionsLine(string.Format(@"Example: {0} -f cs TestContainer werlewkj32lwkejr324pfwer -t dir D:\Backup\TestContainer", ExeUtils.GetExeName()));
                 help.AddPostOptionsLine("");
 
                 return help;

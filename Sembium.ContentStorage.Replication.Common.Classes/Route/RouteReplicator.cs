@@ -1,6 +1,6 @@
 ﻿using Sembium.ContentStorage.Replication.Common.Config;
-using Sembium.ContentStorage.Replication.Common.Utils;
 using Sembium.ContentStorage.Storage.Common;
+using Sembium.ContentStorage.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

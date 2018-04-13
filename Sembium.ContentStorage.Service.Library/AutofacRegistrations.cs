@@ -36,7 +36,7 @@ namespace Sembium.ContentStorage.Service.Library
             Sembium.ContentStorage.Storage.FileSystem.Base.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Storage.FileSystem.Transfer.AutofacRegistrations.RegisterFor(builder);
 
-            builder.RegisterType<Utils.LoggerLogger>().As<Sembium.ContentStorage.Common.ILogger>().SingleInstance();
+            builder.RegisterType<Logging.LoggerLogger>().As<Sembium.ContentStorage.Common.ILogger>().SingleInstance();
         }
     }
 }

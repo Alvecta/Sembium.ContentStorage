@@ -3,12 +3,12 @@ using Sembium.ContentStorage.Replication.Common.Endpoints.Destination;
 using Sembium.ContentStorage.Replication.Common.Endpoints.Source;
 using Sembium.ContentStorage.Replication.Logging.Endpoints.Common;
 using Sembium.ContentStorage.Storage.Common;
+using Sembium.ContentStorage.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sembium.ContentStorage.Replication.Logging.Utils;
 
 namespace Sembium.ContentStorage.Replication.Logging.Endpoints.Destination
 {

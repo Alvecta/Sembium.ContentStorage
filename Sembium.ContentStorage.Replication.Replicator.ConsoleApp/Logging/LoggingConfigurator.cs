@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sembium.ContentStorage.Common;
 using Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Initialization;
-using Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Utils;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp
+namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Logging
 {
     public class LoggingConfigurator : ILoggingConfigurator
     {

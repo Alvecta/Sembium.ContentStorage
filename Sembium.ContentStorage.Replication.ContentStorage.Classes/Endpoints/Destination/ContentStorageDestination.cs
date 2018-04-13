@@ -6,6 +6,7 @@ using Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Source;
 using Sembium.ContentStorage.Storage.Common;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.Tools;
+using Sembium.ContentStorage.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;

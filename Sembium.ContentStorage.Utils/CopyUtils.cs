@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service.Library.Utils
+namespace Sembium.ContentStorage.Utils
 {
     public static class CopyUtils
     {

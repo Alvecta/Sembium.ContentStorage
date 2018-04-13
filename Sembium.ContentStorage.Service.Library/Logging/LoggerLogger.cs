@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
-namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Utils
+namespace Sembium.ContentStorage.Service.Library.Logging
 {
     public class LoggerLogger : Sembium.ContentStorage.Common.ILogger
     {
-        private readonly Microsoft.Extensions.Logging.ILogger<LoggerLogger> _logger;
+        private readonly ILogger _logger;
 
-        public LoggerLogger(Microsoft.Extensions.Logging.ILogger<LoggerLogger> logger)
+        public LoggerLogger(Microsoft.Extensions.Logging.ILogger logger)
         {
             _logger = logger;
         }

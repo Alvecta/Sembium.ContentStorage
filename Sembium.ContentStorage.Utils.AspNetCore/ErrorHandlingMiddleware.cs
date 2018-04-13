@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Sembium.ContentStorage.Service.Library.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service.Library
+namespace Sembium.ContentStorage.Utils.AspNetCore
 {
     public class ErrorHandlingMiddleware
     {

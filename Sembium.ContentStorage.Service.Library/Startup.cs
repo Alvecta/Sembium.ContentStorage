@@ -48,7 +48,7 @@ namespace Sembium.ContentStorage.Service.Library
             }
 
             app.UseMiddleware(
-                typeof(ErrorHandlingMiddleware),
+                typeof(Utils.AspNetCore.ErrorHandlingMiddleware),
                 loggerFactory,
                 typeof(Sembium.ContentStorage.Common.UserException),
                 typeof(Sembium.ContentStorage.Common.UserAuthenticationException),

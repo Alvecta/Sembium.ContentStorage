@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 
-namespace Sembium.ContentStorage.Replication.Logging.Utils
+namespace Sembium.ContentStorage.Utils
 {
-    public static class Extensions
+    public static class ExceptionExtensions
     {
         public static string GetInnerMessages(this Exception exception)
         {
