@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Sembium.ContentStorage.Uploader.AmazonLambda.Controllers
+namespace Sembium.ContentStorage.Uploader.Library.Controllers
 {
     [Route("[controller]")]
     public class HealthController : Controller

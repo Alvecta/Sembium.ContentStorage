@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Sembium.ContentStorage.Uploader.AmazonLambda
+namespace Sembium.ContentStorage.Uploader.Library
 {
     public class Startup
     {
@@ -29,9 +29,6 @@ namespace Sembium.ContentStorage.Uploader.AmazonLambda
             {
                 builder.SetMinimumLevel(LogLevel.Trace);
             });
-
-            // Add S3 to the ASP.NET Core dependency injection framework.
-            services.AddAWSService<Amazon.S3.IAmazonS3>();
 
             return AutofacRegistrations.ConfigureServices(services);
         }

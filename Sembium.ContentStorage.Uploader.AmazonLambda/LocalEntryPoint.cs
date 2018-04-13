@@ -20,7 +20,7 @@ namespace Sembium.ContentStorage.Uploader.AmazonLambda
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+                .UseStartup<Sembium.ContentStorage.Uploader.Library.Startup>()
                 .Build();
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sembium.ContentStorage.Client;
 
-namespace Sembium.ContentStorage.Uploader.AmazonLambda.Controllers
+namespace Sembium.ContentStorage.Uploader.Library.Controllers
 {
     [Route("[controller]")]
     public class UploadController : Controller

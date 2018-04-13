@@ -24,7 +24,7 @@ namespace Sembium.ContentStorage.Uploader.AmznLambda  // shortened because of th
         protected override void Init(IWebHostBuilder builder)
         {
             builder
-                .UseStartup<Sembium.ContentStorage.Uploader.AmazonLambda.Startup>();
+                .UseStartup<Sembium.ContentStorage.Uploader.Library.Startup>();
         }
     }
 }
