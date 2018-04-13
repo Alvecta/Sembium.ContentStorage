@@ -3,7 +3,7 @@ using Microsoft.Net.Http.Headers;
 using Sembium.ContentStorage.Service.Results;
 using Sembium.ContentStorage.Service.Security;
 using Sembium.ContentStorage.Service.ServiceModels;
-using Sembium.ContentStorage.Service.WebApi.Utils;
+using Sembium.ContentStorage.Service.Library.Utils;
 using Sembium.ContentStorage.Storage.Common;
 using Sembium.ContentStorage.Storage.HostingResults;
 using System;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service.WebApi.Controllers
+namespace Sembium.ContentStorage.Service.Library.Controllers
 {
     [Route("[controller]")]
     public class ContentsController : Controller

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Sembium.ContentStorage.Service.WebApi.Utils;
+using Sembium.ContentStorage.Service.Library.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Net;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service.WebApi
+namespace Sembium.ContentStorage.Service.Library
 {
     public class ErrorHandlingMiddleware
     {

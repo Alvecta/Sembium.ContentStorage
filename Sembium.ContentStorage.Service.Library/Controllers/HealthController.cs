@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Sembium.ContentStorage.Service.WebApi.Controllers
+namespace Sembium.ContentStorage.Service.Library.Controllers
 {
     [Route("[controller]")]
     public class HealthController : Controller

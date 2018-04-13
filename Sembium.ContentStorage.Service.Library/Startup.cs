@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 
-namespace Sembium.ContentStorage.Service.WebApi
+namespace Sembium.ContentStorage.Service.Library
 {
     public class Startup
     {

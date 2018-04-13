@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 
-namespace Sembium.ContentStorage.Service.WebApi.Utils
+namespace Sembium.ContentStorage.Service.Library.Utils
 {
     public static class Extensions
     {

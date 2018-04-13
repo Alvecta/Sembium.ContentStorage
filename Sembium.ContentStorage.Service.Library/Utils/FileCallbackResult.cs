@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service.WebApi.Utils
+namespace Sembium.ContentStorage.Service.Library.Utils
 {
     // copied from http://blog.stephencleary.com/2016/11/streaming-zip-on-aspnet-core.html
     public class FileCallbackResult : FileResult

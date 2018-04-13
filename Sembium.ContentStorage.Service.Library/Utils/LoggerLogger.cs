@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service.WebApi.Utils
+namespace Sembium.ContentStorage.Service.Library.Utils
 {
     public class LoggerLogger : Sembium.ContentStorage.Common.ILogger
     {

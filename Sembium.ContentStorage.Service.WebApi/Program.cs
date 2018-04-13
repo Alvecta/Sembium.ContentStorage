@@ -19,10 +19,10 @@ namespace Sembium.ContentStorage.Service.WebApi
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+                .UseStartup<Library.Startup>()
                 .ConfigureAppConfiguration((builderContext, config) =>
                 {
-                    ServicesConfig.ConfigureConfigurationBuilder(config);
+                    Library.ServicesConfig.ConfigureConfigurationBuilder(config);
                 })
                 .Build();
     }
