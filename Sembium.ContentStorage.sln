@@ -105,6 +105,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Serv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sembium.ContentStorage.Uploader.Library", "Sembium.ContentStorage.Uploader.Library\Sembium.ContentStorage.Uploader.Library.csproj", "{64B5EA01-CA40-478F-80D9-6D22042A2212}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sembium.ContentStorage.TransferService.Library", "Sembium.ContentStorage.TransferService.Library\Sembium.ContentStorage.TransferService.Library.csproj", "{8B09FAC4-E2AB-4377-8D42-D22FF28DD99E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -247,6 +249,10 @@ Global
 		{64B5EA01-CA40-478F-80D9-6D22042A2212}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64B5EA01-CA40-478F-80D9-6D22042A2212}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64B5EA01-CA40-478F-80D9-6D22042A2212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B09FAC4-E2AB-4377-8D42-D22FF28DD99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B09FAC4-E2AB-4377-8D42-D22FF28DD99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B09FAC4-E2AB-4377-8D42-D22FF28DD99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B09FAC4-E2AB-4377-8D42-D22FF28DD99E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -296,6 +302,7 @@ Global
 		{14C48B33-BFD0-4E35-8D0F-AAC4586A2F17} = {E9105B3C-9099-4A9F-A79A-551722F84C4F}
 		{8EBE0934-E4C1-4CE1-B996-05A2ED0AF18C} = {FB22BA67-B117-4A7A-ACF3-18D4FC88EB42}
 		{64B5EA01-CA40-478F-80D9-6D22042A2212} = {48C1C6C7-D8E3-4829-9C3A-499AA18AB048}
+		{8B09FAC4-E2AB-4377-8D42-D22FF28DD99E} = {A6472EBD-104D-4354-992C-58EA3F8DF047}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0F1AD2B-12B9-4C4D-AD50-BA9A19FA9B71}
