@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,10 @@ namespace Sembium.ContentStorage.Common
     {
         public static IEnumerable<string> ReadAllLines(this System.IO.Stream stream, Encoding encoding)
         {
-            stream.Position = 0;
+            if (stream.CanSeek)
+            {
+                stream.Position = 0;
+            }
 
             using (var reader = new System.IO.StreamReader(stream, encoding))
             {
