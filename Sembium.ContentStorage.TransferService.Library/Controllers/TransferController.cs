@@ -5,7 +5,8 @@ using Microsoft.Net.Http.Headers;
 using Sembium.ContentStorage.Common;
 using Sembium.ContentStorage.Storage.FileSystem.Base;
 using Sembium.ContentStorage.Storage.FileSystem.Transfer;
-using Sembium.ContentStorage.TransferService.WebApi.Utils;
+using Sembium.ContentStorage.Utils;
+using Sembium.ContentStorage.Utils.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.TransferService.WebApi.Controllers
+namespace Sembium.ContentStorage.TransferService.Library.Controllers
 {
     [Route("[controller]")]
     public class TransferController : Controller

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Replication.Common.Utils
+namespace Sembium.ContentStorage.Utils
 {
     public class HeadedTaskQueue<T>
     {

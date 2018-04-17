@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Replication.Replicator.Common
+namespace Sembium.ContentStorage.Utils
 {
-    public static class Utils
+    public static class ExeUtils
     {
         public static string GetExeName()
         {

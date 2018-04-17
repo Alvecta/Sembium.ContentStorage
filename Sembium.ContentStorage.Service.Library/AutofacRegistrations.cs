@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service.WebApi
+namespace Sembium.ContentStorage.Service.Library
 {
     public static class AutofacRegistrations
     {
@@ -36,7 +36,7 @@ namespace Sembium.ContentStorage.Service.WebApi
             Sembium.ContentStorage.Storage.FileSystem.Base.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Storage.FileSystem.Transfer.AutofacRegistrations.RegisterFor(builder);
 
-            builder.RegisterType<Utils.LoggerLogger>().As<Sembium.ContentStorage.Common.ILogger>().SingleInstance();
+            builder.RegisterType<Logging.LoggerLogger>().As<Sembium.ContentStorage.Common.ILogger>().SingleInstance();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Utils
+namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Logging
 {
     public class LoggerLogger : Sembium.ContentStorage.Common.ILogger
     {

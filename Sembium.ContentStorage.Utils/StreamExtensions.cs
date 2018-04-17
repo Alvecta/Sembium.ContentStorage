@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.TransferService.WebApi.Utils
+namespace Sembium.ContentStorage.Utils
 {
     public static class StreamExtensions
     {
@@ -23,6 +23,22 @@ namespace Sembium.ContentStorage.TransferService.WebApi.Utils
                     bufferSize,
                     cancellationToken
                 );
+        }
+
+        public static IEnumerable<string> ReadAllLines(this System.IO.Stream stream, Encoding encoding)
+        {
+            if (stream.CanSeek)
+            {
+                stream.Position = 0;
+            }
+
+            using (var reader = new System.IO.StreamReader(stream, encoding))
+            {
+                while (!reader.EndOfStream)
+                {
+                    yield return reader.ReadLine();
+                }
+            }
         }
     }
 }

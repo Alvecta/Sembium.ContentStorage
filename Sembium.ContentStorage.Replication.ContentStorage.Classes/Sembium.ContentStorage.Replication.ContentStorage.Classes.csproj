@@ -11,6 +11,7 @@
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.ContentStorage.Interfaces\Sembium.ContentStorage.Replication.ContentStorage.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.Classes\Sembium.ContentStorage.Storage.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Utils\Sembium.ContentStorage.Utils.csproj" />
   </ItemGroup>
 
 </Project>

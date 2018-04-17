@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.TransferService.WebApi
+namespace Sembium.ContentStorage.TransferService.Library
 {
     public static class AutofacRegistrations
     {

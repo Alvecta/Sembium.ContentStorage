@@ -5,9 +5,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Utils
 {
-    public static class HttpUtils
+    public static class HttpExtensions
     {
         public static async Task<HttpResponseMessage> CheckedSendAsync(this HttpClient httpClient, HttpRequestMessage request, HttpCompletionOption httpCompletionOption = HttpCompletionOption.ResponseContentRead)
         {

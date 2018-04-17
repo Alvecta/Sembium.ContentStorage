@@ -1,5 +1,5 @@
 ﻿using Sembium.ContentStorage.Common;
-using Sembium.ContentStorage.Replication.Replicator.Common;
+using Sembium.ContentStorage.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace Sembium.ContentStorage.Replication.Replicator.CompleteMoment
         private string GetFileName()
         {
             var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            return System.IO.Path.Combine(appDataFolder, Utils.GetAssemblyCompany(), Utils.GetAssemblyTitle(), "CompleteMoments.dat");
+            return System.IO.Path.Combine(appDataFolder, ExeUtils.GetAssemblyCompany(), ExeUtils.GetAssemblyTitle(), "CompleteMoments.dat");
         }
 
         private int GetExpiryMinutes()

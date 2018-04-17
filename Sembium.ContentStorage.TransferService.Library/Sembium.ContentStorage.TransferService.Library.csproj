@@ -8,13 +8,11 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
+    <PackageReference Include="MimeKitLite" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sembium.ContentStorage.Service.Classes\Sembium.ContentStorage.Service.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.AmazonS3.Classes\Sembium.ContentStorage.Storage.AmazonS3.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.AzureBlob.Classes\Sembium.ContentStorage.Storage.AzureBlob.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Classes\Sembium.ContentStorage.Storage.FileSystem.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Base.Classes\Sembium.ContentStorage.Storage.FileSystem.Base.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Transfer.Classes\Sembium.ContentStorage.Storage.FileSystem.Transfer.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Utils.AspNetCore\Sembium.ContentStorage.Utils.AspNetCore.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Utils\Sembium.ContentStorage.Utils.csproj" />

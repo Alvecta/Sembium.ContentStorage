@@ -2,7 +2,7 @@
 using Sembium.ContentStorage.Replication.Common.Config;
 using Sembium.ContentStorage.Replication.Common.Exceptions;
 using Sembium.ContentStorage.Replication.Common.Main;
-using Sembium.ContentStorage.Replication.Replicator.Common;
+using Sembium.ContentStorage.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +34,8 @@ namespace Sembium.ContentStorage.Replication.Replicator.Main
         {
             try
             {
-                if (!Utils.IsSingleInstance())
-                    throw new UserException(string.Format("Only one instance of {0} is allowed!", Utils.GetAssemblyTitle()));
+                if (!ExeUtils.IsSingleInstance())
+                    throw new UserException(string.Format("Only one instance of {0} is allowed!", ExeUtils.GetAssemblyTitle()));
 
                 var config = _configResolver.GetConfig();
                 _replicationWorker.Run(config);

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Initialization;
-using Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Utils;
+using Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Logging;
 
 namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp
 {

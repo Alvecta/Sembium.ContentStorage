@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 
-namespace Sembium.ContentStorage.Service.WebApi
+namespace Sembium.ContentStorage.Service.Library
 {
     public class Startup
     {
@@ -48,7 +48,7 @@ namespace Sembium.ContentStorage.Service.WebApi
             }
 
             app.UseMiddleware(
-                typeof(ErrorHandlingMiddleware),
+                typeof(Utils.AspNetCore.ErrorHandlingMiddleware),
                 loggerFactory,
                 typeof(Sembium.ContentStorage.Common.UserException),
                 typeof(Sembium.ContentStorage.Common.UserAuthenticationException),

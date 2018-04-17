@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Utils
+namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Logging
 {
     class ReplicatorConsoleLoggingProvider : ILoggerProvider
     {
