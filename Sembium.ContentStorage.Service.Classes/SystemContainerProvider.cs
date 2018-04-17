@@ -21,11 +21,11 @@ namespace Sembium.ContentStorage.Service
             _contentStorageHost = contentStorageHost;
         }
 
-        public IContainer GetSystemContainer(string specificName = null)
+        public ISystemContainer GetSystemContainer(string specificName = null)
         {
             var containerName = string.IsNullOrEmpty(specificName) ? SystemContainerName : SystemContainerName + "-" + specificName;
 
-            return _contentStorageHost.GetContainer(containerName);
+            return _contentStorageHost.GetContainer(containerName, true) as ISystemContainer;
         }
     }
 }

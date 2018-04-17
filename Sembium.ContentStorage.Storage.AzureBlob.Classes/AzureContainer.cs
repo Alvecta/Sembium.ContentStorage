@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AzureBlob
 {
-    public class AzureContainer : IContainer, IMultiPartUploadContainer
+    public class AzureContainer : IContainer, IMultiPartUploadContainer, ISystemContainer
     {
         private const string AzureApiVersion = "2017-07-29";
 
@@ -25,11 +25,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
         private readonly IContentNameProvider _contentNameProvider;
         private readonly IContentIdentifierGenerator _contentIdentifierGenerator;
         private readonly IContentHashValidator _contentHashValidator;
-        private readonly IContentNamesRepository _committedContentNamesRepository;
-        private readonly IContentMonthProvider _contentMonthProvider;
-        private readonly IContentsMonthHashProvider _contentsMonthHashProvider;
         private readonly IHashProvider _hashProvider;
-        private readonly IContentsMonthHashRepository _contentsMonthHashRepository;
 
         public AzureContainer(
             Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer delegateContainer, 
@@ -37,22 +33,14 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             IContentNameProvider contentNameProvider,
             IContentIdentifierGenerator contentIdentifierGenerator,
             IContentHashValidator contentHashValidator,
-            IContentNamesRepository committedContentNamesRepository,
-            IContentMonthProvider contentMonthProvider,
-            IContentsMonthHashProvider contentsMonthHashProvider,
-            IHashProvider hashProvider,
-            IContentsMonthHashRepository contentsMonthHashRepository)
+            IHashProvider hashProvider)
         {
             _delegateContainer = delegateContainer;
             _azureContentFactory = azureContentFactory;
             _contentNameProvider = contentNameProvider;
             _contentIdentifierGenerator = contentIdentifierGenerator;
             _contentHashValidator = contentHashValidator;
-            _committedContentNamesRepository = committedContentNamesRepository;
-            _contentMonthProvider = contentMonthProvider;
-            _contentsMonthHashProvider = contentsMonthHashProvider;
             _hashProvider = hashProvider;
-            _contentsMonthHashRepository = contentsMonthHashRepository;
         }
 
         private bool ContentExists(string contentName)
@@ -87,60 +75,27 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
                 throw new UserException("Content does not exists");
 
             var contentName = _contentNameProvider.GetContentName(contentIdentifier);
-            var blockBlobReference = _delegateContainer.GetBlockBlobReference(contentName);
 
+            return GetContent(contentName);
+        }
+
+        public IContent GetContent(string contentName)
+        {
+            var blockBlobReference = _delegateContainer.GetBlockBlobReference(contentName);
             return _azureContentFactory(blockBlobReference);
         }
 
-        public IEnumerable<IContentIdentifier> GetContentIdentifiers(bool committed, string hash)
+        public IEnumerable<string> GetContentNames(string prefix)
         {
-            var prefix = _contentNameProvider.GetSearchPrefix(hash);
-
-            prefix = prefix?.ToLower();  // azure specific
-
-            return
-                GetAllContentIdentifiers(prefix)
-                .Where(x => x.Uncommitted != committed);
+            return GetCloudBlobs(prefix).Select(x => x.Name);
         }
 
-        public IEnumerable<IContentIdentifier> GetChronologicallyOrderedContentIdentifiers(DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
+        public IEnumerable<IContent> GetContents(string prefix)
         {
-            var result =
-                _committedContentNamesRepository.GetChronologicallyOrderedContentNames(_delegateContainer.Name, GetMomentMonth(beforeMoment, 1), GetMomentMonth(afterMoment, -1), CancellationToken.None)
-                .Select(x => _contentNameProvider.GetContentIdentifier(x))
-                .Where(x => x != null);
-
-            if (beforeMoment.HasValue)
-            {
-                result = result.Where(x => x.ModifiedMoment < beforeMoment.Value);
-            }
-
-            if (afterMoment.HasValue)
-            {
-                result = result.Where(x => x.ModifiedMoment > afterMoment.Value);
-            }
-
-            return result;
+            return GetCloudBlobs(prefix).Select(x => _azureContentFactory(x));
         }
 
-        private DateTimeOffset? GetMomentMonth(DateTimeOffset? moment, int monthsOffset = 0)
-        {
-            if (moment.HasValue)
-            {
-                return new DateTimeOffset(moment.Value.ToUniversalTime().Year, moment.Value.ToUniversalTime().Month, 1, 0, 0, 0, TimeSpan.FromHours(0)).AddMonths(monthsOffset);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private IEnumerable<string> GetAllContentNames(string prefix)
-        {
-            return GetAllBlobs(prefix).Select(x => x.Name);
-        }
-
-        private IEnumerable<CloudBlob> GetAllBlobs(string prefix)
+        private IEnumerable<CloudBlob> GetCloudBlobs(string prefix)
         {
             BlobContinuationToken continuationToken = null;
 
@@ -160,20 +115,6 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
 
                 continuationToken = result.ContinuationToken;
             }
-        }
-
-        private IEnumerable<IContentIdentifier> GetContentIdentifiers(IEnumerable<string> contentNames)
-        {
-            return
-                contentNames
-                .Select(x => _contentNameProvider.GetContentIdentifier(x))
-                .Where(x => x != null);
-        }
-
-
-        private IEnumerable<IContentIdentifier> GetAllContentIdentifiers(string prefix)
-        {
-            return GetContentIdentifiers(GetAllContentNames(prefix));
         }
 
         public void FinalizeMultiPartUpload(string hostIdentifier, IEnumerable<KeyValuePair<string, string>> partUploadResults)
@@ -221,17 +162,8 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             var contentName = _contentNameProvider.GetContentName(contentIdentifier);
 
             await RenameContentAsync(uncommittedContentName, contentName);
-            await PersistCommittedContentNameAsync(contentName, contentIdentifier.ModifiedMoment);
 
             return contentIdentifier;
-        }
-
-        private async Task PersistCommittedContentNameAsync(string contentName, DateTimeOffset contentDate)
-        {
-            await Task.Run(() =>
-            {
-                _committedContentNamesRepository.AddContent(_delegateContainer.Name, contentName.ToLowerInvariant(), contentDate, CancellationToken.None);
-            });
         }
 
         private static HttpResponseMessage ProcessResult(Task<HttpResponseMessage> task)
@@ -297,65 +229,6 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             }
 
             await oldBlockBlobReference.DeleteAsync();
-        }
-
-        public async Task<int> MaintainAsync(CancellationToken cancellationToken)
-        {
-            var persistedCommittedContentNames =
-                    _committedContentNamesRepository
-                    .GetChronologicallyOrderedContentNames(_delegateContainer.Name, null, null, cancellationToken);
-
-            var notPersistedContentNames =
-                    GetAllContentNames(null)
-                    .Except(persistedCommittedContentNames.OrderBy(x => x));
-
-            var notPersistedCommittedContents=
-                    GetContentIdentifiers(notPersistedContentNames)
-                    .Where(x => !x.Uncommitted)
-                    .OrderBy(x => x.ModifiedMoment)
-                    .ThenBy(x => x.Guid)
-                    .Select(x => new KeyValuePair<string, DateTimeOffset>(_contentNameProvider.GetContentName(x), x.ModifiedMoment));
-
-            var result = _committedContentNamesRepository.AddContents(_delegateContainer.Name, notPersistedCommittedContents, cancellationToken);
-
-            return await Task.FromResult(result);
-        }
-
-        public (byte[] Hash, int Count) GetMonthsHash(DateTimeOffset beforeMoment)
-        {
-            var beforeMomentMonth = _contentMonthProvider.GetContentMonth(beforeMoment);
-
-            var persistedMonthHashAndCounts =
-                    _contentsMonthHashRepository.GetMonthHashAndCounts(_delegateContainer.Name)
-                    .OrderBy(x => x.Month)
-                    .ToList();
-
-            var persistedPastMonthHashAndCounts =
-                    persistedMonthHashAndCounts
-                    .Where(x => x.Month < beforeMomentMonth)
-                    .ToList();
-
-            var lastPersistedPastMonth = persistedPastMonthHashAndCounts.Select(x => (DateTimeOffset?)x.Month).LastOrDefault();
-
-            var nextContentIdentifiers = GetChronologicallyOrderedContentIdentifiers(beforeMoment, lastPersistedPastMonth?.AddMonths(1).AddTicks(-1));
-            var nextMonthHashAndCounts = _contentsMonthHashProvider.GetMonthHashAndCounts(nextContentIdentifiers).ToList();
-
-            AddMissingMonthHashAndCounts(nextMonthHashAndCounts);
-
-            var allMonthHashAndCounts = persistedPastMonthHashAndCounts.Concat(nextMonthHashAndCounts);
-
-            return _hashProvider.GetHashAndCount(allMonthHashAndCounts);
-        }
-
-        private void AddMissingMonthHashAndCounts(IEnumerable<IMonthHashAndCount> monthHashAndCounts)
-        {
-            var missingMonthHashAndCounts =
-                    monthHashAndCounts
-                    .Where(x =>
-                        monthHashAndCounts
-                        .Any(y => (y.Month > x.Month) && (y.LastModifiedMoment > x.Month.AddMonths(1).AddDays(15)))
-                    );
-            _contentsMonthHashRepository.AddMonthHashAndCounts(_delegateContainer.Name, missingMonthHashAndCounts);
         }
     }
 }

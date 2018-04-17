@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AmazonS3
 {
-    public class AmazonContainer : IContainer
+    public class AmazonContainer : IContainer, ISystemContainer
     {
         private readonly string _bucketName;
         private readonly string _directoryName;
@@ -74,49 +74,39 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
 
             var contentName = _contentNameProvider.GetContentName(contentIdentifier);
 
+            return GetContent(contentName);
+        }
+
+        public IContent GetContent(string contentName)
+        {
             return _amazonContentFactory(_bucketName, MakeKey(contentName));
         }
 
-        public IEnumerable<IContentIdentifier> GetContentIdentifiers(bool committed, string hash)
+        public IEnumerable<string> GetContentNames(string prefix)
         {
-            return GetContentIdentifiers(committed, hash, null, null);
-        }
-
-        public IEnumerable<IContentIdentifier> GetChronologicallyOrderedContentIdentifiers(DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
-        {
-            return
-                GetContentIdentifiers(true, null, beforeMoment, afterMoment)
-                .OrderBy(x => x.ModifiedMoment)
-                .ThenBy(x => x.Guid);
-        }
-
-        private IEnumerable<IContentIdentifier> GetContentIdentifiers(bool committed, string hash, DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
-        {
-            var prefix = _contentNameProvider.GetSearchPrefix(hash);
-
-            var request = new Amazon.S3.Model.ListObjectsRequest { BucketName = _bucketName, Prefix = MakeKey(prefix) };
+            var request = new Amazon.S3.Model.ListObjectsV2Request { BucketName = _bucketName, Prefix = MakeKey(prefix) };
 
             while (true)
             {
-                var response = _amazonS3.ListObjectsAsync(request).Result;
+                var response = _amazonS3.ListObjectsV2Async(request).Result;
 
-                var contentIdentifiers =
-                    response.S3Objects.Select(x => _contentNameProvider.GetContentIdentifier(x.Key.Split('/').Last()))
-                    .Where(x => x != null)
-                    .Where(x => x.Uncommitted != committed)
-                    .Where(x => (!beforeMoment.HasValue) || (x.ModifiedMoment < beforeMoment.Value))
-                    .Where(x => (!afterMoment.HasValue) || (x.ModifiedMoment > afterMoment.Value));
+                var contentNames = response.S3Objects.Select(x => string.Join("/", x.Key.Split('/').Skip(1)));
 
-                foreach (var identifier in contentIdentifiers)
+                foreach (var contentName in contentNames)
                 {
-                    yield return identifier;
+                    yield return contentName;
                 }
 
                 if (!response.IsTruncated)
                     break;
 
-                request.Marker = response.NextMarker;
+                request.ContinuationToken = response.ContinuationToken;
             }
+        }
+
+        public IEnumerable<IContent> GetContents(string prefix)
+        {
+            return GetContentNames(prefix).Select(x => GetContent(x));
         }
 
         public async Task<IContentIdentifier> CommitContentAsync(IContentIdentifier uncommittedContentIdentifier)
@@ -156,21 +146,6 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
                 };
 
             _amazonS3.DeleteObjectAsync(deleteObjectRequest).Wait();
-        }
-
-        public Task<int> MaintainAsync(CancellationToken cancellationToken)
-        {
-            return Task.FromResult(0);
-        }
-
-        public (byte[] Hash, int Count) GetMonthsHash(DateTimeOffset beforeMoment)
-        {
-            var monthHashAndCounts =
-                    _contentsMonthHashProvider.GetMonthHashAndCounts(
-                        GetChronologicallyOrderedContentIdentifiers(beforeMoment, null)
-                    );
-
-            return _hashProvider.GetHashAndCount(monthHashAndCounts);
         }
 
         private string MakeKey(string contentName)

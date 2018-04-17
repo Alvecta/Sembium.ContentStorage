@@ -11,7 +11,7 @@ namespace Sembium.ContentStorage.Storage.Hosting
     {
         bool ContainerExists(string containerName);
         IContainer CreateContainer(string containerName);
-        IContainer GetContainer(string containerName);
+        IContainer GetContainer(string containerName, bool createIfNotExists = false);
         IEnumerable<string> GetContainerNames();
         IHttpRequestInfo GetUrlContentUploadInfo(string contentUrl, string contentStorageServiceUrl, string containerName, string contentID, long size, string authenticationToken);
     }

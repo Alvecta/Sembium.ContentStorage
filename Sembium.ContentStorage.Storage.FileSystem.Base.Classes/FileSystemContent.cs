@@ -23,6 +23,8 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Base
             }
         }
 
+        public string Name => FileName;
+
         public FileSystemContent(string root, string dirName, string fileName, 
             IFileSystemFullFileNameProvider fileSystemFullFileNameProvider)
         {
@@ -34,6 +36,8 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Base
 
         public void LoadFromStream(System.IO.Stream stream)
         {
+            System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(FullFileName));
+
             using (var fileStream = System.IO.File.Create(FullFileName))
             {
                 stream.CopyTo(fileStream);

@@ -14,13 +14,13 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
     {
         public static void RegisterFor(ContainerBuilder builder, IConfiguration configuration)
         {
-            if (!string.IsNullOrEmpty(configuration.GetSection("AppSettings").GetValue<string>("AzureBlobStorage")))
+            if (!string.IsNullOrEmpty(configuration.GetConnectionString("AzureBlobStorage")))
             {
                 builder.RegisterType<AzureContainer>().As<Sembium.ContentStorage.Storage.Hosting.IContainer>();
                 builder.RegisterType<AzureContent>().As<IContent>();
                 builder.RegisterType<AzureContentsMonthHashRepository>().As<IContentsMonthHashRepository>();
                 builder.RegisterType<AzureContentNamesVault>().As<IContentNamesVault>();
-                builder.RegisterType<AzureContentNamesVaultItem>().As<IContentNamesVaultItem>();
+                builder.RegisterType<AzureContentNamesVaultItem>().As<IAzureContentNamesVaultItem>();
 
                 builder.RegisterType<AzureContentStorageHost>().As<IContentStorageHost>();
             }

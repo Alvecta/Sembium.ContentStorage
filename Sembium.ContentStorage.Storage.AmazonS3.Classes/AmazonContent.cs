@@ -18,6 +18,10 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
         private readonly IDownloadInfoFactory _downloadInfoFactory;
         private readonly IHttpPartUploadInfoFactory _httpPartUploadInfoFactory;
 
+        private long? _size;
+
+        public string Name => string.Join("/", _keyName.Split('/').Skip(1));
+
         public AmazonContent(string bucketName, string keyName,
             Amazon.S3.IAmazonS3 amazonS3,
             IMultiPartUploadInfoFactory multiPartUploadInfoFactory,
@@ -52,14 +56,19 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
 
         public long GetSize()
         {
-            var request = 
-                new Amazon.S3.Model.GetObjectMetadataRequest
-                {
-                    BucketName = _bucketName,
-                    Key = _keyName
-                };
+            if (!_size.HasValue)
+            {
+                var request =
+                    new Amazon.S3.Model.GetObjectMetadataRequest
+                    {
+                        BucketName = _bucketName,
+                        Key = _keyName
+                    };
 
-            return _amazonS3.GetObjectMetadataAsync(request).Result.ContentLength;
+                _size = _amazonS3.GetObjectMetadataAsync(request).Result.ContentLength;
+            }
+
+            return _size.Value;
         }
 
         public IMultiPartUploadInfo GetMultiPartUploadInfo(int expirySeconds, long size)

@@ -46,6 +46,11 @@ namespace Sembium.ContentStorage.Service
         private readonly IContainerStateRepository _containerStateRepository;
         private readonly ISystemContainerProvider _systemContainerProvider;
         private readonly IAuthorizationChecker _authorizationChecker;
+        private readonly IContentNamesRepository _committedContentNamesRepository;
+        private readonly IContentMonthProvider _contentMonthProvider;
+        private readonly IContentsMonthHashProvider _contentsMonthHashProvider;
+        private readonly IContentsMonthHashRepository _contentsMonthHashRepository;
+        private readonly IContentIdentifiersProvider _contentIdentifiersProvider;
 
         public ContentStorageContainer(string containerName,   
             IContentStorageHost contentStorageHost, 
@@ -69,7 +74,12 @@ namespace Sembium.ContentStorage.Service
             IUploadInfoFactory uploadInfoFactory,
             IContainerStateRepository containerStateRepository,
             ISystemContainerProvider systemContainerProvider,
-            IAuthorizationChecker authorizationChecker)
+            IAuthorizationChecker authorizationChecker,
+            IContentNamesRepository committedContentNamesRepository,
+            IContentMonthProvider contentMonthProvider,
+            IContentsMonthHashProvider contentsMonthHashProvider,
+            IContentsMonthHashRepository contentsMonthHashRepository,
+            IContentIdentifiersProvider contentIdentifiersProvider)
         {
             _containerName = containerName;
 
@@ -95,6 +105,11 @@ namespace Sembium.ContentStorage.Service
             _containerStateRepository = containerStateRepository;
             _systemContainerProvider = systemContainerProvider;
             _authorizationChecker = authorizationChecker;
+            _committedContentNamesRepository = committedContentNamesRepository;
+            _contentMonthProvider = contentMonthProvider;
+            _contentsMonthHashProvider = contentsMonthHashProvider;
+            _contentsMonthHashRepository = contentsMonthHashRepository;
+            _contentIdentifiersProvider = contentIdentifiersProvider;
         }
 
         private int URLExpirySeconds
@@ -136,7 +151,7 @@ namespace Sembium.ContentStorage.Service
         private IDocumentIdentifier GetExistingDocumentIdentifier(IContainer container, string hash, string extension)
         {
             return
-                container.GetContentIdentifiers(true, hash)
+                _contentIdentifiersProvider.GetContentIdentifiers(container, true, hash)
                 .Where(x => string.Equals(x.Extension, extension, StringComparison.InvariantCultureIgnoreCase))
                 .Select(x => _documentIdentifierProvider.GetDocumentIdentifier(x))
                 .FirstOrDefault();
@@ -224,6 +239,10 @@ namespace Sembium.ContentStorage.Service
 
             var uncommittedContentIdentifier = _uploadIdentifierProvider.GetUncommittedContentIdentifier(container, uploadIdentifier);
             var contentIdentifier = await container.CommitContentAsync(uncommittedContentIdentifier);
+
+            var contentName = _contentNameProvider.GetContentName(contentIdentifier);
+            await PersistCommittedContentNameAsync(contentName, contentIdentifier.ModifiedMoment);
+
             return _documentIdentifierProvider.GetDocumentIdentifier(contentIdentifier);
         }
 
@@ -326,15 +345,47 @@ namespace Sembium.ContentStorage.Service
         {
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Replicator, Security.Roles.Backup);
 
-            return InternalGetContentIdentifiers(null, null);
+            return GetChronologicallyOrderedContentIdentifiers(null, null);
         }
 
-        private IEnumerable<IContentIdentifier> InternalGetContentIdentifiers(DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
+        private IEnumerable<IContentIdentifier> GetChronologicallyOrderedContentIdentifiers(DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
         {
             var container = GetContainer();
-            return
-                container.GetChronologicallyOrderedContentIdentifiers(beforeMoment, afterMoment)
-                .Where(x => !_contentIdentifierGenerator.IsSystemContent(x));
+
+            var contentNames = 
+                    _committedContentNamesRepository.GetChronologicallyOrderedContentNames(
+                        _containerName, 
+                        GetMomentMonth(beforeMoment, 1), 
+                        GetMomentMonth(afterMoment, -1), 
+                        CancellationToken.None);
+
+            var result =
+                    _contentIdentifiersProvider.GetContentIdentifiers(contentNames)
+                    .Where(x => !_contentIdentifierGenerator.IsSystemContent(x));
+
+            if (beforeMoment.HasValue)
+            {
+                result = result.Where(x => x.ModifiedMoment < beforeMoment.Value);
+            }
+
+            if (afterMoment.HasValue)
+            {
+                result = result.Where(x => x.ModifiedMoment > afterMoment.Value);
+            }
+
+            return result;
+        }
+
+        private DateTimeOffset? GetMomentMonth(DateTimeOffset? moment, int monthsOffset = 0)
+        {
+            if (moment.HasValue)
+            {
+                return new DateTimeOffset(moment.Value.ToUniversalTime().Year, moment.Value.ToUniversalTime().Month, 1, 0, 0, 0, TimeSpan.FromHours(0)).AddMonths(monthsOffset);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public IEnumerable<string> GetContentIDs(DateTimeOffset afterMoment)
@@ -342,7 +393,7 @@ namespace Sembium.ContentStorage.Service
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Replicator, Security.Roles.Backup);
 
             return
-                InternalGetContentIdentifiers(null, afterMoment)                
+                GetChronologicallyOrderedContentIdentifiers(null, afterMoment)                
                 .Select(x => _contentIdentifierSerializer.Serialize(x));
         }
 
@@ -352,7 +403,7 @@ namespace Sembium.ContentStorage.Service
 
             var container = GetContainer();
 
-            var hashResult = container.GetMonthsHash(beforeMoment);
+            var hashResult = GetContainerMonthsHash(container, beforeMoment);
 
             return _hashStringProvider.GetHashString(hashResult.Hash, hashResult.Count);
         }
@@ -559,12 +610,79 @@ namespace Sembium.ContentStorage.Service
             try
             {
                 var container = GetContainer();
-                return await container.MaintainAsync(cancellationToken);
+                return await MaintainContainerAsync(container, cancellationToken);
             }
             finally
             {
                 await _containerStateRepository.SetContainerStateAsync(_containerName, null, false);
             }
+        }
+
+        private async Task<int> MaintainContainerAsync(IContainer container, CancellationToken cancellationToken)
+        {
+            var persistedCommittedContentNames =
+                    _committedContentNamesRepository
+                    .GetChronologicallyOrderedContentNames(_containerName, null, null, cancellationToken);
+
+            var notPersistedContentNames =
+                    container.GetContentNames(null)
+                    .Except(persistedCommittedContentNames.OrderBy(x => x));
+
+            var notPersistedCommittedContents =
+                    _contentIdentifiersProvider.GetContentIdentifiers(notPersistedContentNames)
+                    .Where(x => !x.Uncommitted)
+                    .OrderBy(x => x.ModifiedMoment)
+                    .ThenBy(x => x.Guid)
+                    .Select(x => new KeyValuePair<string, DateTimeOffset>(_contentNameProvider.GetContentName(x), x.ModifiedMoment));
+
+            var result = _committedContentNamesRepository.AddContents(_containerName, notPersistedCommittedContents, cancellationToken);
+
+            return await Task.FromResult(result);
+        }
+
+        private async Task PersistCommittedContentNameAsync(string contentName, DateTimeOffset contentDate)
+        {
+            await Task.Run(() =>
+            {
+                _committedContentNamesRepository.AddContent(_containerName, contentName.ToLowerInvariant(), contentDate, CancellationToken.None);
+            });
+        }
+
+        private (byte[] Hash, int Count) GetContainerMonthsHash(IContainer container, DateTimeOffset beforeMoment)
+        {
+            var beforeMomentMonth = _contentMonthProvider.GetContentMonth(beforeMoment);
+
+            var persistedMonthHashAndCounts =
+                    _contentsMonthHashRepository.GetMonthHashAndCounts(_containerName)
+                    .OrderBy(x => x.Month)
+                    .ToList();
+
+            var persistedPastMonthHashAndCounts =
+                    persistedMonthHashAndCounts
+                    .Where(x => x.Month < beforeMomentMonth)
+                    .ToList();
+
+            var lastPersistedPastMonth = persistedPastMonthHashAndCounts.Select(x => (DateTimeOffset?)x.Month).LastOrDefault();
+
+            var nextContentIdentifiers = GetChronologicallyOrderedContentIdentifiers(beforeMoment, lastPersistedPastMonth?.AddMonths(1).AddTicks(-1));
+            var nextMonthHashAndCounts = _contentsMonthHashProvider.GetMonthHashAndCounts(nextContentIdentifiers).ToList();
+
+            AddMissingMonthHashAndCounts(nextMonthHashAndCounts);
+
+            var allMonthHashAndCounts = persistedPastMonthHashAndCounts.Concat(nextMonthHashAndCounts);
+
+            return _hashProvider.GetHashAndCount(allMonthHashAndCounts);
+        }
+
+        private void AddMissingMonthHashAndCounts(IEnumerable<IMonthHashAndCount> monthHashAndCounts)
+        {
+            var missingMonthHashAndCounts =
+                    monthHashAndCounts
+                    .Where(x =>
+                        monthHashAndCounts
+                        .Any(y => (y.Month > x.Month) && (y.LastModifiedMoment > x.Month.AddMonths(1).AddDays(15)))
+                    );
+            _contentsMonthHashRepository.AddMonthHashAndCounts(_containerName, missingMonthHashAndCounts);
         }
     }
 }

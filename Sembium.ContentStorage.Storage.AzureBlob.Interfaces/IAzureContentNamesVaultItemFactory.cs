@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AzureBlob
 {
-    public delegate IContentNamesVaultItem IAzureContentNamesVaultItemFactory(Microsoft.WindowsAzure.Storage.Blob.CloudAppendBlob blob);
+    public delegate IAzureContentNamesVaultItem IAzureContentNamesVaultItemFactory(Microsoft.WindowsAzure.Storage.Blob.CloudAppendBlob blob);
 }

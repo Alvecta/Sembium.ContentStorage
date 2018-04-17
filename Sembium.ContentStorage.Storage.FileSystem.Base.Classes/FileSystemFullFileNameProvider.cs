@@ -10,7 +10,7 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Base
     {
         public string GetFullFileName(string root, string dirName, string fileName)
         {
-            return System.IO.Path.Combine(root, dirName, fileName);
+            return System.IO.Path.Combine(root, dirName, fileName.Replace("/", @"\"));
         }
     }
 }

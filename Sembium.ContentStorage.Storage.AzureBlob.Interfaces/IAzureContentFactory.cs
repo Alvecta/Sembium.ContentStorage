@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AzureBlob
 {
-    public delegate IContent IAzureContentFactory(Microsoft.WindowsAzure.Storage.Blob.CloudBlockBlob delegateContent);
+    public delegate IContent IAzureContentFactory(Microsoft.WindowsAzure.Storage.Blob.CloudBlob delegateContent);
 }

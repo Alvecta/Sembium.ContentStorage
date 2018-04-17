@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AzureBlob
 {
-    public class AzureContentNamesVaultItem : IContentNamesVaultItem
+    public class AzureContentNamesVaultItem : IAzureContentNamesVaultItem
     {
         private readonly CloudAppendBlob _blob;
 

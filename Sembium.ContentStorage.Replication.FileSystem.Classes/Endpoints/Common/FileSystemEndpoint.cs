@@ -17,6 +17,7 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Endpoints.Common
         private readonly IHashProvider _hashProvider;
         private readonly IHashStringProvider _hashStringProvider;
         private readonly IContentsMonthHashProvider _contentsMonthHashProvider;
+        private readonly IContentIdentifiersProvider _contentIdentifiersProvider;
 
         public string ID
         {
@@ -32,20 +33,22 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Endpoints.Common
             IContainer container,
             IHashProvider hashProvider,
             IHashStringProvider hashStringProvider,
-            IContentsMonthHashProvider contentsMonthHashProvider)
+            IContentsMonthHashProvider contentsMonthHashProvider,
+            IContentIdentifiersProvider contentIdentifiersProvider)
         {
             _id = id;
             _container = container;
             _hashProvider = hashProvider;
             _hashStringProvider = hashStringProvider;
             _contentsMonthHashProvider = contentsMonthHashProvider;
+            _contentIdentifiersProvider = contentIdentifiersProvider;
         }
 
         public async Task<IEnumerable<IContentIdentifier>> GetContentIdentifiersAsync(DateTimeOffset afterMoment)
         {
             return await Task.Run(() =>
                 {
-                    return _container.GetChronologicallyOrderedContentIdentifiers(null, afterMoment);
+                    return _contentIdentifiersProvider.GetChronologicallyOrderedContentIdentifiers(Container, null, afterMoment);
                 });
         }
 
@@ -55,7 +58,7 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Endpoints.Common
                 {
                     var monthHashAndCounts =
                             _contentsMonthHashProvider.GetMonthHashAndCounts(
-                                _container.GetChronologicallyOrderedContentIdentifiers(beforeMoment, null)
+                                _contentIdentifiersProvider.GetChronologicallyOrderedContentIdentifiers(Container, beforeMoment, null)
                             );
 
                     var hashResult = _hashProvider.GetHashAndCount(monthHashAndCounts);

@@ -59,6 +59,13 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
             if (ContainerExists(containerName))
                 throw new UserException("Container already exist");
 
+            InternalCreateContainer(containerName);
+
+            return _amazonContainerFactory(ContentStorageBucketName, containerName);
+        }
+
+        private void InternalCreateContainer(string containerName)
+        {
             using (var emptyStream = new MemoryStream(new byte[0]))
             {
                 var folderRequest = new Amazon.S3.Model.PutObjectRequest()
@@ -70,14 +77,19 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
 
                 var folderResponse = _amazonS3.PutObjectAsync(folderRequest).Result;
             }
-
-            return _amazonContainerFactory(ContentStorageBucketName, containerName);
         }
 
-        public IContainer GetContainer(string containerName)
+        public IContainer GetContainer(string containerName, bool createIfNotExists = false)
         {
             if (!ContainerExists(containerName))
-                throw new UserException("Container does not exist: " + containerName);
+            {
+                if (!createIfNotExists)
+                {
+                    throw new UserException("Container does not exist: " + containerName);
+                }
+
+                InternalCreateContainer(containerName);
+            }
 
             return _amazonContainerFactory(ContentStorageBucketName, containerName);
         }

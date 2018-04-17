@@ -14,9 +14,6 @@ namespace Sembium.ContentStorage.Storage.Hosting
         IContent CreateContent(IContentIdentifier contentIdentifier);
         Task<IContentIdentifier> CommitContentAsync(IContentIdentifier uncommittedContentIdentifier);
         IContent GetContent(IContentIdentifier contentIdentifier);
-        IEnumerable<IContentIdentifier> GetContentIdentifiers(bool committed, string hash);
-        IEnumerable<IContentIdentifier> GetChronologicallyOrderedContentIdentifiers(DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment);
-        (byte[] Hash, int Count) GetMonthsHash(DateTimeOffset beforeMoment);
-        Task<int> MaintainAsync(CancellationToken cancellationToken);
+        IEnumerable<string> GetContentNames(string prefix);
     }
 }

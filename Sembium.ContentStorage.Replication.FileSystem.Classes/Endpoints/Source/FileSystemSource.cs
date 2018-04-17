@@ -20,8 +20,9 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Endpoints.Source
             IHashProvider hashProvider,
             IHashStringProvider hashStringProvider,
             IContentsMonthHashProvider contentsMonthHashProvider,
+            IContentIdentifiersProvider contentIdentifiersProvider,
             IContentStreamFactory contentStreamFactory)
-            : base(id, container, hashProvider, hashStringProvider, contentsMonthHashProvider)
+            : base(id, container, hashProvider, hashStringProvider, contentsMonthHashProvider, contentIdentifiersProvider)
         {
             _contentStreamFactory = contentStreamFactory;
         }

@@ -55,12 +55,19 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             return _azureContainerFactory(cloudBlobContainer);
         }
 
-        public IContainer GetContainer(string containerName)
+        public IContainer GetContainer(string containerName, bool createIfNotExists = false)
         {
             var cloudBlobContainer = GetCloudBlobClient().GetContainerReference(FixContainerName(containerName));
 
             if (!cloudBlobContainer.ExistsAsync().Result)
-                throw new UserException("Container does not exist: " + containerName);
+            {
+                if (!createIfNotExists)
+                {
+                    throw new UserException("Container does not exist: " + containerName);
+                }
+
+                cloudBlobContainer.CreateAsync().Wait();
+            }
 
             return _azureContainerFactory(cloudBlobContainer);
         }

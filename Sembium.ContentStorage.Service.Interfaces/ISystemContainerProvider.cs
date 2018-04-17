@@ -10,6 +10,6 @@ namespace Sembium.ContentStorage.Service
 {
     public interface ISystemContainerProvider
     {
-        IContainer GetSystemContainer(string specificName = null);
+        ISystemContainer GetSystemContainer(string specificName = null);
     }
 }

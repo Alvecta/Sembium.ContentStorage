@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Sembium.ContentStorage.Storage.Common;
+using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.Tools;
 using System;
@@ -40,7 +41,9 @@ namespace Sembium.ContentStorage.Storage
             builder.RegisterType<ContentIdentifier>().As<IContentIdentifier>();
             builder.RegisterType<ContentIdentifierGenerator>().As<IContentIdentifierGenerator>();
             builder.RegisterType<ContentIdentifierSerializer>().As<IContentIdentifierSerializer>();
+            builder.RegisterType<ContentIdentifiersProvider>().As<IContentIdentifiersProvider>();
             builder.RegisterType<ContentHashValidator>().As<IContentHashValidator>();
+            builder.RegisterType<EmptyContentsMonthHashRepository>().As<IContentsMonthHashRepository>();
 
             builder.RegisterType<HttpRequestInfo>().As<IHttpRequestInfo>();
         }

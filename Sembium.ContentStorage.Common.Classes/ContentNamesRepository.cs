@@ -42,13 +42,20 @@ namespace Sembium.ContentStorage.Common
         {
             var prefix = contentMonth.ToUniversalTime().ToString("yyyy-MM-");
 
-            var availableContentNamesVaultItem =
+            var availableContentNamesVaultItems =
                     _contentNamesVault
                     .GetItems(contentsContainerName, prefix)
                     .Where(x => x.CanAppend())
-                    .FirstOrDefault();
+                    .ToList();
 
-            return availableContentNamesVaultItem ?? _contentNamesVault.GetNewItem(contentsContainerName, GenerateContentNamesVaultItemName(prefix));
+            if (availableContentNamesVaultItems.Count() < 5)  // todo: config
+            {
+                return _contentNamesVault.GetNewItem(contentsContainerName, GenerateContentNamesVaultItemName(prefix));
+            }
+            else
+            {
+                return availableContentNamesVaultItems[new Random().Next(availableContentNamesVaultItems.Count())];
+            }
         }
 
         private void AddBlock(string contentsContainerName, string blockText, DateTimeOffset contentMonth, CancellationToken cancellationToken)
@@ -141,6 +148,7 @@ namespace Sembium.ContentStorage.Common
                         .Select(y => new { ContentName = y, ContentIdentifier = _contentNameProvider.GetContentIdentifier(y) })
                         .OrderBy(y => y.ContentIdentifier.ModifiedMoment)
                         .ThenBy(y => y.ContentIdentifier.Guid)
+                        .Distinct()  // todo: new DistinctOrdered ext method on IOrderedEnumerable
                         .Select(y => y.ContentName)
                     );
 
@@ -167,7 +175,7 @@ namespace Sembium.ContentStorage.Common
 
         private DateTimeOffset GetContentsMonth(string contentNamesVaultItemName)
         {
-            var parts = contentNamesVaultItemName.Split('/')[1].Split('-');
+            var parts = contentNamesVaultItemName.Split('/').Last().Split('-');
 
             if (parts.Length < 2)
             {

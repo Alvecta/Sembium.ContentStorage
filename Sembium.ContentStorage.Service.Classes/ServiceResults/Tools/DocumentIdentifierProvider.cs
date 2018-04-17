@@ -14,13 +14,16 @@ namespace Sembium.ContentStorage.Service.ServiceResults.Tools
     {
         private readonly IDocumentIdentifierFactory _documentIdentifierFactory;
         private readonly IContentIdentifierFactory _contentIdentifierFactory;
+        private readonly IContentIdentifiersProvider _contentIdentifiersProvider;
 
         public DocumentIdentifierProvider(
             IDocumentIdentifierFactory documentIdentifierFactory,
-            IContentIdentifierFactory contentIdentifierFactory)
+            IContentIdentifierFactory contentIdentifierFactory,
+            IContentIdentifiersProvider contentIdentifiersProvider)
         {
             _documentIdentifierFactory = documentIdentifierFactory;
             _contentIdentifierFactory = contentIdentifierFactory;
+            _contentIdentifiersProvider = contentIdentifiersProvider;
         }
 
         public IDocumentIdentifier GetDocumentIdentifier(IContentIdentifier contentIdentifier)
@@ -31,7 +34,7 @@ namespace Sembium.ContentStorage.Service.ServiceResults.Tools
         public IContentIdentifier GetContentIdentifier(IContainer container, IDocumentIdentifier documentIdentifier)
         {
             return
-                container.GetContentIdentifiers(true, documentIdentifier.Hash)
+                _contentIdentifiersProvider.GetContentIdentifiers(container, true, documentIdentifier.Hash)
                 .Where(x => string.Equals(x.Extension, documentIdentifier.Extension, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault();
         }

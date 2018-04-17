@@ -15,13 +15,16 @@ namespace Sembium.ContentStorage.Storage.Tools
     {
         private readonly IUploadIdentifierFactory _uploadIdentifierFactory;
         private readonly IContentIdentifierFactory _contentIdentifierFactory;
+        private readonly IContentIdentifiersProvider _contentIdentifiersProvider;
 
         public UploadIdentifierProvider(
             IUploadIdentifierFactory uploadIdentifierFactory,
-            IContentIdentifierFactory contentIdentifierFactory)
+            IContentIdentifierFactory contentIdentifierFactory,
+            IContentIdentifiersProvider contentIdentifiersProvider)
         {
             _uploadIdentifierFactory = uploadIdentifierFactory;
             _contentIdentifierFactory = contentIdentifierFactory;
+            _contentIdentifiersProvider = contentIdentifiersProvider;
         }
 
         public IUploadIdentifier GetUploadIdentifier(IContentIdentifier contentIdentifier, string hostIdentifier)
@@ -32,7 +35,7 @@ namespace Sembium.ContentStorage.Storage.Tools
         public IContentIdentifier GetUncommittedContentIdentifier(IContainer container, IUploadIdentifier uploadIdentifier)
         {
             return
-                container.GetContentIdentifiers(false, uploadIdentifier.Hash)
+                _contentIdentifiersProvider.GetContentIdentifiers(container, false, uploadIdentifier.Hash)
                 .Where(x => string.Equals(x.Extension, uploadIdentifier.Extension, StringComparison.InvariantCultureIgnoreCase))
                 .Where(x => string.Equals(x.Guid, uploadIdentifier.Guid, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault();

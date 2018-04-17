@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.FileSystem.Base
 {
-    public class FileSystemContainer : IFileSystemContainer
+    public class FileSystemContainer : IFileSystemContainer, ISystemContainer
     {
         private const int ChunkSize = 10000;
 
@@ -84,39 +84,49 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Base
 
             var contentName = _contentNameProvider.GetContentName(contentIdentifier);
 
+            return GetContent(contentName);
+        }
+
+        public IContent GetContent(string contentName)
+        {
             return _fileSystemContentFactory(_root, _dirName, contentName);
         }
 
-        public IEnumerable<IContentIdentifier> GetContentIdentifiers(bool committed, string hash)
+        public IEnumerable<string> GetContentNames(string prefix)
         {
-            return GetContentIdentifiers(committed, hash, null, null);
-        }
+            string fullDirName;
 
-        public IEnumerable<IContentIdentifier> GetChronologicallyOrderedContentIdentifiers(DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
-        {
-            return
-                GetContentIdentifiers(true, null, beforeMoment, afterMoment)
-                .OrderBy(x => x.ModifiedMoment)
-                .ThenBy(x => x.Guid);
-        }
+            if (string.IsNullOrEmpty(prefix))
+            {
+                fullDirName = System.IO.Path.Combine(_root, _dirName);
+            }
+            else
+            {
+                var prefixParts = prefix.Split('/');
+                var dirs = prefixParts.Reverse().Skip(1).Reverse();
+                prefix = prefixParts.Last();
 
-        private IEnumerable<IContentIdentifier> GetContentIdentifiers(bool committed, string hash, DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
-        {
-            var prefix = _contentNameProvider.GetSearchPrefix(hash);
+                var subDirs = System.IO.Path.Combine(dirs.ToArray());
+                fullDirName = System.IO.Path.Combine(_root, _dirName, subDirs);
+            }
 
-            var fullDirName = System.IO.Path.Combine(_root, _dirName);
+            if (!System.IO.Directory.Exists(fullDirName))
+            {
+                return Enumerable.Empty<string>();
+            }
 
             // optimize with FastDirectoryEnumerator http://www.codeproject.com/Articles/38959/A-Faster-Directory-Enumerator
             var fileNames = System.IO.Directory.EnumerateFiles(fullDirName, prefix + "*.*");
 
             return
                 fileNames
-                .Select(x => System.IO.Path.GetFileName(x))
-                .Select(x => _contentNameProvider.GetContentIdentifier(x))
-                .Where(x => x != null)
-                .Where(x => x.Uncommitted != committed)
-                .Where(x => (!beforeMoment.HasValue) || (x.ModifiedMoment < beforeMoment.Value))
-                .Where(x => (!afterMoment.HasValue) || (x.ModifiedMoment > afterMoment.Value));
+                .Select(x => System.IO.Path.GetFileName(x));
+
+        }
+
+        public IEnumerable<IContent> GetContents(string prefix)
+        {
+            return GetContentNames(prefix).Select(x => GetContent(x));
         }
 
         public async Task<IContentIdentifier> CommitContentAsync(IContentIdentifier uncommittedContentIdentifier)
@@ -142,21 +152,6 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Base
 
             System.IO.File.Delete(newContentFullFileName);
             System.IO.File.Move(oldContentFullFileName, newContentFullFileName);
-        }
-
-        public Task<int> MaintainAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public (byte[] Hash, int Count) GetMonthsHash(DateTimeOffset beforeMoment)
-        {
-            var monthHashAndCounts =
-                    _contentsMonthHashProvider.GetMonthHashAndCounts(
-                        GetChronologicallyOrderedContentIdentifiers(beforeMoment, null)
-                    );
-
-            return _hashProvider.GetHashAndCount(monthHashAndCounts);
         }
     }
 }

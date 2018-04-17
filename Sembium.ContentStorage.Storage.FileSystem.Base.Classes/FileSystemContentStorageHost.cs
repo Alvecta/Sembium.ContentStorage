@@ -33,15 +33,27 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Base
             if (ContainerExists(containerName))
                 throw new UserException("Container already exist");
 
-            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(_storageRoot, containerName));
+            InternalCreateContainer(containerName);
 
             return _fileSystemContainerFactory(_storageRoot, containerName);
         }
 
-        public IContainer GetContainer(string containerName)
+        private void InternalCreateContainer(string containerName)
+        {
+            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(_storageRoot, containerName));
+        }
+
+        public IContainer GetContainer(string containerName, bool createIfNotExists = false)
         {
             if (!ContainerExists(containerName))
-                throw new UserException("Container does not exist: " + containerName);
+            {
+                if (!createIfNotExists)
+                {
+                    throw new UserException("Container does not exist: " + containerName);
+                }
+
+                InternalCreateContainer(containerName);
+            }
 
             return _fileSystemContainerFactory(_storageRoot, containerName);
         }

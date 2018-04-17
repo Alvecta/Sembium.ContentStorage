@@ -22,8 +22,9 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Endpoints.Destination
             IHashProvider hashProvider,
             IHashStringProvider hashStringProvider,
             IContentsMonthHashProvider contentsMonthHashProvider,
+            IContentIdentifiersProvider contentIdentifiersProvider,
             IContentIdentifierGenerator contentIdentifierGenerator)
-            : base(id, container, hashProvider, hashStringProvider, contentsMonthHashProvider)
+            : base(id, container, hashProvider, hashStringProvider, contentsMonthHashProvider, contentIdentifiersProvider)
         {
             _contentIdentifierGenerator = contentIdentifierGenerator;
         }
