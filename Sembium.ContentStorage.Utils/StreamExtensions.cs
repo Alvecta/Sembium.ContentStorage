@@ -27,10 +27,14 @@ namespace Sembium.ContentStorage.Utils
 
         public static IEnumerable<string> ReadAllLines(this System.IO.Stream stream, Encoding encoding)
         {
+<<<<<<< HEAD:Sembium.ContentStorage.Utils/StreamExtensions.cs
             if (stream.CanSeek)
             {
                 stream.Position = 0;
             }
+=======
+            stream.Position = 0;
+>>>>>>> 614029ee3b71460ab6e6035b501da8d4a4705d6b:Sembium.ContentStorage.Utils/StreamExtensions.cs
 
             using (var reader = new System.IO.StreamReader(stream, encoding))
             {
