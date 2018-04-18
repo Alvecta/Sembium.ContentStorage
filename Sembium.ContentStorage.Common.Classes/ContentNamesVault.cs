@@ -21,23 +21,23 @@ namespace Sembium.ContentStorage.Common
 
         public IEnumerable<IContentNamesVaultItem> GetItems(string contentsContainerName, string prefix)
         {
-            var namesContainer = GetNamesContainer();
-            var contents = namesContainer.GetContents(contentsContainerName + "/" + prefix);
+            var namesContainer = GetNamesContainer(contentsContainerName);
+            var contents = namesContainer.GetContents(prefix);
 
-            return contents.Select(x => _contentNameVaultItemFactory(x, x.SimpleName.Split('/').Last(), false));
+            return contents.Select(x => _contentNameVaultItemFactory(x, x.SimpleName, false));
         }
 
         public IContentNamesVaultItem GetNewItem(string contentsContainerName, string name)
         {
-            var namesContainer = GetNamesContainer();
-            var content = namesContainer.GetContent(contentsContainerName + "/" + name);
+            var namesContainer = GetNamesContainer(contentsContainerName);
+            var content = namesContainer.GetContent(name);
 
             return _contentNameVaultItemFactory(content, name, true);
         }
 
-        private ISystemContainer GetNamesContainer()
+        private ISystemContainer GetNamesContainer(string contentsContainerName)
         {
-            return _systemContainerProvider.GetSystemContainer("names");
+            return _systemContainerProvider.GetSystemContainer("names/" + contentsContainerName);
         }
     }
 }

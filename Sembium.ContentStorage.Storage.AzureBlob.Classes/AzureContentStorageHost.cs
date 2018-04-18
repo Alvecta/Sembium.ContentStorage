@@ -43,7 +43,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
 
         private CloudBlobContainer GetCloudBlobContainer(string containerName)
         {
-            return GetCloudBlobClient().GetContainerReference(FixContainerName(containerName));
+            return GetCloudBlobClient().GetContainerReference(FixContainerName(containerName.Split('/').First()));
         }
 
         public bool ContainerExists(string containerName)
