@@ -149,8 +149,8 @@ namespace Sembium.ContentStorage.Common
                         .Select(y => new { ContentName = y, ContentIdentifier = _contentNameProvider.GetContentIdentifier(y) })
                         .OrderBy(y => y.ContentIdentifier.ModifiedMoment)
                         .ThenBy(y => y.ContentIdentifier.Guid)
-                        .Distinct()  // todo: new DistinctOrdered ext method on IOrderedEnumerable
                         .Select(y => y.ContentName)
+                        .UniqueOnOrdered()
                     );
 
             return result;
