@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AmazonS3
 {
-    public delegate IContent IAmazonContentFactory(string bucketName, string keyName);
+    public delegate IContent IAmazonContentFactory(string bucketName, string keyName, long? size);
 }

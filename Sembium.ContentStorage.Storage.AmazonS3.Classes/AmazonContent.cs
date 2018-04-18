@@ -22,7 +22,7 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
 
         public string SimpleName => _keyName.Split('/').Last();
 
-        public AmazonContent(string bucketName, string keyName,
+        public AmazonContent(string bucketName, string keyName, long? size,
             Amazon.S3.IAmazonS3 amazonS3,
             IMultiPartUploadInfoFactory multiPartUploadInfoFactory,
             IUploadIdentifierProvider uploadIdentifierProvider,
@@ -32,6 +32,7 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
         {
             _bucketName = bucketName;
             _keyName = keyName;
+            _size = size;
             _amazonS3 = amazonS3;
             _multiPartUploadInfoFactory = multiPartUploadInfoFactory;
             _uploadIdentifierProvider = uploadIdentifierProvider;

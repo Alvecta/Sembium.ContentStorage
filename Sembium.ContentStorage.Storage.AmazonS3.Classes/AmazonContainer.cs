@@ -64,7 +64,7 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
 
             var contentName = _contentNameProvider.GetContentName(contentIdentifier);
 
-            return _amazonContentFactory(_bucketName, MakeKey(contentName));
+            return _amazonContentFactory(_bucketName, MakeKey(contentName), null);
         }
 
         public IContent GetContent(IContentIdentifier contentIdentifier)
@@ -74,16 +74,26 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
 
             var contentName = _contentNameProvider.GetContentName(contentIdentifier);
 
-            return GetContent(contentName);
+            return GetContent(contentName, null);
         }
 
         public IContent GetContent(string contentName)
         {
-            return _amazonContentFactory(_bucketName, MakeKey(contentName));
+            return _amazonContentFactory(_bucketName, MakeKey(contentName), null);
+        }
+
+        private IContent GetContent(string contentName, long? size)
+        {
+            return _amazonContentFactory(_bucketName, MakeKey(contentName), size);
         }
 
         public IEnumerable<string> GetContentNames(string prefix)
         {
+            return InternalGetContents(prefix).Select(x => x.ContentName);
+        }
+
+        private IEnumerable<(string ContentName, long? Size)> InternalGetContents(string prefix)
+        { 
             var request = new Amazon.S3.Model.ListObjectsV2Request { BucketName = _bucketName, Prefix = MakeKey(prefix) };
 
             var containerDepth = _directoryName.Split('/').Length - 1;
@@ -92,14 +102,14 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
             {
                 var response = _amazonS3.ListObjectsV2Async(request).Result;
 
-                var contentNames = 
+                var contents = 
                         response.S3Objects
-                        .Select(x => string.Join("/", x.Key.Split('/').Skip(1 + containerDepth)))
-                        .Where(x => !string.IsNullOrEmpty(x));
+                        .Select(x => (ContentName: string.Join("/", x.Key.Split('/').Skip(1 + containerDepth)), Size: x.Size))
+                        .Where(x => !string.IsNullOrEmpty(x.ContentName));
 
-                foreach (var contentName in contentNames)
+                foreach (var content in contents)
                 {
-                    yield return contentName;
+                    yield return content;
                 }
 
                 if (!response.IsTruncated)
@@ -111,7 +121,7 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
 
         public IEnumerable<IContent> GetContents(string prefix)
         {
-            return GetContentNames(prefix).Select(x => GetContent(x));
+            return InternalGetContents(prefix).Select(x => GetContent(x.ContentName, x.Size));
         }
 
         public async Task<IContentIdentifier> CommitContentAsync(IContentIdentifier uncommittedContentIdentifier)
