@@ -24,7 +24,7 @@ namespace Sembium.ContentStorage.Common
             var namesContainer = GetNamesContainer();
             var contents = namesContainer.GetContents(contentsContainerName + "/" + prefix);
 
-            return contents.Select(x => _contentNameVaultItemFactory(x, x.Name.Split('/').Last(), false));
+            return contents.Select(x => _contentNameVaultItemFactory(x, x.SimpleName.Split('/').Last(), false));
         }
 
         public IContentNamesVaultItem GetNewItem(string contentsContainerName, string name)

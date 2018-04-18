@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AzureBlob
 {
-    public delegate IContainer IAzureContainerFactory(Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer delegateContainer);
+    public delegate IContainer IAzureContainerFactory(Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer delegateContainer, string rootPath);
 }

@@ -20,7 +20,7 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
 
         private long? _size;
 
-        public string Name => string.Join("/", _keyName.Split('/').Skip(1));
+        public string SimpleName => _keyName.Split('/').Last();
 
         public AmazonContent(string bucketName, string keyName,
             Amazon.S3.IAmazonS3 amazonS3,

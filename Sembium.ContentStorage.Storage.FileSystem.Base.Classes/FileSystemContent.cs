@@ -23,7 +23,7 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Base
             }
         }
 
-        public string Name => FileName;
+        public string SimpleName => FileName;
 
         public FileSystemContent(string root, string dirName, string fileName, 
             IFileSystemFullFileNameProvider fileSystemFullFileNameProvider)

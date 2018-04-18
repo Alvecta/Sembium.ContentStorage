@@ -36,28 +36,38 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             return containerName.ToLowerInvariant();  // development storage throws "Bad request. 400." on camelcase names
         }
 
+        private string GetContainerRootPath(string containerName)
+        {
+            return string.Join("/", containerName.Split('/').Skip(1));
+        }
+
+        private CloudBlobContainer GetCloudBlobContainer(string containerName)
+        {
+            return GetCloudBlobClient().GetContainerReference(FixContainerName(containerName));
+        }
+
         public bool ContainerExists(string containerName)
         {
-            var cloudBlobContainer = GetCloudBlobClient().GetContainerReference(FixContainerName(containerName));
+            var cloudBlobContainer = GetCloudBlobContainer(containerName);
 
             return cloudBlobContainer.ExistsAsync().Result;
         }
 
         public IContainer CreateContainer(string containerName)
         {
-            var cloudBlobContainer = GetCloudBlobClient().GetContainerReference(FixContainerName(containerName));
+            var cloudBlobContainer = GetCloudBlobContainer(containerName);
 
             if (cloudBlobContainer.ExistsAsync().Result)
                 throw new UserException("Container already exist");
 
             cloudBlobContainer.CreateAsync().Wait();
 
-            return _azureContainerFactory(cloudBlobContainer);
+            return _azureContainerFactory(cloudBlobContainer, GetContainerRootPath(containerName));
         }
 
         public IContainer GetContainer(string containerName, bool createIfNotExists = false)
         {
-            var cloudBlobContainer = GetCloudBlobClient().GetContainerReference(FixContainerName(containerName));
+            var cloudBlobContainer = GetCloudBlobContainer(containerName);
 
             if (!cloudBlobContainer.ExistsAsync().Result)
             {
@@ -69,7 +79,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
                 cloudBlobContainer.CreateAsync().Wait();
             }
 
-            return _azureContainerFactory(cloudBlobContainer);
+            return _azureContainerFactory(cloudBlobContainer, GetContainerRootPath(containerName));
         }
 
         public IEnumerable<string> GetContainerNames()

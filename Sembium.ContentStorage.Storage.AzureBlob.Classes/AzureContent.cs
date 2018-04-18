@@ -21,7 +21,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
         private readonly IDownloadInfoFactory _downloadInfoFactory;
         private readonly IHttpPartUploadInfoFactory _httpPartUploadInfoFactory;
 
-        public string Name => _delegateContent.Name;
+        public string SimpleName => _delegateContent.Name.Split('/').Last();
 
         public AzureContent(Microsoft.WindowsAzure.Storage.Blob.CloudBlockBlob delegateContent,
             IMultiPartUploadInfoFactory multiPartUploadInfoFactory,

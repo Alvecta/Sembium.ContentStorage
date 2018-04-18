@@ -21,6 +21,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
         private const string AzureApiVersion = "2017-07-29";
 
         private readonly Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer _delegateContainer;
+        private readonly string _rootPath;
         private readonly IAzureContentFactory _azureContentFactory;
         private readonly IContentNameProvider _contentNameProvider;
         private readonly IContentIdentifierGenerator _contentIdentifierGenerator;
@@ -28,7 +29,8 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
         private readonly IHashProvider _hashProvider;
 
         public AzureContainer(
-            Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer delegateContainer, 
+            Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer delegateContainer,
+            string rootPath,
             IAzureContentFactory azureContentFactory,
             IContentNameProvider contentNameProvider,
             IContentIdentifierGenerator contentIdentifierGenerator,
@@ -36,6 +38,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             IHashProvider hashProvider)
         {
             _delegateContainer = delegateContainer;
+            _rootPath = rootPath;
             _azureContentFactory = azureContentFactory;
             _contentNameProvider = contentNameProvider;
             _contentIdentifierGenerator = contentIdentifierGenerator;
@@ -48,7 +51,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             if (contentName == null)
                 return false;
 
-            var blockBlobReference = _delegateContainer.GetBlockBlobReference(contentName);
+            var blockBlobReference = GetBlockBlobReference(contentName);
             return blockBlobReference.ExistsAsync().Result;
         }
 
@@ -64,9 +67,14 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
                 throw new UserException("Content already exists");
 
             var contentName = _contentNameProvider.GetContentName(contentIdentifier);
-            var blockBlobReference = _delegateContainer.GetBlockBlobReference(contentName);
+            var blockBlobReference = GetBlockBlobReference(contentName);
 
             return _azureContentFactory(blockBlobReference);
+        }
+
+        private CloudBlockBlob GetBlockBlobReference(string contentName)
+        {
+            return _delegateContainer.GetBlockBlobReference(contentName);
         }
 
         public IContent GetContent(IContentIdentifier contentIdentifier)
@@ -81,7 +89,8 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
 
         public IContent GetContent(string contentName)
         {
-            var blockBlobReference = _delegateContainer.GetBlockBlobReference(contentName);
+            var contentFullName = string.IsNullOrEmpty(_rootPath) ? contentName : _rootPath + "/" + contentName;
+            var blockBlobReference = GetBlockBlobReference(contentFullName);
             return _azureContentFactory(blockBlobReference);
         }
 
@@ -201,8 +210,8 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
 
         private async Task RenameContentAsync(string oldContentName, string newContentName)
         {
-            var oldBlockBlobReference = _delegateContainer.GetBlockBlobReference(oldContentName);
-            var newBlockBlobReference = _delegateContainer.GetBlockBlobReference(newContentName);
+            var oldBlockBlobReference = GetBlockBlobReference(oldContentName);
+            var newBlockBlobReference = GetBlockBlobReference(newContentName);
 
             await newBlockBlobReference.StartCopyAsync(oldBlockBlobReference);
 

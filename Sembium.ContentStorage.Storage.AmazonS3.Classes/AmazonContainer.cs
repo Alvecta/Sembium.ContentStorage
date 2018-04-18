@@ -86,11 +86,13 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
         {
             var request = new Amazon.S3.Model.ListObjectsV2Request { BucketName = _bucketName, Prefix = MakeKey(prefix) };
 
+            var containerDepth = _directoryName.Split('/').Length - 1;
+
             while (true)
             {
                 var response = _amazonS3.ListObjectsV2Async(request).Result;
 
-                var contentNames = response.S3Objects.Select(x => string.Join("/", x.Key.Split('/').Skip(1)));
+                var contentNames = response.S3Objects.Select(x => string.Join("/", x.Key.Split('/').Skip(1 + containerDepth)));
 
                 foreach (var contentName in contentNames)
                 {
