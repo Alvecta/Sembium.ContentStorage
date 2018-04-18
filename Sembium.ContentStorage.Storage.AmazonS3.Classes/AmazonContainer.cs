@@ -115,7 +115,7 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
                 if (!response.IsTruncated)
                     break;
 
-                request.ContinuationToken = response.ContinuationToken;
+                request.ContinuationToken = response.NextContinuationToken;
             }
         }
 
