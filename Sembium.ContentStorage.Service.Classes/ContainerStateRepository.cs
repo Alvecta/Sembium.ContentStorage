@@ -1,6 +1,7 @@
 ﻿using Sembium.ContentStorage.Common;
 using Sembium.ContentStorage.Service.Hosting;
 using Sembium.ContentStorage.Service.Results;
+using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.Tools;
 using System;
 using System.Collections.Generic;

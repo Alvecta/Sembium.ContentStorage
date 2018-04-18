@@ -56,8 +56,6 @@ namespace Sembium.ContentStorage.Service
             //container.RegisterTypedFactory<IUserFactory>().ForConcreteType<IUser>(); use delegate
             builder.RegisterType<User>().As<IUser>();
 
-            builder.RegisterType<SystemContainerProvider>().As<ISystemContainerProvider>();
-
             builder.RegisterType<ContainerStateRepository>().As<IContainerStateRepository>();
 
 

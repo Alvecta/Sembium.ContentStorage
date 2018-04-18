@@ -1,5 +1,4 @@
-﻿using Sembium.ContentStorage.Service;
-using Sembium.ContentStorage.Storage.Hosting;
+﻿using Sembium.ContentStorage.Storage.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;

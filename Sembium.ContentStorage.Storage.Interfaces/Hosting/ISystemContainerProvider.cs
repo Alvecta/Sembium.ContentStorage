@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service
+namespace Sembium.ContentStorage.Storage.Hosting
 {
     public interface ISystemContainerProvider
     {
