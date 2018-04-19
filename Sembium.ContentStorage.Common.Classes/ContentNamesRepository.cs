@@ -148,20 +148,22 @@ namespace Sembium.ContentStorage.Common
                 .OrderBy(x => x.Month);
         }
 
+        private IEnumerable<string> GetChronologicallyOrderedContentNames(IEnumerable<IContentNamesVaultItem> vaultItems, CancellationToken cancellationToken)
+        {
+            return 
+                vaultItems
+                    .AsParallel()
+                    .SelectMany(y => GetContentNames(y, cancellationToken))
+                    .Select(y => new { ContentName = y, ContentIdentifier = _contentNameProvider.GetContentIdentifier(y) })
+                    .OrderBy(y => y.ContentIdentifier.ModifiedMoment)
+                    .ThenBy(y => y.ContentIdentifier.Guid)
+                    .Select(y => y.ContentName)
+                    .UniqueOnOrdered();
+        }
+
         private IEnumerable<string> GetChronologicallyOrderedContentNames(IOrderedEnumerable<(DateTimeOffset Month, IEnumerable<IContentNamesVaultItem> VaultItems)> monthVaultItems, CancellationToken cancellationToken)
         {
-            return
-                monthVaultItems
-                    .SelectMany(x =>
-                        x.VaultItems
-                        .AsParallel()
-                        .SelectMany(y => GetContentNames(y, cancellationToken))
-                        .Select(y => new { ContentName = y, ContentIdentifier = _contentNameProvider.GetContentIdentifier(y) })
-                        .OrderBy(y => y.ContentIdentifier.ModifiedMoment)
-                        .ThenBy(y => y.ContentIdentifier.Guid)
-                        .Select(y => y.ContentName)
-                        .UniqueOnOrdered()
-                    );
+            return monthVaultItems.SelectMany(x => GetChronologicallyOrderedContentNames(x.VaultItems, cancellationToken));
         }
 
         public IEnumerable<string> GetChronologicallyOrderedContentNames(string contentsContainerName, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth, CancellationToken cancellationToken)
