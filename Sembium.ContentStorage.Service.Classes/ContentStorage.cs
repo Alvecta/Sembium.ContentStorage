@@ -98,7 +98,7 @@ namespace Sembium.ContentStorage.Service
             try
             {
                 var container = _contentStorageContainerFactory(containerName);
-                return container.MaintainAsync(cancellationToken).Result;
+                return container.MaintainAsync(null, cancellationToken).Result;
             }
             catch (Exception e)
             {

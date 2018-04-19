@@ -84,12 +84,12 @@ namespace Sembium.ContentStorage.Service.ServiceModels
             contentStorageContainer.RemoveReadOnlySubcontainer(subcontainerName);
         }
 
-        public async Task<string> MaintainContainerAsync(string containerName, string authenticationToken, CancellationToken cancellationToken)
+        public async Task<string> MaintainContainerAsync(string containerName, string prefix, string authenticationToken, CancellationToken cancellationToken)
         {
             var account = _contentStorageAccountProvider.GetAccount(authenticationToken, containerName);
             var contentStorageContainer = account.GetContentStorageContainer();
 
-            return await contentStorageContainer.MaintainAsync(cancellationToken);
+            return await contentStorageContainer.MaintainAsync(prefix, cancellationToken);
         }
 
         public IEnumerable<string> Maintain(string authenticationToken, CancellationToken cancellationToken)

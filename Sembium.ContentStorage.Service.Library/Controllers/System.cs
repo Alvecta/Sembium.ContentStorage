@@ -45,19 +45,20 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         {
             _system.CreateContainer(containerName, auth);
         }
-        
+
         /// <summary>
         /// Maintains a container
         /// </summary>
         /// <param name="containerName">Name of the container to be maintain</param>
+        /// <param name="prefix">Prefix for the content names to index</param>
         /// <param name="auth">Authentication token for the request</param>
         /// <param name="cancellationToken">CancellationToken</param>
         /// <returns>HTTP response code</returns>
         [Route("containers/{containerName}/maintain")]
         [HttpPut]
-        public async Task<string> MaintainContainerAsync(string containerName, [FromQuery]string auth, CancellationToken cancellationToken)
+        public async Task<string> MaintainContainerAsync(string containerName, [FromQuery]string prefix, [FromQuery]string auth, CancellationToken cancellationToken)
         {
-            return await _system.MaintainContainerAsync(containerName, auth, cancellationToken);
+            return await _system.MaintainContainerAsync(containerName, prefix, auth, cancellationToken);
         }
 
         /// <summary>

@@ -120,7 +120,7 @@ namespace Sembium.ContentStorage.Common
 
             foreach (var month in monthContents)
             {
-                result += AddContents(contentsContainerName, month.Select(y => y.ContentName), month.Key, null, cancellationToken);
+                result += AddContents(contentsContainerName, month.Select(y => y.ContentName), month.Key, null, cancellationToken);  // todo: parallel tasksd
             }
 
             return result;
@@ -149,12 +149,12 @@ namespace Sembium.ContentStorage.Common
                 .OrderBy(x => x.Month);
         }
 
-        private IEnumerable<string> GetChronologicallyOrderedContentNames(IEnumerable<IContentNamesVaultItem> vaultItems, CancellationToken cancellationToken)
+        private IEnumerable<string> GetChronologicallyOrderedContentNames(IEnumerable<IContentNamesVaultItem> vaultItems, string prefix, CancellationToken cancellationToken)
         {
-            return 
+            return
                 vaultItems
                     .AsParallel()
-                    .SelectMany(y => GetContentNames(y, cancellationToken))
+                    .SelectMany(y => GetContentNames(y, prefix, cancellationToken))
                     .Select(y => new { ContentName = y, ContentIdentifier = _contentNameProvider.GetContentIdentifier(y) })
                     .OrderBy(y => y.ContentIdentifier.ModifiedMoment)
                     .ThenBy(y => y.ContentIdentifier.Guid)
@@ -162,31 +162,31 @@ namespace Sembium.ContentStorage.Common
                     .UniqueOnOrdered();
         }
 
-        private IEnumerable<string> GetChronologicallyOrderedContentNames(IOrderedEnumerable<(DateTimeOffset Month, IEnumerable<IContentNamesVaultItem> VaultItems)> monthVaultItems, CancellationToken cancellationToken)
+        private IEnumerable<string> GetChronologicallyOrderedContentNames(IOrderedEnumerable<(DateTimeOffset Month, IEnumerable<IContentNamesVaultItem> VaultItems)> monthVaultItems, string prefix, CancellationToken cancellationToken)
         {
-            return monthVaultItems.SelectMany(x => GetChronologicallyOrderedContentNames(x.VaultItems, cancellationToken));
+            return monthVaultItems.SelectMany(x => GetChronologicallyOrderedContentNames(x.VaultItems, prefix, cancellationToken));
         }
 
-        public IEnumerable<string> GetChronologicallyOrderedContentNames(string contentsContainerName, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth, CancellationToken cancellationToken)
+        public IEnumerable<string> GetChronologicallyOrderedContentNames(string contentsContainerName, string prefix, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth, CancellationToken cancellationToken)
         {
-            return GetChronologicallyOrderedContentNames(GetMonthVaultItems(contentsContainerName, beforeMonth, afterMonth), cancellationToken);
+            return GetChronologicallyOrderedContentNames(GetMonthVaultItems(contentsContainerName, beforeMonth, afterMonth), prefix, cancellationToken);
         }
 
-        private IEnumerable<string> GetContentNamesVaultItemLines(IContentNamesVaultItem contentNamesVaultItem, CancellationToken cancellationToken)
+        private IEnumerable<string> GetContentNamesVaultItemLines(IContentNamesVaultItem contentNamesVaultItem, string prefix, CancellationToken cancellationToken)
         {
             using (var stream = contentNamesVaultItem.OpenReadStream())
             {
-                foreach (var line in stream.ReadAllLines(Encoding.UTF8))  // to prevent stream disposal
+                foreach (var line in stream.ReadAllLines(Encoding.UTF8).Where(x => (prefix == null) || ((!string.IsNullOrEmpty(x)) && x.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase))))  // to prevent stream disposal
                 {
                     yield return line;
                 }
             }
         }
 
-        private IEnumerable<string> GetContentNames(IContentNamesVaultItem contentNamesVaultItem, CancellationToken cancellationToken)
+        private IEnumerable<string> GetContentNames(IContentNamesVaultItem contentNamesVaultItem, string prefix, CancellationToken cancellationToken)
         {
             return 
-                GetContentNamesVaultItemLines(contentNamesVaultItem, cancellationToken)
+                GetContentNamesVaultItemLines(contentNamesVaultItem, prefix, cancellationToken)
                 .Where(x => !string.IsNullOrEmpty(x));
         }
 
@@ -212,7 +212,7 @@ namespace Sembium.ContentStorage.Common
             foreach (var x in monthVaultItems)
             {
                 var vaultItemNames = x.VaultItems.Select(y => y.Name);
-                var monthContentNames = GetChronologicallyOrderedContentNames(x.VaultItems, cancellationToken);
+                var monthContentNames = GetChronologicallyOrderedContentNames(x.VaultItems, null, cancellationToken);
 
                 AddContents(containerName, monthContentNames, x.Month, vaultItemNames, cancellationToken);
 

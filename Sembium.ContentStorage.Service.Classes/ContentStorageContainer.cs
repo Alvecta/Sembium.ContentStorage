@@ -345,16 +345,17 @@ namespace Sembium.ContentStorage.Service
         {
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Replicator, Security.Roles.Backup);
 
-            return GetChronologicallyOrderedContentIdentifiers(null, null);
+            return GetChronologicallyOrderedContentIdentifiers(null, null, null);
         }
 
-        private IEnumerable<IContentIdentifier> GetChronologicallyOrderedContentIdentifiers(DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
+        private IEnumerable<IContentIdentifier> GetChronologicallyOrderedContentIdentifiers(string prefix, DateTimeOffset? beforeMoment, DateTimeOffset? afterMoment)
         {
             var container = GetContainer();
 
             var contentNames = 
                     _committedContentNamesRepository.GetChronologicallyOrderedContentNames(
-                        _containerName, 
+                        _containerName,
+                        prefix,
                         GetMomentMonth(beforeMoment, 1), 
                         GetMomentMonth(afterMoment, -1), 
                         CancellationToken.None);
@@ -393,7 +394,7 @@ namespace Sembium.ContentStorage.Service
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Replicator, Security.Roles.Backup);
 
             return
-                GetChronologicallyOrderedContentIdentifiers(null, afterMoment)                
+                GetChronologicallyOrderedContentIdentifiers(null, null, afterMoment)                
                 .Select(x => _contentIdentifierSerializer.Serialize(x));
         }
 
@@ -589,20 +590,20 @@ namespace Sembium.ContentStorage.Service
             return GetContentDownloadInfo(contentID).Url;
         }
 
-        public async Task<string> MaintainAsync(CancellationToken cancellationToken)
+        public async Task<string> MaintainAsync(string prefix, CancellationToken cancellationToken)
         {
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin);
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            var count = await SafeMaintainAsync(cancellationToken);
+            var count = await SafeMaintainAsync(prefix, cancellationToken);
 
             watch.Stop();
 
             return $"Persisted {count} committed content names in the {_containerName} container. Elapsed time: {watch.Elapsed.ToString()}";
         }
 
-        private async Task<int> SafeMaintainAsync(CancellationToken cancellationToken)
+        private async Task<int> SafeMaintainAsync(string prefix, CancellationToken cancellationToken)
         {
             CheckContainerState(false);
 
@@ -610,7 +611,7 @@ namespace Sembium.ContentStorage.Service
             try
             {
                 var container = GetContainer();
-                return await MaintainContainerAsync(container, cancellationToken);
+                return await MaintainContainerAsync(container, prefix, cancellationToken);
             }
             finally
             {
@@ -618,15 +619,15 @@ namespace Sembium.ContentStorage.Service
             }
         }
 
-        private async Task<int> MaintainContainerAsync(IContainer container, CancellationToken cancellationToken)
+        private async Task<int> MaintainContainerAsync(IContainer container, string prefix, CancellationToken cancellationToken)
         {
             var persistedCommittedContentNames =
                     _committedContentNamesRepository
-                    .GetChronologicallyOrderedContentNames(_containerName, null, null, cancellationToken);
+                    .GetChronologicallyOrderedContentNames(_containerName, prefix, null, null, cancellationToken);
 
             var notPersistedContentNames =
-                    container.GetContentNames(null)
-                    .Except(persistedCommittedContentNames.OrderBy(x => x));
+                    container.GetContentNames(prefix)
+                    .Except(persistedCommittedContentNames);
 
             var notPersistedCommittedContents =
                     _contentIdentifiersProvider.GetContentIdentifiers(notPersistedContentNames)
@@ -664,7 +665,7 @@ namespace Sembium.ContentStorage.Service
 
             var lastPersistedPastMonth = persistedPastMonthHashAndCounts.Select(x => (DateTimeOffset?)x.Month).LastOrDefault();
 
-            var nextContentIdentifiers = GetChronologicallyOrderedContentIdentifiers(beforeMoment, lastPersistedPastMonth?.AddMonths(1).AddTicks(-1));
+            var nextContentIdentifiers = GetChronologicallyOrderedContentIdentifiers(null, beforeMoment, lastPersistedPastMonth?.AddMonths(1).AddTicks(-1));
             var nextMonthHashAndCounts = _contentsMonthHashProvider.GetMonthHashAndCounts(nextContentIdentifiers).ToList();
 
             AddMissingMonthHashAndCounts(nextMonthHashAndCounts);
