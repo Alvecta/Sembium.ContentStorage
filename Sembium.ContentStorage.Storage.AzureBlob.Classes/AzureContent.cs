@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AzureBlob
 {
-    public class AzureContent : IURLContent
+    public class AzureContent : IURLContent, ISystemContent
     {
         private const long MaxSinglePartUploadSize = 64 * 1024 * 1024;
         private const long PartUploadSize = 4 * 1024 * 1024;
@@ -121,6 +123,11 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
         public System.IO.Stream GetReadStream()
         {
             return _delegateContent.OpenReadAsync().Result;
+        }
+
+        public async Task DeleteAsync(CancellationToken cancellationToken)
+        {
+            await _delegateContent.DeleteAsync();
         }
     }
 }

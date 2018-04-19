@@ -4,10 +4,12 @@ using Sembium.ContentStorage.Storage.HostingResults.Factories;
 using Sembium.ContentStorage.Storage.Tools;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AmazonS3
 {
-    public class AmazonContent : IURLContent
+    public class AmazonContent : IURLContent, ISystemContent
     {
         private readonly string _bucketName;
         private readonly string _keyName;
@@ -103,6 +105,11 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
             var request = new Amazon.S3.Model.GetObjectRequest { BucketName = _bucketName, Key = _keyName };
             var response = _amazonS3.GetObjectAsync(request).Result;
             return response.ResponseStream;
+        }
+
+        public async Task DeleteAsync(CancellationToken cancellationToken)
+        {
+            await _amazonS3.DeleteAsync(_bucketName, _keyName, null, cancellationToken);
         }
     }
 }

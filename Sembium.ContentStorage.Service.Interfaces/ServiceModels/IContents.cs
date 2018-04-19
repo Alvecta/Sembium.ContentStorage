@@ -21,6 +21,7 @@ namespace Sembium.ContentStorage.Service.ServiceModels
         IEnumerable<string> GetContainerNames(string authenticationToken);
         void CreateContainer(string containerName, string authenticationToken);
         Task<string> MaintainContainerAsync(string containerName, string authenticationToken, CancellationToken cancellationToken);
+        Task CompactContainerContentNamesAsync(string containerName, string authenticationToken, CancellationToken cancellationToken);
         IEnumerable<IContainerState> GetContainerStates(string authenticationToken);
         IEnumerable<string> GetReadOnlyContainerNames(string authenticationToken);
         void SetContainerReadOnlyState(string containerName, bool readOnly, string authenticationToken);

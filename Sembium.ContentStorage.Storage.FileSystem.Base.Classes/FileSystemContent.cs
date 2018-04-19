@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.FileSystem.Base
 {
-    public class FileSystemContent : IContent
+    public class FileSystemContent : IContent, ISystemContent
     {
         private readonly IFileSystemFullFileNameProvider _fileSystemFullFileNameProvider;
 
@@ -52,6 +53,11 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Base
         public  long GetSize()
         {
             return new System.IO.FileInfo(FullFileName).Length;
+        }
+
+        public async Task DeleteAsync(CancellationToken cancellationToken)
+        {
+            await Task.Run(() => System.IO.File.Delete(FullFileName));
         }
     }
 }

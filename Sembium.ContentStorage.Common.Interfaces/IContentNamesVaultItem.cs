@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Common
@@ -13,5 +14,6 @@ namespace Sembium.ContentStorage.Common
         Stream OpenReadStream();
         bool CanAppend();
         void Append(Stream stream);
+        Task DeleteAsync(CancellationToken cancellationToken);
     }
 }

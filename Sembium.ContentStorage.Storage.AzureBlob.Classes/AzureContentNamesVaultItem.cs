@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AzureBlob
@@ -39,6 +40,11 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             }
 
             _blob.AppendBlockAsync(stream, null).Wait();
+        }
+
+        public async Task DeleteAsync(CancellationToken cancellationToken)
+        {
+            await _blob.DeleteAsync();
         }
     }
 }

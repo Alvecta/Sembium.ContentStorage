@@ -54,5 +54,6 @@ namespace Sembium.ContentStorage.Service
         Task<string> CommitMultiPartUploadAsync(string uploadID, IEnumerable<KeyValuePair<string, string>> partUploadResults);
 
         Task<string> MaintainAsync(CancellationToken cancellationToken);
+        Task CompactContentNamesAsync(CancellationToken cancellationToken);
     }
 }

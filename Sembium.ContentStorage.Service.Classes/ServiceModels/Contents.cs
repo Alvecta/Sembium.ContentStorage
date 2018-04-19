@@ -251,6 +251,14 @@ namespace Sembium.ContentStorage.Service.ServiceModels
             return contentStorage.Maintain(cancellationToken);
         }
 
+        public async Task CompactContainerContentNamesAsync(string containerName, string authenticationToken, CancellationToken cancellationToken)
+        {
+            var account = _contentStorageAccountProvider.GetAccount(authenticationToken, containerName);
+            var contentStorageContainer = account.GetContentStorageContainer();
+
+            await contentStorageContainer.CompactContentNamesAsync(cancellationToken);
+        }
+
         public IHttpRequestInfo GetUrlContentUploadInfo(string contentUrl, string contentStorageServiceUrl, string containerName, string contentID, long size, string authenticationToken)
         {
             var account = _contentStorageAccountProvider.GetAccount(authenticationToken, containerName);

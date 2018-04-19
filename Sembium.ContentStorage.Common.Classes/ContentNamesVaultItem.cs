@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Common
 {
@@ -56,6 +58,11 @@ namespace Sembium.ContentStorage.Common
             {
                 return _content.GetReadStream();
             }
+        }
+
+        public async Task DeleteAsync(CancellationToken cancellationToken)
+        {
+            await (_content as ISystemContent).DeleteAsync(cancellationToken);
         }
     }
 }

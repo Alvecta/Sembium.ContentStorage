@@ -61,6 +61,20 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         }
 
         /// <summary>
+        /// Compacts a container content names index
+        /// </summary>
+        /// <param name="containerName">Name of the container to be maintain</param>
+        /// <param name="auth">Authentication token for the request</param>
+        /// <param name="cancellationToken">CancellationToken</param>
+        /// <returns>HTTP response code</returns>
+        [Route("containers/{containerName}/compactcontentnames")]
+        [HttpPut]
+        public async Task CompactContainerContentNamesAsync(string containerName, [FromQuery]string auth, CancellationToken cancellationToken)
+        {
+            await _contents.CompactContainerContentNamesAsync(containerName, auth, cancellationToken);
+        }
+
+        /// <summary>
         /// Maintains all containers
         /// </summary>
         /// <param name="auth">Authentication token for the request</param>
