@@ -148,12 +148,10 @@ namespace Sembium.ContentStorage.Common
                 .OrderBy(x => x.Month);
         }
 
-        public IEnumerable<string> GetChronologicallyOrderedContentNames(string contentsContainerName, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth, CancellationToken cancellationToken)
+        private IEnumerable<string> GetChronologicallyOrderedContentNames(IOrderedEnumerable<(DateTimeOffset Month, IEnumerable<IContentNamesVaultItem> VaultItems)> monthVaultItems, CancellationToken cancellationToken)
         {
-            var monthContentNamesVaultItems = GetMonthVaultItems(contentsContainerName, beforeMonth, afterMonth);
-
-            var result =
-                    monthContentNamesVaultItems
+            return
+                monthVaultItems
                     .SelectMany(x =>
                         x.VaultItems
                         .AsParallel()
@@ -164,8 +162,11 @@ namespace Sembium.ContentStorage.Common
                         .Select(y => y.ContentName)
                         .UniqueOnOrdered()
                     );
+        }
 
-            return result;
+        public IEnumerable<string> GetChronologicallyOrderedContentNames(string contentsContainerName, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth, CancellationToken cancellationToken)
+        {
+            return GetChronologicallyOrderedContentNames(GetMonthVaultItems(contentsContainerName, beforeMonth, afterMonth), cancellationToken);
         }
 
         private IEnumerable<string> GetContentNamesVaultItemLines(IContentNamesVaultItem contentNamesVaultItem, CancellationToken cancellationToken)
