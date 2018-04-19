@@ -687,6 +687,7 @@ namespace Sembium.ContentStorage.Service
 
         public async Task CompactContentNamesAsync(CancellationToken cancellationToken)
         {
+            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin);
             await _committedContentNamesRepository.CompactAsync(_containerName, cancellationToken);
         }
     }
