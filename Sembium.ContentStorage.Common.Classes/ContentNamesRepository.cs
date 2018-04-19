@@ -145,7 +145,9 @@ namespace Sembium.ContentStorage.Common
             var result =
                     monthContentNamesVaultItems
                     .SelectMany(x =>
-                        x.SelectMany(y => GetContentNames(y.ContentNamesVaultItem, cancellationToken))
+                        x
+                        .AsParallel()
+                        .SelectMany(y => GetContentNames(y.ContentNamesVaultItem, cancellationToken))
                         .Select(y => new { ContentName = y, ContentIdentifier = _contentNameProvider.GetContentIdentifier(y) })
                         .OrderBy(y => y.ContentIdentifier.ModifiedMoment)
                         .ThenBy(y => y.ContentIdentifier.Guid)
