@@ -125,9 +125,9 @@ namespace Sembium.ContentStorage.Common
             return result;
         }
 
-        public IEnumerable<string> GetChronologicallyOrderedContentNames(string contentsContainerName, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth, CancellationToken cancellationToken)
+        private IOrderedEnumerable<(DateTimeOffset Month, IEnumerable<IContentNamesVaultItem> VaultItems)> GetMonthVaultItems(string contentsContainerName, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth)
         {
-            var contentNamesVaultItems = 
+            var contentNamesVaultItems =
                     _contentNamesVault.GetItems(contentsContainerName, "")
                     .Select(x => new { ContentNamesVaultItem = x, ContentsMonth = GetContentsMonth(x.Name) });
 
@@ -141,14 +141,23 @@ namespace Sembium.ContentStorage.Common
                 contentNamesVaultItems = contentNamesVaultItems.Where(x => x.ContentsMonth > afterMonth.Value);
             }
 
-            var monthContentNamesVaultItems = contentNamesVaultItems.GroupBy(x => x.ContentsMonth).OrderBy(x => x.Key);
+            return
+                contentNamesVaultItems
+                .GroupBy(x => x.ContentsMonth)
+                .Select(x => (Month: x.Key, VaultItems: x.Select(y => y.ContentNamesVaultItem)))
+                .OrderBy(x => x.Month);
+        }
+
+        public IEnumerable<string> GetChronologicallyOrderedContentNames(string contentsContainerName, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth, CancellationToken cancellationToken)
+        {
+            var monthContentNamesVaultItems = GetMonthVaultItems(contentsContainerName, beforeMonth, afterMonth);
 
             var result =
                     monthContentNamesVaultItems
                     .SelectMany(x =>
-                        x
+                        x.VaultItems
                         .AsParallel()
-                        .SelectMany(y => GetContentNames(y.ContentNamesVaultItem, cancellationToken))
+                        .SelectMany(y => GetContentNames(y, cancellationToken))
                         .Select(y => new { ContentName = y, ContentIdentifier = _contentNameProvider.GetContentIdentifier(y) })
                         .OrderBy(y => y.ContentIdentifier.ModifiedMoment)
                         .ThenBy(y => y.ContentIdentifier.Guid)
