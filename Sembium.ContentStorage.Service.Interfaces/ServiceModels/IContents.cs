@@ -11,23 +11,6 @@ namespace Sembium.ContentStorage.Service.ServiceModels
 {
     public interface IContents
     {
-        IEnumerable<IUser> GetUsers(string authenticationToken);
-        void AddAdmin(string userName, string userAuthenticationToken, string authenticationToken);
-        void AddReplicator(string userName, string userAuthenticationToken, string containerName, string authenticationToken);
-        void AddBackupOperator(string userName, string userAuthenticationToken, string containerName, string authenticationToken);
-        void AddOperator(string userName, string userAuthenticationToken, string containerName, string authenticationToken);
-        void DeleteUser(string userAuthenticationToken, string authenticationToken);
-
-        IEnumerable<string> GetContainerNames(string authenticationToken);
-        void CreateContainer(string containerName, string authenticationToken);
-        Task<string> MaintainContainerAsync(string containerName, string authenticationToken, CancellationToken cancellationToken);
-        Task CompactContainerContentNamesAsync(string containerName, string authenticationToken, CancellationToken cancellationToken);
-        IEnumerable<IContainerState> GetContainerStates(string authenticationToken);
-        IEnumerable<string> GetReadOnlyContainerNames(string authenticationToken);
-        void SetContainerReadOnlyState(string containerName, bool readOnly, string authenticationToken);
-
-        IEnumerable<string> Maintain(string authenticationToken, CancellationToken cancellationToken);
-
         IDocumentIDUploadInfo GetIDUploadInfoOrDocumentID(string containerName, string hash, string extention, string authenticationToken);
         IIDUploadInfo GetIDUploadInfo(string containerName, string contentID, string authenticationToken);
         
@@ -39,11 +22,6 @@ namespace Sembium.ContentStorage.Service.ServiceModels
         IEnumerable<string> GetContentIDs(string containerName, DateTimeOffset afterMoment, string authenticationToken);
         int GetContentCount(string containerName, string authenticationToken);
         string GetContentsHash(string containerName, DateTimeOffset beforeMoment, string authenticationToken);
-
-        IEnumerable<string> GetContainerReadOnlySubcontainerNames(string containerName, string authenticationToken);
-        void AddContainerReadOnlySubcontainer(string containerName, string subcontainerName, string authenticationToken);
-        void RemoveContainerReadOnlySubcontainer(string containerName, string subcontainerName, string authenticationToken);
-
 
         // multipart upload routines
 

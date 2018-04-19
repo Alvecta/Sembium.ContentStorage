@@ -85,6 +85,8 @@ namespace Sembium.ContentStorage.Service
                 .Named<IDocumentIdentifierVersionSerializer>("DocumentIdentifierVersionSerializer1")   // not sure if 'named' is appropriate
                 .As<IDocumentIdentifierVersionSerializer>();
 
+            builder.RegisterType<ServiceModels.Users>().As<ServiceModels.IUsers>();
+            builder.RegisterType<ServiceModels.System>().As<ServiceModels.ISystem>();
             builder.RegisterType<ServiceModels.Contents>().As<ServiceModels.IContents>();
         }
     }
