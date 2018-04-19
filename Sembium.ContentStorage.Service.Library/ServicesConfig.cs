@@ -12,6 +12,7 @@ namespace Sembium.ContentStorage.Service.Library
     {
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            Sembium.ContentStorage.Common.ServicesConfig.ConfigureServices(services, configuration);
             Sembium.ContentStorage.Storage.AmazonS3.ServicesConfig.ConfigureServices(services, configuration);
         }
 

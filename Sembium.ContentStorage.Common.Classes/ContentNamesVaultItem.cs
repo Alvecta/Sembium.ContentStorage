@@ -1,4 +1,5 @@
-﻿using Sembium.ContentStorage.Storage.Hosting;
+﻿using Microsoft.Extensions.Options;
+using Sembium.ContentStorage.Storage.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,16 +10,20 @@ namespace Sembium.ContentStorage.Common
     public class ContentNamesVaultItem : IContentNamesVaultItem
     {
         private readonly IContent _content;
+        private readonly ContentNamesRepositorySettings _contentNamesRepositorySettings;
 
         public string Name { get; }
 
         private readonly bool _isNew;
 
-        public ContentNamesVaultItem(IContent content, string name, bool isNew)
+        public ContentNamesVaultItem(IContent content, string name, bool isNew,
+            IOptions<ContentNamesRepositorySettings> contentNamesRepositorySettings)
         {
             _content = content;
             Name = name;
             _isNew = isNew;
+
+            _contentNamesRepositorySettings = contentNamesRepositorySettings.Value;
         }
 
         public void Append(Stream stream)
@@ -38,7 +43,7 @@ namespace Sembium.ContentStorage.Common
 
         public bool CanAppend()
         {
-            return _content.GetSize() < 512 * 1024;  // todo: config
+            return (_content.GetSize() < _contentNamesRepositorySettings.MaxMonthVaultItemSize);
         }
 
         public Stream OpenReadStream()

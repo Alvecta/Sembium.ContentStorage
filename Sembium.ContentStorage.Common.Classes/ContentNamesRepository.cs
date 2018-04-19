@@ -1,4 +1,5 @@
-﻿using Sembium.ContentStorage.Storage.Tools;
+﻿using Microsoft.Extensions.Options;
+using Sembium.ContentStorage.Storage.Tools;
 using Sembium.ContentStorage.Utils;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,18 @@ namespace Sembium.ContentStorage.Common
 {
     public class ContentNamesRepository : IContentNamesRepository
     {
-        private readonly IConfigurationSettings _configurationSettings;
+        private readonly ContentNamesRepositorySettings _contentNamesRepositorySettings;
         private readonly IContentNameProvider _contentNameProvider;
         private readonly IContentMonthProvider _contentMonthProvider;
         private readonly IContentNamesVault _contentNamesVault;
 
         public ContentNamesRepository(
-            IConfigurationSettings configurationSettings,
+            IOptions<ContentNamesRepositorySettings> contentNamesRepositorySettings,
             IContentNameProvider contentNameProvider,
             IContentMonthProvider contentMonthProvider,
             IContentNamesVault contentNamesVault)
         {
-            _configurationSettings = configurationSettings;
+            _contentNamesRepositorySettings = contentNamesRepositorySettings.Value;
             _contentNameProvider = contentNameProvider;
             _contentMonthProvider = contentMonthProvider;
             _contentNamesVault = contentNamesVault;
@@ -49,7 +50,7 @@ namespace Sembium.ContentStorage.Common
                     .Where(x => x.CanAppend())
                     .ToList();
 
-            if (availableContentNamesVaultItems.Count() < 5)  // todo: config
+            if (availableContentNamesVaultItems.Count() < _contentNamesRepositorySettings.ActiveMonthVaultItemCount)  // todo: config
             {
                 return _contentNamesVault.GetNewItem(contentsContainerName, GenerateContentNamesVaultItemName(prefix));
             }
