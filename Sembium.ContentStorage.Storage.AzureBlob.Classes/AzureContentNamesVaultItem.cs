@@ -46,5 +46,10 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
         {
             await _blob.DeleteAsync();
         }
+
+        public void LoadFromStream(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

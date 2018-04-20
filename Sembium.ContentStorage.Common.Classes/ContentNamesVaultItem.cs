@@ -28,21 +28,6 @@ namespace Sembium.ContentStorage.Common
             _contentNamesRepositorySettings = contentNamesRepositorySettings.Value;
         }
 
-        public void Append(Stream stream)
-        {
-            using (var ms = new MemoryStream())
-            {
-                using (var rs = OpenReadStream())
-                {
-                    rs.CopyTo(ms);
-                    stream.CopyTo(ms);
-                }
-
-                ms.Position = 0;
-                _content.LoadFromStream(ms);
-            }
-        }
-
         public bool CanAppend(bool compacting)
         {
             return (_content.GetSize() < (compacting ? _contentNamesRepositorySettings.MaxCompactVaultItemSize : _contentNamesRepositorySettings.MaxActiveVaultItemSize));
@@ -60,9 +45,19 @@ namespace Sembium.ContentStorage.Common
             }
         }
 
+        public void LoadFromStream(Stream stream)
+        {
+            _content.LoadFromStream(stream);
+        }
+
         public async Task DeleteAsync(CancellationToken cancellationToken)
         {
             await (_content as ISystemContent).DeleteAsync(cancellationToken);
+        }
+
+        public void Append(Stream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

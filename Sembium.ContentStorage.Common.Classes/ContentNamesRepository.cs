@@ -42,7 +42,7 @@ namespace Sembium.ContentStorage.Common
 
         private IContentNamesVaultItem GetAppendContentNamesVaultItem(string contentsContainerName, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting)
         {
-            var prefix = contentMonth.ToUniversalTime().ToString("yyyy-MM-");
+            var prefix = MonthToPrefix(contentMonth);
 
             var availableContentNamesVaultItems =
                     _contentNamesVault
@@ -70,8 +70,33 @@ namespace Sembium.ContentStorage.Common
                 stream.Position = 0;
 
                 var contentNamesVaultItem = GetAppendContentNamesVaultItem(contentsContainerName, contentMonth, forbiddenVaultItemNames, compacting);
-                contentNamesVaultItem.Append(stream);
+
+                AppendToVaultItem(contentNamesVaultItem, contentsContainerName, contentMonth, stream);
             }
+        }
+
+        private void AppendToVaultItem(IContentNamesVaultItem contentNamesVaultItem, string contentsContainerName, DateTimeOffset contentMonth, MemoryStream stream)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using (var rs = contentNamesVaultItem.OpenReadStream())
+                {
+                    rs.CopyTo(ms);
+                    stream.CopyTo(ms);
+                }
+
+                ms.Position = 0;
+
+                var prefix = MonthToPrefix(contentMonth);
+                var newContentNamesVaultItem = _contentNamesVault.GetNewItem(contentsContainerName, GenerateContentNamesVaultItemName(prefix));
+
+                newContentNamesVaultItem.LoadFromStream(ms);
+            }
+        }
+
+        private string MonthToPrefix(DateTimeOffset month)
+        {
+            return month.ToUniversalTime().ToString("yyyy-MM-");
         }
 
         private int AddContents(string contentsContainerName, IEnumerable<string> contentNames, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting, CancellationToken cancellationToken)
@@ -226,8 +251,16 @@ namespace Sembium.ContentStorage.Common
 
         private async Task DeleteVaultItems(IEnumerable<IContentNamesVaultItem> vaultItems, CancellationToken cancellationToken)
         {
-            var tasks = vaultItems.Select(x => x.DeleteAsync(cancellationToken));
-            await Task.WhenAll(tasks);
+            var tasks = vaultItems.AsParallel().Select(x => x.DeleteAsync(cancellationToken));
+
+            try
+            {
+                await Task.WhenAll(tasks);
+            }
+            catch
+            {
+                // do nothing, delete tomorrow
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Sembium.ContentStorage.Common
     {
         string Name { get; }
         Stream OpenReadStream();
+        void LoadFromStream(Stream stream);
         bool CanAppend(bool compacting);
         void Append(Stream stream);
         Task DeleteAsync(CancellationToken cancellationToken);
