@@ -108,22 +108,23 @@ namespace Sembium.ContentStorage.Common
             AddContents(contentsContainerName, new[] { contentName }, _contentMonthProvider.GetContentMonth(contentDate), null, false, cancellationToken);
         }
 
+        private async Task<int> AddContentsAsync(string contentsContainerName, IEnumerable<string> contentNames, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting, CancellationToken cancellationToken)
+        {
+            return await Task.Run(() => AddContents(contentsContainerName, contentNames, contentMonth, forbiddenVaultItemNames, compacting, cancellationToken));
+        }
+
         public int AddContents(string contentsContainerName, IEnumerable<KeyValuePair<string, DateTimeOffset>> contents, CancellationToken cancellationToken)
         {
-            var result = 0;
-
-            var monthContents = 
+            var monthContents =
                     contents
                     .OrderBy(x => x.Value)
                     .Select(x => new { ContentName = x.Key, ContentMonth = _contentMonthProvider.GetContentMonth(x.Value) })
                     .GroupBy(x => x.ContentMonth);
 
-            foreach (var month in monthContents)
-            {
-                result += AddContents(contentsContainerName, month.Select(y => y.ContentName), month.Key, null, false, cancellationToken);  // todo: parallel tasksd
-            }
+            var tasks = monthContents.AsParallel().Select(month => AddContentsAsync(contentsContainerName, month.Select(y => y.ContentName), month.Key, null, false, cancellationToken)).ToArray();
+            Task.WhenAll(tasks).Wait();
 
-            return result;
+            return tasks.Sum(x => x.Result);
         }
 
         private IOrderedEnumerable<(DateTimeOffset Month, IEnumerable<IContentNamesVaultItem> VaultItems)> GetMonthVaultItems(string contentsContainerName, DateTimeOffset? beforeMonth, DateTimeOffset? afterMonth)
