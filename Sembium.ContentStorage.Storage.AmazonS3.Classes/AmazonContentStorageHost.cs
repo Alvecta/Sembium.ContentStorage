@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Sembium.ContentStorage.Common;
+using Sembium.ContentStorage.Common.Utils;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.HostingResults.Factories;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sembium.ContentStorage.Storage.HostingResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Common
 {
-    public class Sha1Provider : IHashProvider
+    public class Sha1HashProvider : IHashProvider
     {
         public byte[] GetHash(byte[] data)
         {
@@ -40,6 +41,15 @@ namespace Sembium.ContentStorage.Common
 
                 return (sha1.Hash, count);
             }
+        }
+
+        public (byte[] Hash, int Count) GetHashAndCount(IEnumerable<IMonthHashAndCount> monthHashAndCounts)
+        {
+            monthHashAndCounts = monthHashAndCounts.ToList();  // enumerate once
+
+            var hashResult = GetHashAndCount(monthHashAndCounts.Select(x => x.Hash));
+
+            return (hashResult.Hash, monthHashAndCounts.Sum(x => x.Count));
         }
     }
 }

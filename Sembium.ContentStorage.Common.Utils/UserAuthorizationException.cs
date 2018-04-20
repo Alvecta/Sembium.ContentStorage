@@ -1,11 +1,11 @@
-﻿using Sembium.ContentStorage.Common;
+﻿using Sembium.ContentStorage.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Service.Security
+namespace Sembium.ContentStorage.Common.Utils
 {
     public class UserAuthorizationException : UserException
     {

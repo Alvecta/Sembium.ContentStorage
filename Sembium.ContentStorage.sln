@@ -109,9 +109,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Tran
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{D76BD99D-EED6-4EA9-8353-3C4E439CB8CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sembium.ContentStorage.Utils", "Sembium.ContentStorage.Utils\Sembium.ContentStorage.Utils.csproj", "{C118D092-351D-413E-974C-8BBE799E338E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Utils", "Sembium.ContentStorage.Utils\Sembium.ContentStorage.Utils.csproj", "{C118D092-351D-413E-974C-8BBE799E338E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sembium.ContentStorage.Utils.AspNetCore", "Sembium.ContentStorage.Utils.AspNetCore\Sembium.ContentStorage.Utils.AspNetCore.csproj", "{0008EE1D-2B3C-42BF-9E37-E509BBD480EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Utils.AspNetCore", "Sembium.ContentStorage.Utils.AspNetCore\Sembium.ContentStorage.Utils.AspNetCore.csproj", "{0008EE1D-2B3C-42BF-9E37-E509BBD480EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sembium.ContentStorage.Common.Utils", "Sembium.ContentStorage.Common.Utils\Sembium.ContentStorage.Common.Utils.csproj", "{4CDCF0F4-210D-40BA-95CB-E2D22B4594F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -267,6 +269,10 @@ Global
 		{0008EE1D-2B3C-42BF-9E37-E509BBD480EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0008EE1D-2B3C-42BF-9E37-E509BBD480EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0008EE1D-2B3C-42BF-9E37-E509BBD480EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CDCF0F4-210D-40BA-95CB-E2D22B4594F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CDCF0F4-210D-40BA-95CB-E2D22B4594F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CDCF0F4-210D-40BA-95CB-E2D22B4594F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CDCF0F4-210D-40BA-95CB-E2D22B4594F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -319,6 +325,7 @@ Global
 		{8B09FAC4-E2AB-4377-8D42-D22FF28DD99E} = {A6472EBD-104D-4354-992C-58EA3F8DF047}
 		{C118D092-351D-413E-974C-8BBE799E338E} = {D76BD99D-EED6-4EA9-8353-3C4E439CB8CF}
 		{0008EE1D-2B3C-42BF-9E37-E509BBD480EA} = {D76BD99D-EED6-4EA9-8353-3C4E439CB8CF}
+		{4CDCF0F4-210D-40BA-95CB-E2D22B4594F0} = {37051BCC-71ED-48A5-B35A-09629FB10274}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0F1AD2B-12B9-4C4D-AD50-BA9A19FA9B71}

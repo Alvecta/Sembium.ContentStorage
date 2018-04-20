@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sembium.ContentStorage.Storage.HostingResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace Sembium.ContentStorage.Common
         byte[] GetHash(byte[] data);
         byte[] GetHash(System.IO.Stream stream);
         (byte[] Hash, int Count) GetHashAndCount(IEnumerable<byte[]> datas);
+        (byte[] Hash, int Count) GetHashAndCount(IEnumerable<IMonthHashAndCount> monthHashAndCounts);
     }
 }
