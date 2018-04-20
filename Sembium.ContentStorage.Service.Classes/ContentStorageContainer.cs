@@ -592,7 +592,7 @@ namespace Sembium.ContentStorage.Service
 
         public async Task<string> MaintainAsync(string prefix, CancellationToken cancellationToken)
         {
-            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin);
+            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.Maintainer);
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
@@ -600,7 +600,7 @@ namespace Sembium.ContentStorage.Service
 
             watch.Stop();
 
-            return $"Persisted {count} committed content names in the {_containerName} container. Elapsed time: {watch.Elapsed.ToString()}";
+            return $"Persisted {count} committed content names in the '{_containerName}' container. Elapsed time: {watch.Elapsed.ToString()}";
         }
 
         private async Task<int> SafeMaintainAsync(string prefix, CancellationToken cancellationToken)
@@ -688,7 +688,7 @@ namespace Sembium.ContentStorage.Service
 
         public async Task CompactContentNamesAsync(CancellationToken cancellationToken)
         {
-            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin);
+            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.Maintainer);
             await _committedContentNamesRepository.CompactAsync(_containerName, cancellationToken);
         }
     }

@@ -42,6 +42,13 @@ namespace Sembium.ContentStorage.Service
             AddUser(userName, authenticationToken, "*", Security.Roles.Admin, Security.Roles.Replicator, Security.Roles.Backup, Security.Roles.Operator);
         }
 
+        public void AddMaintainer(string userName, string authenticationToken)
+        {
+            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin);
+
+            AddUser(userName, authenticationToken, "*", Security.Roles.Maintainer);
+        }
+
         public void AddReplicator(string userName, string authenticationToken, string containerName)
         {
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin);

@@ -59,7 +59,7 @@ namespace Sembium.ContentStorage.Service
 
         public IEnumerable<string> GetContainerNames()
         {
-            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin);
+            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.Maintainer);
 
             return _contentStorageHost.GetContainerNames().Where(x => !IsSystemContainer(x));
         }
@@ -85,7 +85,7 @@ namespace Sembium.ContentStorage.Service
 
         public IEnumerable<string> Maintain(CancellationToken cancellationToken)
         {
-            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin);
+            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.Maintainer);
 
             foreach (var containerName in GetContainerNames())
             {

@@ -10,6 +10,7 @@ namespace Sembium.ContentStorage.Service.Security
     {
         public const string System = "system";
         public const string Admin = "admin";
+        public const string Maintainer = "maintainer";
         public const string Backup = "backup";
         public const string Operator = "operator";
         public const string Replicator = "replicator";

@@ -61,6 +61,20 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         }
 
         /// <summary>
+        /// Adds new maintainer user
+        /// </summary>
+        /// <param name="userName">Maintainer user name</param>
+        /// <param name="userAuth">Authentication token for the user</param>
+        /// <param name="auth">Authentication token for the request</param>
+        /// <returns>HTTP response</returns>
+        [Route("maintainers")]
+        [HttpPut]
+        public void AddMaintainer([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string auth)
+        {
+            _users.AddMaintainer(userName, userAuth, auth);
+        }
+
+        /// <summary>
         /// Adds new replicator user
         /// </summary>
         /// <param name="userName">Replicator user name</param>

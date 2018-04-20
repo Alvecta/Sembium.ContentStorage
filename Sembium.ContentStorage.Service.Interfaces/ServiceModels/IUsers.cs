@@ -13,6 +13,7 @@ namespace Sembium.ContentStorage.Service.ServiceModels
     {
         IEnumerable<IUser> GetUsers(string authenticationToken);
         void AddAdmin(string userName, string userAuthenticationToken, string authenticationToken);
+        void AddMaintainer(string userName, string userAuthenticationToken, string authenticationToken);
         void AddReplicator(string userName, string userAuthenticationToken, string containerName, string authenticationToken);
         void AddBackupOperator(string userName, string userAuthenticationToken, string containerName, string authenticationToken);
         void AddOperator(string userName, string userAuthenticationToken, string containerName, string authenticationToken);

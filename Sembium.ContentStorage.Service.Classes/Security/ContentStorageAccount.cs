@@ -29,14 +29,14 @@ namespace Sembium.ContentStorage.Service.Security
 
         public IContentStorageContainer GetContentStorageContainer()
         {
-            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.Replicator, Security.Roles.Operator, Security.Roles.Backup);
+            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.Maintainer, Security.Roles.Replicator, Security.Roles.Operator, Security.Roles.Backup);
 
             return _contentStorageContainerFactory(((IContentStorageIdentity)Thread.CurrentPrincipal.Identity).ContainerName);
         }
 
         public IContentStorage GetContentStorage()
         {
-            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.System, Security.Roles.Replicator);
+            _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.Maintainer, Security.Roles.System, Security.Roles.Replicator);
 
             return _contentStorageFactory();
         }

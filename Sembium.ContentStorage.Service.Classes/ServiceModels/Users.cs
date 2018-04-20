@@ -36,6 +36,14 @@ namespace Sembium.ContentStorage.Service.ServiceModels
             contentStorageUsersRepository.AddAdmin(userName, userAuthenticationToken);
         }
 
+        public void AddMaintainer(string userName, string userAuthenticationToken, string authenticationToken)
+        {
+            var account = _contentStorageAccountProvider.GetAccount(authenticationToken, null);
+            var contentStorageUsersRepository = account.GetContentStorageUsersRepository();
+
+            contentStorageUsersRepository.AddMaintainer(userName, userAuthenticationToken);
+        }
+
         public void AddReplicator(string userName, string userAuthenticationToken, string containerName, string authenticationToken)
         {
             var account = _contentStorageAccountProvider.GetAccount(authenticationToken, null);
