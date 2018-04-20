@@ -71,11 +71,11 @@ namespace Sembium.ContentStorage.Common
 
                 var contentNamesVaultItem = GetAppendContentNamesVaultItem(contentsContainerName, contentMonth, forbiddenVaultItemNames, compacting);
 
-                AppendToVaultItem(contentNamesVaultItem, contentsContainerName, contentMonth, stream);
+                AppendToVaultItem(contentNamesVaultItem, contentsContainerName, contentMonth, stream, cancellationToken);
             }
         }
 
-        private void AppendToVaultItem(IContentNamesVaultItem contentNamesVaultItem, string contentsContainerName, DateTimeOffset contentMonth, MemoryStream stream)
+        private void AppendToVaultItem(IContentNamesVaultItem contentNamesVaultItem, string contentsContainerName, DateTimeOffset contentMonth, MemoryStream stream, CancellationToken cancellationToken)
         {
             using (var ms = new MemoryStream())
             {
@@ -91,6 +91,15 @@ namespace Sembium.ContentStorage.Common
                 var newContentNamesVaultItem = _contentNamesVault.GetNewItem(contentsContainerName, GenerateContentNamesVaultItemName(prefix));
 
                 newContentNamesVaultItem.LoadFromStream(ms);
+
+                try
+                {
+                    contentNamesVaultItem.DeleteAsync(cancellationToken).Wait();
+                }
+                catch
+                {
+                    // do nothing, duplicates are not a problem, delete on compact
+                }
             }
         }
 
