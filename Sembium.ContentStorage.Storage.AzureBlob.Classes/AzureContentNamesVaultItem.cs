@@ -26,7 +26,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             return _blob.OpenReadAsync().Result;
         }
 
-        public bool CanAppend()
+        public bool CanAppend(bool compacting)
         {
             _blob.FetchAttributesAsync().Wait();
             return (_blob.Properties.AppendBlobCommittedBlockCount < 49000);

@@ -43,9 +43,9 @@ namespace Sembium.ContentStorage.Common
             }
         }
 
-        public bool CanAppend()
+        public bool CanAppend(bool compacting)
         {
-            return (_content.GetSize() < _contentNamesRepositorySettings.MaxMonthVaultItemSize);
+            return (_content.GetSize() < (compacting ? _contentNamesRepositorySettings.MaxCompactVaultItemSize : _contentNamesRepositorySettings.MaxActiveVaultItemSize));
         }
 
         public Stream OpenReadStream()

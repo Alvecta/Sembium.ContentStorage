@@ -6,7 +6,8 @@ namespace Sembium.ContentStorage.Common
 {
     public class ContentNamesRepositorySettings
     {
-        public int ActiveMonthVaultItemCount { get; set; }
-        public long MaxMonthVaultItemSize { get; set; }
+        public int MonthActiveVaultItemCount { get; set; }
+        public long MaxActiveVaultItemSize { get; set; }
+        public long MaxCompactVaultItemSize { get; set; }
     }
 }

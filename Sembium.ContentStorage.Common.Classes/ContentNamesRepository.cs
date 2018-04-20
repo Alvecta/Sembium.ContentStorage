@@ -40,7 +40,7 @@ namespace Sembium.ContentStorage.Common
             return prefix + GenerateGuid() + ".txt";
         }
 
-        private IContentNamesVaultItem GetAppendContentNamesVaultItem(string contentsContainerName, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames)
+        private IContentNamesVaultItem GetAppendContentNamesVaultItem(string contentsContainerName, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting)
         {
             var prefix = contentMonth.ToUniversalTime().ToString("yyyy-MM-");
 
@@ -48,10 +48,10 @@ namespace Sembium.ContentStorage.Common
                     _contentNamesVault
                     .GetItems(contentsContainerName, prefix)
                     .Where(x => (forbiddenVaultItemNames == null) || (!forbiddenVaultItemNames.Contains(x.Name)))
-                    .Where(x => x.CanAppend())
+                    .Where(x => x.CanAppend(compacting))
                     .ToList();
 
-            if (availableContentNamesVaultItems.Count() < _contentNamesRepositorySettings.ActiveMonthVaultItemCount)  // todo: config
+            if (availableContentNamesVaultItems.Count() < (compacting ? 1 : _contentNamesRepositorySettings.MonthActiveVaultItemCount))
             {
                 return _contentNamesVault.GetNewItem(contentsContainerName, GenerateContentNamesVaultItemName(prefix));
             }
@@ -61,7 +61,7 @@ namespace Sembium.ContentStorage.Common
             }
         }
 
-        private void AddBlock(string contentsContainerName, string blockText, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, CancellationToken cancellationToken)
+        private void AddBlock(string contentsContainerName, string blockText, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting, CancellationToken cancellationToken)
         {
             using (var stream = new MemoryStream())
             {
@@ -69,12 +69,12 @@ namespace Sembium.ContentStorage.Common
                 stream.Write(bytes, 0, bytes.Length);
                 stream.Position = 0;
 
-                var contentNamesVaultItem = GetAppendContentNamesVaultItem(contentsContainerName, contentMonth, forbiddenVaultItemNames);
+                var contentNamesVaultItem = GetAppendContentNamesVaultItem(contentsContainerName, contentMonth, forbiddenVaultItemNames, compacting);
                 contentNamesVaultItem.Append(stream);
             }
         }
 
-        private int AddContents(string contentsContainerName, IEnumerable<string> contentNames, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, CancellationToken cancellationToken)
+        private int AddContents(string contentsContainerName, IEnumerable<string> contentNames, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting, CancellationToken cancellationToken)
         {
             var result = 0;
             string text = "";
@@ -82,9 +82,9 @@ namespace Sembium.ContentStorage.Common
             {
                 var newText = text + contentName + Environment.NewLine;
 
-                if (Encoding.UTF8.GetByteCount(newText) > 4 * 1024 * 1024)
+                if (Encoding.UTF8.GetByteCount(newText) > 4 * 1024 * 1024)  // todo: config???
                 {
-                    AddBlock(contentsContainerName, text, contentMonth, forbiddenVaultItemNames, cancellationToken);
+                    AddBlock(contentsContainerName, text, contentMonth, forbiddenVaultItemNames, compacting, cancellationToken);
                     text = contentName + Environment.NewLine;
                 }
                 else
@@ -97,7 +97,7 @@ namespace Sembium.ContentStorage.Common
 
             if (text != "")
             {
-                AddBlock(contentsContainerName, text, contentMonth, forbiddenVaultItemNames, cancellationToken);
+                AddBlock(contentsContainerName, text, contentMonth, forbiddenVaultItemNames, compacting, cancellationToken);
             }
 
             return result;
@@ -105,7 +105,7 @@ namespace Sembium.ContentStorage.Common
 
         public void AddContent(string contentsContainerName, string contentName, DateTimeOffset contentDate, CancellationToken cancellationToken)
         {
-            AddContents(contentsContainerName, new[] { contentName }, _contentMonthProvider.GetContentMonth(contentDate), null, cancellationToken);
+            AddContents(contentsContainerName, new[] { contentName }, _contentMonthProvider.GetContentMonth(contentDate), null, false, cancellationToken);
         }
 
         public int AddContents(string contentsContainerName, IEnumerable<KeyValuePair<string, DateTimeOffset>> contents, CancellationToken cancellationToken)
@@ -120,7 +120,7 @@ namespace Sembium.ContentStorage.Common
 
             foreach (var month in monthContents)
             {
-                result += AddContents(contentsContainerName, month.Select(y => y.ContentName), month.Key, null, cancellationToken);  // todo: parallel tasksd
+                result += AddContents(contentsContainerName, month.Select(y => y.ContentName), month.Key, null, false, cancellationToken);  // todo: parallel tasksd
             }
 
             return result;
@@ -211,12 +211,15 @@ namespace Sembium.ContentStorage.Common
 
             foreach (var x in monthVaultItems)
             {
-                var vaultItemNames = x.VaultItems.Select(y => y.Name);
-                var monthContentNames = GetChronologicallyOrderedContentNames(x.VaultItems, null, cancellationToken);
+                if (x.VaultItems.Where(y => y.CanAppend(compacting: true)).Count() > 1)
+                {
+                    var vaultItemNames = x.VaultItems.Select(y => y.Name);
+                    var monthContentNames = GetChronologicallyOrderedContentNames(x.VaultItems, null, cancellationToken);
 
-                AddContents(containerName, monthContentNames, x.Month, vaultItemNames, cancellationToken);
+                    AddContents(containerName, monthContentNames, x.Month, vaultItemNames, true, cancellationToken);
 
-                await DeleteVaultItems(x.VaultItems, cancellationToken);
+                    await DeleteVaultItems(x.VaultItems, cancellationToken);
+                }
             }
         }
 
