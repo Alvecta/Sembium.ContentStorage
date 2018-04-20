@@ -6,12 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sembium.ContentStorage.Client.Interfaces\Sembium.ContentStorage.Client.Interfaces.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Common.Classes\Sembium.ContentStorage.Common.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.Classes\Sembium.ContentStorage.Storage.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Utils\Sembium.ContentStorage.Utils.csproj" />

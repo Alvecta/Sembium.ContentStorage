@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Replication.Common.Exceptions
+namespace Sembium.ContentStorage.Replication.Common.Utils
 {
     public class RouteNotSpecifiedException : Exception
     {

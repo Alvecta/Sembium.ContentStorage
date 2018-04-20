@@ -14,6 +14,7 @@ namespace Sembium.ContentStorage.Replication.Common
             builder.RegisterType<Sembium.ContentStorage.Replication.Common.Route.Route>().As<IRoute>();
             builder.RegisterType<Sembium.ContentStorage.Replication.Common.Config.RouteConfig>().As<IRouteConfig>();
             builder.RegisterType<Sembium.ContentStorage.Replication.Common.Config.Config>().As<IConfig>();
+            builder.RegisterType<ConfigResolver>().As<IConfigResolver>();
             builder.RegisterType<Sembium.ContentStorage.Replication.Common.Endpoints.Source.ContentStream>().As<IContentStream>();
             builder.RegisterType<SourceResolverProvider>().As<ISourceResolverProvider>();
             builder.RegisterType<DestinationResolverProvider>().As<IDestinationResolverProvider>();

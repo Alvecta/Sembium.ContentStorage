@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sembium.ContentStorage.Client.Classes\Sembium.ContentStorage.Client.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Common.Classes\Sembium.ContentStorage.Common.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.Classes\Sembium.ContentStorage.Storage.Classes.csproj" />
   </ItemGroup>
 
 </Project>

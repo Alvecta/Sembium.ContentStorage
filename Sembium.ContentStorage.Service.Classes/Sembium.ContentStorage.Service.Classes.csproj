@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Utils\Sembium.ContentStorage.Common.Utils.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Service.Interfaces\Sembium.ContentStorage.Service.Interfaces.csproj" />

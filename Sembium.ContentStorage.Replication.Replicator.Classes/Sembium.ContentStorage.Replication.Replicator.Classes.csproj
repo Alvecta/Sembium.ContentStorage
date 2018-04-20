@@ -6,16 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.0" />
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Utils\Sembium.ContentStorage.Common.Utils.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Replication.Common.Classes\Sembium.ContentStorage.Replication.Common.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.Common.Utils\Sembium.ContentStorage.Replication.Common.Utils.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.ContentStorage.Interfaces\Sembium.ContentStorage.Replication.ContentStorage.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.FileSystem.Interfaces\Sembium.ContentStorage.Replication.FileSystem.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.Replicator.Interfaces\Sembium.ContentStorage.Replication.Replicator.Interfaces.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Utils\Sembium.ContentStorage.Utils.csproj" />
   </ItemGroup>
 
 </Project>

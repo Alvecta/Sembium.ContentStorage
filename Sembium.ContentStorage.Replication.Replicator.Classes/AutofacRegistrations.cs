@@ -14,7 +14,6 @@ namespace Sembium.ContentStorage.Replication.Replicator
             builder.RegisterType<EmptyConfigProvider>().As<IConfigProvider>();
             builder.RegisterType<CommandLineArgsConfigProvider>().As<ICommandLineArgsConfigProvider>();
             builder.RegisterType<FileConfigProvider>().As<IFileConfigProvider>();
-            builder.RegisterType<ConfigResolver>().As<IConfigResolver>();
             builder.RegisterType<UsageHelpProvider>().As<IUsageHelpProvider>();
             builder.RegisterType<FileStoredCompleteMomentProvider>().Named<ICompleteMomentProvider>("base");
             builder.RegisterType<Sembium.ContentStorage.Replication.Replicator.Main.Replicator>().Named<IReplicator>("base");

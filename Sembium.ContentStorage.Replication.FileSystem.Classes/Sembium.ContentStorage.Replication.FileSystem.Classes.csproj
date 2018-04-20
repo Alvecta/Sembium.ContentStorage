@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sembium.ContentStorage.Common.Classes\Sembium.ContentStorage.Common.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.FileSystem.Interfaces\Sembium.ContentStorage.Replication.FileSystem.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Base.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Base.Interfaces.csproj" />
