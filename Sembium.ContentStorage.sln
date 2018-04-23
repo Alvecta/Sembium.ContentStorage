@@ -115,7 +115,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Util
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Common.Utils", "Sembium.ContentStorage.Common.Utils\Sembium.ContentStorage.Common.Utils.csproj", "{4CDCF0F4-210D-40BA-95CB-E2D22B4594F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sembium.ContentStorage.Replication.Common.Utils", "Sembium.ContentStorage.Replication.Common.Utils\Sembium.ContentStorage.Replication.Common.Utils.csproj", "{182A1051-4EB3-4CCF-B1CB-426401B8D336}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Replication.Common.Utils", "Sembium.ContentStorage.Replication.Common.Utils\Sembium.ContentStorage.Replication.Common.Utils.csproj", "{182A1051-4EB3-4CCF-B1CB-426401B8D336}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Service.AmazonLambda", "Sembium.ContentStorage.Service.AmazonLambda\Sembium.ContentStorage.Service.AmazonLambda.csproj", "{610AC9D4-391F-427B-8CAB-6DCE1461F259}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -279,6 +281,10 @@ Global
 		{182A1051-4EB3-4CCF-B1CB-426401B8D336}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{182A1051-4EB3-4CCF-B1CB-426401B8D336}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{182A1051-4EB3-4CCF-B1CB-426401B8D336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{610AC9D4-391F-427B-8CAB-6DCE1461F259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{610AC9D4-391F-427B-8CAB-6DCE1461F259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{610AC9D4-391F-427B-8CAB-6DCE1461F259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{610AC9D4-391F-427B-8CAB-6DCE1461F259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -333,6 +339,7 @@ Global
 		{0008EE1D-2B3C-42BF-9E37-E509BBD480EA} = {D76BD99D-EED6-4EA9-8353-3C4E439CB8CF}
 		{4CDCF0F4-210D-40BA-95CB-E2D22B4594F0} = {37051BCC-71ED-48A5-B35A-09629FB10274}
 		{182A1051-4EB3-4CCF-B1CB-426401B8D336} = {8ABA53F3-717E-4B29-8761-34891EF87DA7}
+		{610AC9D4-391F-427B-8CAB-6DCE1461F259} = {FB22BA67-B117-4A7A-ACF3-18D4FC88EB42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0F1AD2B-12B9-4C4D-AD50-BA9A19FA9B71}
