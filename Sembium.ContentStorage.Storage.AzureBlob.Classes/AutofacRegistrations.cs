@@ -18,7 +18,6 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             {
                 builder.RegisterType<AzureContainer>().As<Sembium.ContentStorage.Storage.Hosting.IContainer>();
                 builder.RegisterType<AzureContent>().As<IContent>();
-                builder.RegisterType<AzureContentsMonthHashRepository>().As<IContentsMonthHashRepository>();
                 builder.RegisterType<AzureContentNamesVault>().As<IContentNamesVault>();
                 builder.RegisterType<AzureContentNamesVaultItem>().As<IAzureContentNamesVaultItem>();
 
