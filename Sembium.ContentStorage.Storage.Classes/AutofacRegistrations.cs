@@ -43,7 +43,7 @@ namespace Sembium.ContentStorage.Storage
             builder.RegisterType<ContentIdentifierSerializer>().As<IContentIdentifierSerializer>();
             builder.RegisterType<ContentIdentifiersProvider>().As<IContentIdentifiersProvider>();
             builder.RegisterType<ContentHashValidator>().As<IContentHashValidator>();
-            builder.RegisterType<EmptyContentsMonthHashRepository>().As<IContentsMonthHashRepository>();
+            builder.RegisterType<ContentsMonthHashRepository>().As<IContentsMonthHashRepository>();
             builder.RegisterType<SystemContainerProvider>().As<ISystemContainerProvider>();
 
             builder.RegisterType<HttpRequestInfo>().As<IHttpRequestInfo>();

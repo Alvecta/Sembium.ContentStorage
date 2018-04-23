@@ -10,6 +10,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Storage.AzureBlob
 {
@@ -118,6 +120,12 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             var hashAndCount = _hashStringProvider.GetStringHashAndCount(parts[1]);
 
             return _monthHashAndCountFactory(month, hashAndCount.Hash, hashAndCount.Count, null);
+        }
+
+        public Task CompactAsync(string containerName, CancellationToken cancellationToken)
+        {
+            // do nothing, data is already compact
+            return Task.CompletedTask;
         }
     }
 }
