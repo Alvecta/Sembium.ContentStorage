@@ -9,11 +9,11 @@ namespace Sembium.ContentStorage.Common
     public class ContentNamesVault : IContentNamesVault
     {
         private readonly ISystemContainerProvider _systemContainerProvider;
-        private readonly IContentNameVaultItemFactory _contentNameVaultItemFactory;
+        private readonly IContentNamesVaultItemFactory _contentNameVaultItemFactory;
 
         public ContentNamesVault(
             ISystemContainerProvider systemContainerProvider,
-            IContentNameVaultItemFactory contentNameVaultItemFactory)
+            IContentNamesVaultItemFactory contentNameVaultItemFactory)
         {
             _systemContainerProvider = systemContainerProvider;
             _contentNameVaultItemFactory = contentNameVaultItemFactory;
