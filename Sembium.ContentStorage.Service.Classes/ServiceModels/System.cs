@@ -100,12 +100,12 @@ namespace Sembium.ContentStorage.Service.ServiceModels
             return contentStorage.Maintain(cancellationToken);
         }
 
-        public async Task CompactContainerContentNamesAsync(string containerName, string authenticationToken, CancellationToken cancellationToken)
+        public async Task CompactContainerAsync(string containerName, string authenticationToken, CancellationToken cancellationToken)
         {
             var account = _contentStorageAccountProvider.GetAccount(authenticationToken, containerName);
             var contentStorageContainer = account.GetContentStorageContainer();
 
-            await contentStorageContainer.CompactContentNamesAsync(cancellationToken);
+            await contentStorageContainer.CompactAsync(cancellationToken);
         }
     }
 }

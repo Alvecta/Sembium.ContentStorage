@@ -68,11 +68,11 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <param name="auth">Authentication token for the request</param>
         /// <param name="cancellationToken">CancellationToken</param>
         /// <returns>HTTP response code</returns>
-        [Route("containers/{containerName}/compactcontentnames")]
+        [Route("containers/{containerName}/compact")]
         [HttpPut]
-        public async Task CompactContainerContentNamesAsync(string containerName, [FromQuery]string auth, CancellationToken cancellationToken)
+        public async Task CompactContainerAsync(string containerName, [FromQuery]string auth, CancellationToken cancellationToken)
         {
-            await _system.CompactContainerContentNamesAsync(containerName, auth, cancellationToken);
+            await _system.CompactContainerAsync(containerName, auth, cancellationToken);
         }
 
         /// <summary>

@@ -687,10 +687,11 @@ namespace Sembium.ContentStorage.Service
             _contentsMonthHashRepository.AddMonthHashAndCounts(_containerName, missingMonthHashAndCounts);
         }
 
-        public async Task CompactContentNamesAsync(CancellationToken cancellationToken)
+        public async Task CompactAsync(CancellationToken cancellationToken)
         {
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Admin, Security.Roles.Maintainer);
             await _committedContentNamesRepository.CompactAsync(_containerName, cancellationToken);
+            await _contentsMonthHashRepository.CompactAsync(_containerName, cancellationToken);
         }
     }
 }

@@ -115,7 +115,7 @@ namespace Sembium.ContentStorage.Storage.Hosting
         public async Task CompactAsync(string containerName, CancellationToken cancellationToken)
         {
             var hashContainer = GetCacheContainer(containerName);
-            var contents = hashContainer.GetContents(null).Select(x => x as ISystemContent);
+            var contents = hashContainer.GetContents(null).Select(x => x as ISystemContent).ToList();  // enumerate once
 
             var monthHashAndCounts = GetMonthHashAndCounts(contents);
 
