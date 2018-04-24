@@ -41,7 +41,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>List of users</returns>
         [Route("")]
         [HttpGet]
-        public IEnumerable<IUser> GetUsers([FromQuery]string auth)
+        public IEnumerable<IUser> GetUsers([FromQuery]string auth, [FromHeader]string authenticationKey)
         {
             return _users.GetUsers(auth);
         }
@@ -55,9 +55,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response code</returns>
         [Route("admins")]
         [HttpPut]
-        public void AddAdmin([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string auth)
+        public void AddAdmin([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _users.AddAdmin(userName, userAuth, auth);
+            _users.AddAdmin(userName, userAuth, auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response</returns>
         [Route("maintainers")]
         [HttpPut]
-        public void AddMaintainer([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string auth)
+        public void AddMaintainer([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _users.AddMaintainer(userName, userAuth, auth);
+            _users.AddMaintainer(userName, userAuth, auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -84,9 +84,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response</returns>
         [Route("replicators")]
         [HttpPut]
-        public void AddReplicator([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string container, [FromQuery]string auth)
+        public void AddReplicator([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string container, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _users.AddReplicator(userName, userAuth, FixContainerName(container), auth);
+            _users.AddReplicator(userName, userAuth, FixContainerName(container), auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -99,9 +99,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response</returns>
         [Route("operators")]
         [HttpPut]
-        public void AddOperator([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string container, [FromQuery]string auth)
+        public void AddOperator([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string container, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _users.AddOperator(userName, userAuth, FixContainerName(container), auth);
+            _users.AddOperator(userName, userAuth, FixContainerName(container), auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response</returns>
         [Route("backupops")]
         [HttpPut]
-        public void AddBackupOperator([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string container, [FromQuery]string auth)
+        public void AddBackupOperator([FromQuery]string userName, [FromQuery]string userAuth, [FromQuery]string container, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _users.AddBackupOperator(userName, userAuth, FixContainerName(container), auth);
+            _users.AddBackupOperator(userName, userAuth, FixContainerName(container), auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response</returns>
         [Route("")]
         [HttpDelete]
-        public void DeleteUser([FromQuery]string userAuth, [FromQuery]string auth)
+        public void DeleteUser([FromQuery]string userAuth, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _users.DeleteUser(userAuth, auth);
+            _users.DeleteUser(userAuth, auth ?? authenticationKey);
         }
     }
 }

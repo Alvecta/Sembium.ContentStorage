@@ -28,7 +28,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
 
         [Route("containers")]
         [HttpGet]
-        public IEnumerable<string> GetContainerNames([FromQuery]string auth)
+        public IEnumerable<string> GetContainerNames([FromQuery]string auth, [FromHeader]string authenticationKey)
         {
             return _system.GetContainerNames(auth);
         }
@@ -41,9 +41,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response code</returns>
         [Route("containers/add/{containerName}")]
         [HttpPut]
-        public void CreateContainer(string containerName, [FromQuery]string auth)
+        public void CreateContainer(string containerName, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _system.CreateContainer(containerName, auth);
+            _system.CreateContainer(containerName, auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response code</returns>
         [Route("containers/{containerName}/maintain")]
         [HttpPut]
-        public async Task<string> MaintainContainerAsync(string containerName, [FromQuery]string prefix, [FromQuery]string auth, CancellationToken cancellationToken)
+        public async Task<string> MaintainContainerAsync(string containerName, [FromQuery]string prefix, [FromQuery]string auth, [FromHeader]string authenticationKey, CancellationToken cancellationToken)
         {
-            return await _system.MaintainContainerAsync(containerName, prefix, auth, cancellationToken);
+            return await _system.MaintainContainerAsync(containerName, prefix, auth ?? authenticationKey, cancellationToken);
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response code</returns>
         [Route("containers/{containerName}/compact")]
         [HttpPut]
-        public async Task CompactContainerAsync(string containerName, [FromQuery]string auth, CancellationToken cancellationToken)
+        public async Task CompactContainerAsync(string containerName, [FromQuery]string auth, [FromHeader]string authenticationKey, CancellationToken cancellationToken)
         {
-            await _system.CompactContainerAsync(containerName, auth, cancellationToken);
+            await _system.CompactContainerAsync(containerName, auth ?? authenticationKey, cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response code</returns>
         [Route("maintain")]
         [HttpPut]
-        public IActionResult Maintain([FromQuery]string auth, CancellationToken cancellationToken)
+        public IActionResult Maintain([FromQuery]string auth, [FromHeader]string authenticationKey, CancellationToken cancellationToken)
         {
             //return _contents.Maintain(auth, cancellationToken);
 
@@ -108,7 +108,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>List of strings</returns>
         [Route("containers/states")]
         [HttpGet]
-        public IEnumerable<IContainerState> GetContainerStates([FromQuery]string auth)
+        public IEnumerable<IContainerState> GetContainerStates([FromQuery]string auth, [FromHeader]string authenticationKey)
         {
             return _system.GetContainerStates(auth);
         }
@@ -120,7 +120,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>List of strings</returns>
         [Route("readonlycontainers")]
         [HttpGet]
-        public IEnumerable<string> GetReadOnlyContainerNames([FromQuery]string auth)
+        public IEnumerable<string> GetReadOnlyContainerNames([FromQuery]string auth, [FromHeader]string authenticationKey)
         {
             return _system.GetReadOnlyContainerNames(auth);
         }
@@ -133,9 +133,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>List of strings</returns>
         [Route("readonlycontainers/add/{containerName}")]
         [HttpPut]
-        public void SetContainerReadOnly(string containerName, [FromQuery]string auth)
+        public void SetContainerReadOnly(string containerName, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _system.SetContainerReadOnlyState(containerName, true, auth);
+            _system.SetContainerReadOnlyState(containerName, true, auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -146,9 +146,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>List of strings</returns>
         [Route("readonlycontainers/delete/{containerName}")]
         [HttpDelete]
-        public void SetContainerNotReadOnly(string containerName, [FromQuery]string auth)
+        public void SetContainerNotReadOnly(string containerName, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _system.SetContainerReadOnlyState(containerName, false, auth);
+            _system.SetContainerReadOnlyState(containerName, false, auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -159,9 +159,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response code</returns>
         [Route("containers/{containerName}/subcontainers")]
         [HttpGet]
-        public IEnumerable<string> GetContainerSubcontainers(string containerName, [FromQuery]string auth)
+        public IEnumerable<string> GetContainerSubcontainers(string containerName, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            return _system.GetContainerReadOnlySubcontainerNames(containerName, auth);
+            return _system.GetContainerReadOnlySubcontainerNames(containerName, auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response code</returns>
         [Route("containers/{containerName}/subcontainers/add/{subcontainerName}")]
         [HttpPut]
-        public void AddContainerSubcontainer(string containerName, string subcontainerName, [FromQuery]string auth)
+        public void AddContainerSubcontainer(string containerName, string subcontainerName, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _system.AddContainerReadOnlySubcontainer(containerName, subcontainerName, auth);
+            _system.AddContainerReadOnlySubcontainer(containerName, subcontainerName, auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -187,9 +187,9 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// <returns>HTTP response code</returns>
         [Route("containers/{containerName}/subcontainers/delete/{subcontainerName}")]
         [HttpDelete]
-        public void RemoveContainerSubcontainer(string containerName, string subcontainerName, [FromQuery]string auth)
+        public void RemoveContainerSubcontainer(string containerName, string subcontainerName, [FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            _system.RemoveContainerReadOnlySubcontainer(containerName, subcontainerName, auth);
+            _system.RemoveContainerReadOnlySubcontainer(containerName, subcontainerName, auth ?? authenticationKey);
         }
     }
 }
