@@ -65,6 +65,8 @@ namespace Sembium.ContentStorage.TransferService.Library.Controllers
 
         [Route("upload/{containerName}/{contentName}")]
         [HttpPut]
+        //[DisableRequestSizeLimit]
+        [RequestSizeLimit(100_000_000)]
         public async Task Upload(string containerName, string contentName, /*IFormFile file, */CancellationToken cancellationToken)
         {
             CheckRequest();
