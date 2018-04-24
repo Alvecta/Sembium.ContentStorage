@@ -14,16 +14,22 @@ namespace Sembium.ContentStorage.Replication.Logging.Endpoints.Source
     public class LoggingContentStorageSource : LoggingSource, ILoggingContentStorageSource
     {
         private readonly IContentStorageSource _contentStorageSource;
+        private readonly ILogger _logger;
 
         public LoggingContentStorageSource(IContentStorageSource source, ILogger logger)
             : base(source, logger)
         {
             _contentStorageSource = source;
+            _logger = logger;
         }
 
         public IDownloadInfo GetDownloadInfo(IContentIdentifier contentIdentifier)
         {
-            return _contentStorageSource.GetDownloadInfo(contentIdentifier);
+            var result = _contentStorageSource.GetDownloadInfo(contentIdentifier);
+
+            Logger.LogTrace($"Content size: {contentIdentifier.Hash} ==> {result.Size}");
+
+            return result;
         }
     }
 }
