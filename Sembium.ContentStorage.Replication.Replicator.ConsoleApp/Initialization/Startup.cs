@@ -37,7 +37,7 @@ namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Initializatio
             var builder = new ContainerBuilder();
 
             builder.Populate(services);
-            AutofacRegistrations.RegisterFor(builder);
+            AutofacRegistrations.RegisterFor(builder, Configuration);
 
             var container = builder.Build();
             return new AutofacServiceProvider(container);
