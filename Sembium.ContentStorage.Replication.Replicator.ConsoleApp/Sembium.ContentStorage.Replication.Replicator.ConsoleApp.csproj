@@ -29,7 +29,7 @@
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.FileSystem.Classes\Sembium.ContentStorage.Replication.FileSystem.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.Logging.Classes\Sembium.ContentStorage.Replication.Logging.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.Replicator.Classes\Sembium.ContentStorage.Replication.Replicator.Classes.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Base.Classes\Sembium.ContentStorage.Storage.FileSystem.Base.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Classes\Sembium.ContentStorage.Storage.FileSystem.Classes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

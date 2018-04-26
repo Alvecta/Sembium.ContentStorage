@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.FileSystem.Base
+namespace Sembium.ContentStorage.Storage.FileSystem
 {
     public class FileSystemContent : IContent, ISystemContent
     {

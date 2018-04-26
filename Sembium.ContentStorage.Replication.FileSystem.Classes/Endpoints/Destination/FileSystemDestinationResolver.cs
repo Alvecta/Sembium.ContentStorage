@@ -1,7 +1,7 @@
 ﻿using Sembium.ContentStorage.Replication.Common.Config;
 using Sembium.ContentStorage.Replication.Common.Endpoints.Destination;
 using Sembium.ContentStorage.Replication.FileSystem.Config;
-using Sembium.ContentStorage.Storage.FileSystem.Base;
+using Sembium.ContentStorage.Storage.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;

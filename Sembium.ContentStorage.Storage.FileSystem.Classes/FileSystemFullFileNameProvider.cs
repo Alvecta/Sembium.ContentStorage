@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.FileSystem.Base
+namespace Sembium.ContentStorage.Storage.FileSystem
 {
     public class FileSystemFullFileNameProvider : IFileSystemFullFileNameProvider
     {

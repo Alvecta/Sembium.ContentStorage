@@ -1,5 +1,4 @@
-﻿using Sembium.ContentStorage.Storage.FileSystem.Base;
-using Sembium.ContentStorage.Storage.Hosting;
+﻿using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.HostingResults.Factories;
 using Sembium.ContentStorage.Storage.Tools;

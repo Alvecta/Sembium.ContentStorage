@@ -23,15 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureBlob", "AzureBlob", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileSystem", "FileSystem", "{C777DA7A-AAB5-44EE-961F-92C0DE04A735}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{FE3EE003-CC45-408D-A6A2-2D0E763BF87F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.Interfaces", "Sembium.ContentStorage.Storage.Interfaces\Sembium.ContentStorage.Storage.Interfaces.csproj", "{DA001BC2-3744-4F16-86C9-5A5163230EB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.AmazonS3.Interfaces", "Sembium.ContentStorage.Storage.AmazonS3.Interfaces\Sembium.ContentStorage.Storage.AmazonS3.Interfaces.csproj", "{140DFCFE-C5F5-4732-90AC-DF0F968B2DF2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.FileSystem.Interfaces", "Sembium.ContentStorage.Storage.FileSystem.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Interfaces.csproj", "{BFA7E2A1-AD87-4DC6-9A16-6E2CAAF60BD8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.FileSystem.Base.Interfaces", "Sembium.ContentStorage.Storage.FileSystem.Base.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Base.Interfaces.csproj", "{3F51FE74-2D72-4C63-A3EC-EE867D6C7848}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces", "Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces.csproj", "{A2017DA0-1FEE-450C-858C-0EB926873E93}"
 EndProject
@@ -52,8 +48,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.AzureBlob.Interfaces", "Sembium.ContentStorage.Storage.AzureBlob.Interfaces\Sembium.ContentStorage.Storage.AzureBlob.Interfaces.csproj", "{2B3690F2-99A2-4208-8D20-E604D743B7B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.AzureBlob.Classes", "Sembium.ContentStorage.Storage.AzureBlob.Classes\Sembium.ContentStorage.Storage.AzureBlob.Classes.csproj", "{C2779144-32F4-49AB-B1D8-E28B2D162B78}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.FileSystem.Base.Classes", "Sembium.ContentStorage.Storage.FileSystem.Base.Classes\Sembium.ContentStorage.Storage.FileSystem.Base.Classes.csproj", "{596F7200-B420-4A81-836C-029227585F41}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sembium.ContentStorage.Storage.FileSystem.Classes", "Sembium.ContentStorage.Storage.FileSystem.Classes\Sembium.ContentStorage.Storage.FileSystem.Classes.csproj", "{F199BB05-AA5F-407F-B137-06E1DE86A3F7}"
 EndProject
@@ -137,10 +131,6 @@ Global
 		{BFA7E2A1-AD87-4DC6-9A16-6E2CAAF60BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFA7E2A1-AD87-4DC6-9A16-6E2CAAF60BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFA7E2A1-AD87-4DC6-9A16-6E2CAAF60BD8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F51FE74-2D72-4C63-A3EC-EE867D6C7848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F51FE74-2D72-4C63-A3EC-EE867D6C7848}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F51FE74-2D72-4C63-A3EC-EE867D6C7848}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F51FE74-2D72-4C63-A3EC-EE867D6C7848}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A2017DA0-1FEE-450C-858C-0EB926873E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A2017DA0-1FEE-450C-858C-0EB926873E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2017DA0-1FEE-450C-858C-0EB926873E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -181,10 +171,6 @@ Global
 		{C2779144-32F4-49AB-B1D8-E28B2D162B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2779144-32F4-49AB-B1D8-E28B2D162B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2779144-32F4-49AB-B1D8-E28B2D162B78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{596F7200-B420-4A81-836C-029227585F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{596F7200-B420-4A81-836C-029227585F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{596F7200-B420-4A81-836C-029227585F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{596F7200-B420-4A81-836C-029227585F41}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F199BB05-AA5F-407F-B137-06E1DE86A3F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F199BB05-AA5F-407F-B137-06E1DE86A3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F199BB05-AA5F-407F-B137-06E1DE86A3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -293,11 +279,9 @@ Global
 		{C3C4277E-9093-4D8F-8AB8-B376A85050E1} = {4FE305E8-EF23-4F4F-A961-140D18F0C159}
 		{12ADB530-5B67-4D60-95DF-42F90359FE6F} = {4FE305E8-EF23-4F4F-A961-140D18F0C159}
 		{C777DA7A-AAB5-44EE-961F-92C0DE04A735} = {4FE305E8-EF23-4F4F-A961-140D18F0C159}
-		{FE3EE003-CC45-408D-A6A2-2D0E763BF87F} = {C777DA7A-AAB5-44EE-961F-92C0DE04A735}
 		{DA001BC2-3744-4F16-86C9-5A5163230EB6} = {4FE305E8-EF23-4F4F-A961-140D18F0C159}
 		{140DFCFE-C5F5-4732-90AC-DF0F968B2DF2} = {C3C4277E-9093-4D8F-8AB8-B376A85050E1}
 		{BFA7E2A1-AD87-4DC6-9A16-6E2CAAF60BD8} = {C777DA7A-AAB5-44EE-961F-92C0DE04A735}
-		{3F51FE74-2D72-4C63-A3EC-EE867D6C7848} = {FE3EE003-CC45-408D-A6A2-2D0E763BF87F}
 		{A2017DA0-1FEE-450C-858C-0EB926873E93} = {1F235F35-CB4A-4D3A-A5F8-E0991B67F63B}
 		{2989E89D-6742-4BB8-92F3-BFD84BDC3997} = {37051BCC-71ED-48A5-B35A-09629FB10274}
 		{C0D3992A-66FA-4394-AE90-0320E3A25BB7} = {37051BCC-71ED-48A5-B35A-09629FB10274}
@@ -308,7 +292,6 @@ Global
 		{89C0D657-2824-4F41-A7DC-B352574FFBAA} = {48C1C6C7-D8E3-4829-9C3A-499AA18AB048}
 		{2B3690F2-99A2-4208-8D20-E604D743B7B7} = {12ADB530-5B67-4D60-95DF-42F90359FE6F}
 		{C2779144-32F4-49AB-B1D8-E28B2D162B78} = {12ADB530-5B67-4D60-95DF-42F90359FE6F}
-		{596F7200-B420-4A81-836C-029227585F41} = {FE3EE003-CC45-408D-A6A2-2D0E763BF87F}
 		{F199BB05-AA5F-407F-B137-06E1DE86A3F7} = {C777DA7A-AAB5-44EE-961F-92C0DE04A735}
 		{F05F716F-9965-4EF2-9774-8344CA3E25E3} = {FB22BA67-B117-4A7A-ACF3-18D4FC88EB42}
 		{08AD627B-BEA7-4596-8751-10B848A8A7F9} = {FB22BA67-B117-4A7A-ACF3-18D4FC88EB42}
