@@ -18,6 +18,7 @@
     "Sembium.ContentStorage.Service.AmazonLambda": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:65321/health",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
