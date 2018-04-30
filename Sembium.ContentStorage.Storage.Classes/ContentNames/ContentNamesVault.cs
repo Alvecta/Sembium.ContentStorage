@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Storage.ContentNames
 {
     public class ContentNamesVault : IContentNamesVault
     {

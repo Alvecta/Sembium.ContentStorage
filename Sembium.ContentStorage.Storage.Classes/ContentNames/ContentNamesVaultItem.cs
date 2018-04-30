@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Storage.ContentNames
 {
     public class ContentNamesVaultItem : IContentNamesVaultItem
     {

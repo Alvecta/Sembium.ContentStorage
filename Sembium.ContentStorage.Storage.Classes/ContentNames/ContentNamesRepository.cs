@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Sembium.ContentStorage.Common.Utils;
+using Sembium.ContentStorage.Storage.ContentsMonthHash;
 using Sembium.ContentStorage.Storage.Tools;
 using Sembium.ContentStorage.Utils;
 using System;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Storage.ContentNames
 {
     public class ContentNamesRepository : IContentNamesRepository
     {
