@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sembium.ContentStorage.Storage.FileSystem.Base
+namespace Sembium.ContentStorage.Storage.FileSystem
 {
-    public interface IFileSystemContentStorageHost : IContentStorageHost
+    public interface IFileSystemContainer : IContainer
     {
     }
 }

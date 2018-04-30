@@ -33,7 +33,6 @@ namespace Sembium.ContentStorage.Service.Library
             Sembium.ContentStorage.Storage.AzureBlob.AutofacRegistrations.RegisterFor(builder, configuration);
 
             Sembium.ContentStorage.Storage.FileSystem.AutofacRegistrations.RegisterFor(builder, configuration);
-            Sembium.ContentStorage.Storage.FileSystem.Base.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Storage.FileSystem.Transfer.AutofacRegistrations.RegisterFor(builder);
 
             builder.RegisterType<Logging.LoggerLogger>().As<Sembium.ContentStorage.Common.ILogger>().SingleInstance();

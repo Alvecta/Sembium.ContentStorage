@@ -25,7 +25,7 @@ namespace Sembium.ContentStorage.TransferService.Library
         {
             services.AddMvc();
 
-            return AutofacRegistrations.ConfigureServices(services);
+            return AutofacRegistrations.ConfigureServices(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

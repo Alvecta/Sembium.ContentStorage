@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.FileSystem.Base
+namespace Sembium.ContentStorage.Storage.FileSystem
 {
     public delegate IContent IFileSystemContentFactory(string root, string dirName, string fileName);
 }

@@ -6,13 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Base.Classes\Sembium.ContentStorage.Storage.FileSystem.Base.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Common.Utils\Sembium.ContentStorage.Common.Utils.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces.csproj" />
   </ItemGroup>

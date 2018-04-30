@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.Extensions.Configuration;
 using Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Initialization;
 using Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Logging;
 
@@ -6,7 +7,7 @@ namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp
 {
     public static class AutofacRegistrations
     {
-        public static void RegisterFor(ContainerBuilder builder)
+        public static void RegisterFor(ContainerBuilder builder, IConfiguration configuration)
         {
             Sembium.ContentStorage.Replication.Common.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Replication.FileSystem.AutofacRegistrations.RegisterFor(builder);
@@ -16,7 +17,7 @@ namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp
             Sembium.ContentStorage.Client.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Common.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Storage.AutofacRegistrations.RegisterFor(builder);
-            Sembium.ContentStorage.Storage.FileSystem.Base.AutofacRegistrations.RegisterFor(builder);
+            Sembium.ContentStorage.Storage.FileSystem.AutofacRegistrations.RegisterFor(builder, configuration);
 
             builder.RegisterType<LoggingConfigurator>().As<ILoggingConfigurator>();
             builder.RegisterType<MainService>().As<IMainService>();
