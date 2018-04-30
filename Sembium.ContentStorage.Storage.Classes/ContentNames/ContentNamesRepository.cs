@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Sembium.ContentStorage.Common.Utils;
+﻿using Sembium.ContentStorage.Common.Utils;
 using Sembium.ContentStorage.Storage.ContentsMonthHash;
 using Sembium.ContentStorage.Storage.Tools;
 using Sembium.ContentStorage.Utils;
@@ -21,12 +20,12 @@ namespace Sembium.ContentStorage.Storage.ContentNames
         private readonly IContentNamesVault _contentNamesVault;
 
         public ContentNamesRepository(
-            IOptions<ContentNamesRepositorySettings> contentNamesRepositorySettings,
+            ContentNamesRepositorySettings contentNamesRepositorySettings,
             IContentNameProvider contentNameProvider,
             IContentMonthProvider contentMonthProvider,
             IContentNamesVault contentNamesVault)
         {
-            _contentNamesRepositorySettings = contentNamesRepositorySettings.Value;
+            _contentNamesRepositorySettings = contentNamesRepositorySettings;
             _contentNameProvider = contentNameProvider;
             _contentMonthProvider = contentMonthProvider;
             _contentNamesVault = contentNamesVault;

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.Extensions.Options;
 using Sembium.ContentStorage.Storage.Common;
 using Sembium.ContentStorage.Storage.ContentNames;
 using Sembium.ContentStorage.Storage.ContentsMonthHash;
@@ -43,6 +44,8 @@ namespace Sembium.ContentStorage.Storage
             builder.RegisterType<ContentNamesVaultItem>().As<IContentNamesVaultItem>();
 
             builder.RegisterType<HttpRequestInfo>().As<IHttpRequestInfo>();
+
+            builder.RegisterAdapter<IOptions<ContentNamesRepositorySettings>, ContentNamesRepositorySettings>(o => o.Value);
         }
     }
 }
