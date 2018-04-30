@@ -272,5 +272,17 @@ namespace Sembium.ContentStorage.Common
                 // do nothing, delete tomorrow
             }
         }
+
+        public void EnsureContent(string containerName, string contentName, DateTimeOffset contentDate, CancellationToken cancellationToken)
+        {
+            var contentMonth = _contentMonthProvider.GetContentMonth(contentDate);
+
+            var contentNameExists = GetChronologicallyOrderedContentNames(containerName, contentName, contentMonth.AddMonths(1), contentMonth.AddMonths(-1), cancellationToken).Any();
+
+            if (!contentNameExists)
+            {
+                AddContent(containerName, contentName, contentDate, cancellationToken);
+            }
+        }
     }
 }

@@ -149,12 +149,11 @@ namespace Sembium.ContentStorage.Service
             return result;
         }
 
-        private IDocumentIdentifier GetExistingDocumentIdentifier(IContainer container, string hash, string extension)
+        private IContentIdentifier GetExistingContentIdentifier(IContainer container, string hash, string extension)
         {
             return
                 _contentIdentifiersProvider.GetContentIdentifiers(container, true, hash)
                 .Where(x => string.Equals(x.Extension, extension, StringComparison.InvariantCultureIgnoreCase))
-                .Select(x => _documentIdentifierProvider.GetDocumentIdentifier(x))
                 .FirstOrDefault();
         }
 
@@ -164,10 +163,17 @@ namespace Sembium.ContentStorage.Service
 
             var container = GetContainer();
 
-            var existingDocumentIdentifier = GetExistingDocumentIdentifier(container, hash, extention);
+            var existingContentIdentifier = GetExistingContentIdentifier(container, hash, extention);
 
-            if (existingDocumentIdentifier != null)
+            if (existingContentIdentifier != null)
+            {
+                var existingDocumentIdentifier = _documentIdentifierProvider.GetDocumentIdentifier(existingContentIdentifier);
+                var existingContentName = _contentNameProvider.GetContentName(existingContentIdentifier);
+
+                _committedContentNamesRepository.EnsureContent(_containerName, existingContentName, existingContentIdentifier.ModifiedMoment, CancellationToken.None);
+
                 return _documentMultiPartUploadInfoFactory(null, existingDocumentIdentifier);
+            }
 
             CheckContainerState(true);
 
