@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Sembium.ContentStorage.Storage.Hosting;
+﻿using Sembium.ContentStorage.Storage.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Storage.ContentNames
 {
     public class ContentNamesVaultItem : IContentNamesVaultItem
     {
@@ -19,13 +18,13 @@ namespace Sembium.ContentStorage.Common
         private readonly bool _isNew;
 
         public ContentNamesVaultItem(IContent content, string name, bool isNew,
-            IOptions<ContentNamesRepositorySettings> contentNamesRepositorySettings)
+            ContentNamesRepositorySettings contentNamesRepositorySettings)
         {
             _content = content;
             Name = name;
             _isNew = isNew;
 
-            _contentNamesRepositorySettings = contentNamesRepositorySettings.Value;
+            _contentNamesRepositorySettings = contentNamesRepositorySettings;
         }
 
         public bool CanAppend(bool compacting)

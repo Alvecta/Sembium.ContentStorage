@@ -5,8 +5,4 @@
     <RootNamespace>Sembium.ContentStorage.Common</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.Interfaces\Sembium.ContentStorage.Storage.Interfaces.csproj" />
-  </ItemGroup>
-
 </Project>

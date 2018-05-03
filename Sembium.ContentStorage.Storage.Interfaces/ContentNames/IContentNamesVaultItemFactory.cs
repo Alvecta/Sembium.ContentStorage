@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Storage.ContentNames
 {
     public delegate IContentNamesVaultItem IContentNamesVaultItemFactory(IContent content, string name, bool isNew);
 }

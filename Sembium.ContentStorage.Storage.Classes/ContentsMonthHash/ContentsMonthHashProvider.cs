@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Storage.ContentsMonthHash
 {
     public class ContentsMonthHashProvider : IContentsMonthHashProvider
     {

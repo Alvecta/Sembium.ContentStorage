@@ -13,13 +13,7 @@ namespace Sembium.ContentStorage.Common
         {
             builder.RegisterType<ConfigurationSettings>().As<IConfigurationSettings>();
             builder.RegisterType<JavaScriptSerializer>().As<ISerializer>();
-            builder.RegisterType<Sha1HashProvider>().As<IHashProvider>();
             builder.RegisterType<HashStringProvider>().As<IHashStringProvider>();
-            builder.RegisterType<ContentMonthProvider>().As<IContentMonthProvider>();
-            builder.RegisterType<ContentsMonthHashProvider>().As<IContentsMonthHashProvider>();
-            builder.RegisterType<ContentNamesRepository>().As<IContentNamesRepository>();
-            builder.RegisterType<ContentNamesVault>().As<IContentNamesVault>();
-            builder.RegisterType<ContentNamesVaultItem>().As<IContentNamesVaultItem>();
         }
     }
 }
