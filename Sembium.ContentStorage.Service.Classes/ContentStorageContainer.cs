@@ -214,7 +214,13 @@ namespace Sembium.ContentStorage.Service
             var container = GetContainer();
 
             if (container.ContentExists(contentIdentifier))
+            {
+                var existingContentName = _contentNameProvider.GetContentName(contentIdentifier);
+
+                _committedContentNamesRepository.EnsureContent(_containerName, existingContentName, contentIdentifier.ModifiedMoment, CancellationToken.None);
+
                 return null;
+            }
 
             CheckContainerState(false);
 
