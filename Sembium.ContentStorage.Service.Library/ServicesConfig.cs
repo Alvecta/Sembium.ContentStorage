@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Sembium.ContentStorage.Utils.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace Sembium.ContentStorage.Service.Library
 
         public static void ConfigureConfigurationBuilder(IConfigurationBuilder configurationBuilder)
         {
+            configurationBuilder.AddEnvironmentVariablesAsSettings();
+
             Sembium.ContentStorage.Storage.AmazonS3.ServicesConfig.ConfigureConfigurationBuilder(configurationBuilder);
         }
     }
