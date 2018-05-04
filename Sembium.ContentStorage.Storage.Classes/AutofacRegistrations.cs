@@ -1,11 +1,11 @@
 ﻿using Autofac;
-using Microsoft.Extensions.Options;
 using Sembium.ContentStorage.Storage.Common;
 using Sembium.ContentStorage.Storage.ContentNames;
 using Sembium.ContentStorage.Storage.ContentsMonthHash;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.Tools;
+using Sembium.ContentStorage.Utils.Autofac;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +45,7 @@ namespace Sembium.ContentStorage.Storage
 
             builder.RegisterType<HttpRequestInfo>().As<IHttpRequestInfo>();
 
-            builder.RegisterAdapter<IOptions<ContentNamesRepositorySettings>, ContentNamesRepositorySettings>(o => o.Value);
+            builder.RegisterOptionsAdapter<ContentNamesRepositorySettings>();
         }
     }
 }
