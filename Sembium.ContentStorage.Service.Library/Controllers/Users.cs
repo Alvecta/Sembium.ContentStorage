@@ -43,7 +43,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         [HttpGet]
         public IEnumerable<IUser> GetUsers([FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            return _users.GetUsers(auth);
+            return _users.GetUsers(auth ?? authenticationKey);
         }
 
         /// <summary>

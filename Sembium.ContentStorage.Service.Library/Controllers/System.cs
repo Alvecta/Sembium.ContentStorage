@@ -30,7 +30,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         [HttpGet]
         public IEnumerable<string> GetContainerNames([FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            return _system.GetContainerNames(auth);
+            return _system.GetContainerNames(auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -85,13 +85,13 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         [HttpPut]
         public IActionResult Maintain([FromQuery]string auth, [FromHeader]string authenticationKey, CancellationToken cancellationToken)
         {
-            //return _contents.Maintain(auth, cancellationToken);
+            //return _contents.Maintain(auth ?? authenticationKey, cancellationToken);
 
             return new FileCallbackResult(
                 new MediaTypeHeaderValue("text/plain"),
                 async (outputStream, _) =>
                 {
-                    var messages = _system.Maintain(auth, cancellationToken);
+                    var messages = _system.Maintain(auth ?? authenticationKey, cancellationToken);
 
                     foreach (var message in messages)
                     {
@@ -110,7 +110,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         [HttpGet]
         public IEnumerable<IContainerState> GetContainerStates([FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            return _system.GetContainerStates(auth);
+            return _system.GetContainerStates(auth ?? authenticationKey);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         [HttpGet]
         public IEnumerable<string> GetReadOnlyContainerNames([FromQuery]string auth, [FromHeader]string authenticationKey)
         {
-            return _system.GetReadOnlyContainerNames(auth);
+            return _system.GetReadOnlyContainerNames(auth ?? authenticationKey);
         }
 
         /// <summary>
