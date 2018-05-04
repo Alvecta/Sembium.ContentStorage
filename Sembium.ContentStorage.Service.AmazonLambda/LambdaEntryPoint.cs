@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Sembium.ContentStorage.Service.Library;
 
-namespace Sembium.ContentStorage.Service.AmznLambda
+namespace Sembium.ContentStorage.Service.AmazonLambda
 {
     /// <summary>
     /// This class extends from APIGatewayProxyFunction which contains the method FunctionHandlerAsync which is the 
