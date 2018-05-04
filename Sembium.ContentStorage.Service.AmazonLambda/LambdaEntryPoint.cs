@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Sembium.ContentStorage.Service.Library;
 
 namespace Sembium.ContentStorage.Service.AmznLambda
 {
@@ -23,8 +24,7 @@ namespace Sembium.ContentStorage.Service.AmznLambda
         /// <param name="builder"></param>
         protected override void Init(IWebHostBuilder builder)
         {
-            builder
-                .UseStartup<Sembium.ContentStorage.Service.Library.Startup>();
+            builder.InitWebHostBuilder();
         }
     }
 }

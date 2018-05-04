@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Sembium.ContentStorage.Service.Library;
 
 namespace Sembium.ContentStorage.Service.WebApi
 {
@@ -19,11 +20,7 @@ namespace Sembium.ContentStorage.Service.WebApi
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Library.Startup>()
-                .ConfigureAppConfiguration((builderContext, config) =>
-                {
-                    Library.ServicesConfig.ConfigureConfigurationBuilder(config);
-                })
+                .InitWebHostBuilder()
                 .Build();
     }
 }
