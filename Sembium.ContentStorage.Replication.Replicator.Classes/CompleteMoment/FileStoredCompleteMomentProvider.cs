@@ -78,7 +78,7 @@ namespace Sembium.ContentStorage.Replication.Replicator.CompleteMoment
             if (System.IO.File.Exists(fileName))
             {
                 var seralized = System.IO.File.ReadAllText(fileName);
-                _completeMoments = _seralizer.Deserialize<List<CompleteMomentInfo>>(seralized);
+                _completeMoments = _seralizer.Deserialize<IEnumerable<ICompleteMomentInfo>>(seralized);
             }
 
             _loaded = true;

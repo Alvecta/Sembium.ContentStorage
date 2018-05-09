@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace Sembium.ContentStorage.Common
 {
     public class JavaScriptSerializer : ISerializer
     {
+        private readonly IContractResolver _contractResolver;
+
+        public JavaScriptSerializer(IContractResolver contractResolver)
+        {
+            _contractResolver = contractResolver;
+        }
+
         public string Serialize(object obj)
         {
             return JsonConvert.SerializeObject(obj);
@@ -16,7 +24,7 @@ namespace Sembium.ContentStorage.Common
 
         public T Deserialize<T>(string input)
         {
-            return JsonConvert.DeserializeObject<T>(input);
+            return JsonConvert.DeserializeObject<T>(input, new JsonSerializerSettings { ContractResolver = _contractResolver });
         }
     }
 }

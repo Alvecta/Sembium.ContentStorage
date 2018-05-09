@@ -24,7 +24,7 @@ namespace Sembium.ContentStorage.Storage.Tools
 
         public IContentIdentifier Deserialize(string value)
         {
-            return _serializer.Deserialize<ContentIdentifier>(value);
+            return _serializer.Deserialize<IContentIdentifier>(value);
         }
     }
 }

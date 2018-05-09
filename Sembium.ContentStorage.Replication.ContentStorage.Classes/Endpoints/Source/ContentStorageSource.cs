@@ -53,7 +53,7 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Source
             {
                 var downloadinfoJson = httpClient.CheckedGetStringAsync(requestURL).Result;
 
-                return Serializer.Deserialize<DownloadInfo>(downloadinfoJson);
+                return Serializer.Deserialize<IDownloadInfo>(downloadinfoJson);
             }
         }
     }

@@ -42,7 +42,7 @@ namespace Sembium.ContentStorage.Service.ServiceResults.Tools
             if (string.IsNullOrEmpty(value))
                 return null;
 
-            var serializedObject = _serializer.Deserialize<SerializedObject>(value);
+            var serializedObject = _serializer.Deserialize<ISerializedObject>(value);
 
             var documentIdentifierVersionSerializer = _documentIdentifierVersionSerializerProvider.GetSerializer(serializedObject.DataTypeName);
 

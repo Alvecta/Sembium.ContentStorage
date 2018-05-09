@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Sembium.ContentStorage.Storage.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Sembium.ContentStorage.Storage.HostingResults
 {
@@ -9,7 +7,6 @@ namespace Sembium.ContentStorage.Storage.HostingResults
         public string HttpMethod { get; private set; }
         public long PartSize { get; private set; }
 
-        [JsonConverter(typeof(ConcreteJsonConverter<IEnumerable<HttpPartUploadInfo>>))]
         public IEnumerable<IHttpPartUploadInfo> PartUploadInfos { get; private set; }
 
         public string MultiPartUploadResultHeaderName { get; private set; }

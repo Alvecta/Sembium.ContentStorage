@@ -77,7 +77,7 @@ namespace Sembium.ContentStorage.Service
                 return Enumerable.Empty<IContainerState>();
             }
 
-            return _serializer.Deserialize<IEnumerable<ContainerState>>(serializedContainerStatesContainers);
+            return _serializer.Deserialize<IEnumerable<IContainerState>>(serializedContainerStatesContainers);
         }
 
         private async Task SaveContainerStatesAsync(IEnumerable<IContainerState> containerStates)

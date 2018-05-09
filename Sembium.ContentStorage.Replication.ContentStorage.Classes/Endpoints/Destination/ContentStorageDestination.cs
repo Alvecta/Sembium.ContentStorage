@@ -93,7 +93,7 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Destinatio
 
                 var stringResult = httpClient.CheckedGetStringAsync(urlForGetUrlContentUploadInfo, headers).Result;
 
-                return Serializer.Deserialize<HttpRequestInfo>(stringResult);
+                return Serializer.Deserialize<IHttpRequestInfo>(stringResult);
             }
         }
     }

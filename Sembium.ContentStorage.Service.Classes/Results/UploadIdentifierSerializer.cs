@@ -24,7 +24,7 @@ namespace Sembium.ContentStorage.Service.Results
 
         public IUploadIdentifier Deserialize(string value)
         {
-            return _serializer.Deserialize<UploadIdentifier>(value);
+            return _serializer.Deserialize<IUploadIdentifier>(value);
         }
     }
 }

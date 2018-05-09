@@ -117,7 +117,7 @@ namespace Sembium.ContentStorage.Service
             if (string.IsNullOrEmpty(serializedUsers))
                 return InitialUsers();
 
-            return _serializer.Deserialize<IEnumerable<User>>(serializedUsers);
+            return _serializer.Deserialize<IEnumerable<IUser>>(serializedUsers);
         }
 
         // generator: https://www.grc.com/passwords.htm

@@ -135,7 +135,7 @@ namespace Sembium.ContentStorage.Client
 
             var serializedIDUploadInfo = httpClient.CheckedGetStringAsync(requestURL).Result;
 
-            return _serializer.Deserialize<MultiPartIDUploadInfo>(serializedIDUploadInfo);
+            return _serializer.Deserialize<IMultiPartIDUploadInfo>(serializedIDUploadInfo);
         }
 
         public void UploadContent(Stream stream, string contentStorageServiceURL, string containerName, string contentID, long size, string authenticationToken)
