@@ -61,7 +61,7 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Destinatio
 
         private void UploadUrlContent(IHttpRequestInfo urlContentUploadInfo)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 using (var request = new HttpRequestMessage(new HttpMethod(urlContentUploadInfo.Method), urlContentUploadInfo.URL))
                 {

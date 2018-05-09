@@ -19,7 +19,7 @@ namespace Sembium.ContentStorage.Service.ServiceModels
         string GetDocumentDownloadUrl(string containerName, string documentID, string authenticationToken);
         string GetContentDownloadUrl(string containerName, string contentID, string authenticationToken);
 
-        IEnumerable<string> GetContentIDs(string containerName, DateTimeOffset afterMoment, string authenticationToken);
+        IEnumerable<string> GetContentIDs(string containerName, DateTimeOffset? afterMoment, int? maxCount, string afterContentID, string authenticationToken);
         int GetContentCount(string containerName, string authenticationToken);
         string GetContentsHash(string containerName, DateTimeOffset beforeMoment, string authenticationToken);
 

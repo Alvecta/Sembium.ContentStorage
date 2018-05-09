@@ -8,7 +8,7 @@ namespace Sembium.ContentStorage.Client
 {
     public interface IContentStorageServiceURLProvider
     {
-        string GetURLForGetContentIdentifiers(string serviceURL, string containerName, DateTimeOffset afterMoment, string authenticationToken);
+        string GetURLForGetContentIdentifiers(string serviceURL, string containerName, DateTimeOffset? afterMoment, int? maxCount, string afterContentID, string authenticationToken);
         string GetURLForGetContentsHash(string serviceURL, string containerName, DateTimeOffset beforeMoment, string authenticationToken);
         string GetURLForGetContentDownloadURL(string serviceURL, string containerName, string contentID, string authenticationToken);
         string GetURLForGetUploadInfo(string serviceURL, string containerName, string contentID, string authenticationToken);

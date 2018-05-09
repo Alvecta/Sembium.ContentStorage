@@ -59,19 +59,54 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Common
 
         public async Task<IEnumerable<IContentIdentifier>> GetContentIdentifiersAsync(DateTimeOffset afterMoment)
         {
-            var moment = new[] { afterMoment, new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.FromTicks(0)) }.Max();
+            return await Task.FromResult(GetContentIdentifiers(afterMoment).ToList());
+        }
 
-            var requestURL = ContentStorageServiceURLProvider.GetURLForGetContentIdentifiers(ContentStorageServiceURL, ContainerName, moment, AuthenticationToken);
+        private IEnumerable<IContentIdentifier> GetContentIdentifiers(DateTimeOffset afterMoment)
+        {
+            afterMoment = new[] { afterMoment, new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.FromTicks(0)) }.Max();
 
             using (var httpClient = GetHttpClient())
             {
-                using (var stream = await httpClient.CheckedGetStreamAsync(requestURL))
+                IContentIdentifier lastContentIdentifier = null;
+
+                while (true)
                 {
-                    return
-                        stream
-                        .ReadAllLines(Encoding.UTF8)
-                        .Select(x => ContentIdentifierSerializer.Deserialize(x))
-                        .ToList();
+                    var afterContentID = (lastContentIdentifier == null) ? null : ContentIdentifierSerializer.Serialize(lastContentIdentifier);
+                    var moment = (lastContentIdentifier == null) ? (DateTimeOffset?)afterMoment : null;
+
+                    var requestURL = ContentStorageServiceURLProvider.GetURLForGetContentIdentifiers(ContentStorageServiceURL, ContainerName, moment, null, afterContentID, AuthenticationToken);
+
+                    using (var stream = httpClient.CheckedGetStreamAsync(requestURL).Result)
+                    {
+                        var contentIdentifiers =
+                                stream
+                                .ReadAllLines(Encoding.UTF8)
+                                .Select(x => ContentIdentifierSerializer.Deserialize(x))
+                                .ToList();
+
+                        var hasContentIdentifiers = false;
+                        foreach (var contentIdentifier in contentIdentifiers)
+                        {
+                            yield return contentIdentifier;
+
+                            lastContentIdentifier = contentIdentifier;
+                            hasContentIdentifiers = true;
+                        }
+
+                        if (!hasContentIdentifiers)
+                        {
+                            break;
+                        }
+
+                        // todo: remove this when deployed everywhere
+                        var supportsContinuation = requestURL.StartsWith("https");
+
+                        if (!supportsContinuation)
+                        {
+                            break;
+                        }
+                    }
                 }
             }
         }

@@ -29,7 +29,7 @@ namespace Sembium.ContentStorage.Service
         string GetContentDownloadURL(string contentID);
 
         IEnumerable<IContentIdentifier> GetContentIdentifiers();
-        IEnumerable<string> GetContentIDs(DateTimeOffset afterMoment);
+        IEnumerable<string> GetContentIDs(DateTimeOffset? afterMoment, int? maxCount, string afterContentID);
         string GetContentsHash(DateTimeOffset beforeMoment);
 
         void AddReadOnlySubcontainer(string subcontainerName);

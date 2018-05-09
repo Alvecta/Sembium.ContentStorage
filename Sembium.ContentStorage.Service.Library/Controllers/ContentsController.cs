@@ -102,18 +102,22 @@ namespace Sembium.ContentStorage.Service.Library.Controllers
         /// </summary>
         /// <param name="containerName">Container name</param>
         /// <param name="after">Minimum UTC for the contents to be returned</param>
+        /// <param name="maxCount">Maximum count of returned contents</param>
+        /// <param name="afterContentID">Return contents chronologically after the specified ContentID</param>
         /// <param name="auth">Authentication token for the request</param>
         /// <param name="cancellationToken">CancellationToken</param>
         /// <returns>IEnumerable of string</returns>
         [Route("containers/{containerName}")]
         [HttpGet]
-        public IActionResult GetContentIDs(string containerName, [FromQuery]DateTimeOffset after, [FromQuery]string auth, [FromHeader]string authenticationKey, CancellationToken cancellationToken)
+        public IActionResult GetContentIDs(string containerName, [FromQuery]DateTimeOffset? after, [FromQuery]string maxCount, [FromQuery]string afterContentID, [FromQuery]string auth, [FromHeader]string authenticationKey, CancellationToken cancellationToken)
         {
+            var intMaxCount = string.IsNullOrEmpty(maxCount) ? default(int?) : int.Parse(maxCount);
+
             return new FileCallbackResult(
                 new MediaTypeHeaderValue("text/plain"),
                 async (outputStream, _) =>
                 {
-                    using (var contentIDsEnumerator = _contents.GetContentIDs(containerName, after, auth ?? authenticationKey).GetEnumerator())
+                    using (var contentIDsEnumerator = _contents.GetContentIDs(containerName, after, intMaxCount, afterContentID, auth ?? authenticationKey).GetEnumerator())
                     {
                         await CopyUtils.CopyAsync(
                                 (buffer, ct) =>

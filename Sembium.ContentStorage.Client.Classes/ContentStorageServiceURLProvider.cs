@@ -9,11 +9,14 @@ namespace Sembium.ContentStorage.Client
 {
     public class ContentStorageServiceURLProvider : IContentStorageServiceURLProvider
     {
-        public string GetURLForGetContentIdentifiers(string serviceURL, string containerName, DateTimeOffset afterMoment, string authenticationToken)
+        public string GetURLForGetContentIdentifiers(string serviceURL, string containerName, DateTimeOffset? afterMoment, int? maxCount, string afterContentID, string authenticationToken)
         {
             return
                 serviceURL.TrimEnd('/') +
-                string.Format("/contents/containers/{0}?after={1}&auth={2}", containerName, afterMoment.ToString("u"), authenticationToken);
+                string.Format("/contents/containers/{0}?auth={1}", containerName, authenticationToken) +
+                (afterMoment.HasValue ? "&after=" + afterMoment.Value.ToString("u") : null) +
+                (maxCount.HasValue ? "&maxCount=" + maxCount.Value.ToString() : null) +
+                (string.IsNullOrEmpty(afterContentID) ? null: "&afterContentID=" + WebUtility.UrlEncode(afterContentID));
         }
 
         public string GetURLForGetContentsHash(string serviceURL, string containerName, DateTimeOffset beforeMoment, string authenticationToken)

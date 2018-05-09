@@ -13,6 +13,7 @@ using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.Tools;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -403,12 +404,25 @@ namespace Sembium.ContentStorage.Service
             }
         }
 
-        public IEnumerable<string> GetContentIDs(DateTimeOffset afterMoment)
+        public IEnumerable<string> GetContentIDs(DateTimeOffset? afterMoment, int? maxCount, string afterContentID)
         {
+            const int defaultMaxCount = 5000;
+
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Replicator, Security.Roles.Backup);
 
+            Contract.Assert(afterMoment.HasValue == string.IsNullOrEmpty(afterContentID));
+
+            var afterContentIdentifier = string.IsNullOrEmpty(afterContentID) ? null : _contentIdentifierSerializer.Deserialize(afterContentID);
+
+            var useAfterMoment = afterMoment ?? afterContentIdentifier?.ModifiedMoment.AddTicks(-1);
+            var useMaxCount = maxCount.HasValue ? Math.Min(maxCount.Value, defaultMaxCount) : defaultMaxCount;
+
             return
-                GetChronologicallyOrderedContentIdentifiers(null, null, afterMoment)                
+                GetChronologicallyOrderedContentIdentifiers(null, null, useAfterMoment)
+                .Where(x => (afterContentIdentifier == null) ||
+                            (x.ModifiedMoment > afterContentIdentifier.ModifiedMoment) ||
+                            ((x.ModifiedMoment == afterContentIdentifier.ModifiedMoment) && (string.Compare(x.Guid, afterContentIdentifier.Guid) > 0)))
+                .Take(useMaxCount)
                 .Select(x => _contentIdentifierSerializer.Serialize(x));
         }
 

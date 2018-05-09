@@ -59,12 +59,12 @@ namespace Sembium.ContentStorage.Service.ServiceModels
             return contentStorageContainer.GetContentDownloadURL(contentID);
         }
 
-        public IEnumerable<string> GetContentIDs(string containerName, DateTimeOffset afterMoment, string authenticationToken)
+        public IEnumerable<string> GetContentIDs(string containerName, DateTimeOffset? afterMoment, int? maxCount, string afterContentID, string authenticationToken)
         {
             var account = _contentStorageAccountProvider.GetAccount(authenticationToken, containerName);
             var contentStorageContainer = account.GetContentStorageContainer();
 
-            return contentStorageContainer.GetContentIDs(afterMoment);
+            return contentStorageContainer.GetContentIDs(afterMoment, maxCount, afterContentID);
         }
 
         public int GetContentCount(string containerName, string authenticationToken)
