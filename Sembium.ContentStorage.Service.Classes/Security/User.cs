@@ -8,10 +8,15 @@ namespace Sembium.ContentStorage.Service.Security
 {
     public class User : IUser
     {
-        public string Name { get; private set; }
-        public string AuthenticationToken { get; private set; }
-        public string ContainerName { get; private set; }
-        public IEnumerable<string> Roles { get; private set; }
+        public string Name { get; }
+        public string AuthenticationToken { get; }
+        public string ContainerName { get; }
+        public IEnumerable<string> Roles { get; }
+
+        private User()
+        {
+            // do nothing
+        }
 
         public User(string name, string authenticationToken, string containerName, IEnumerable<string> roles)
         {

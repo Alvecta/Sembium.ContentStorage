@@ -8,10 +8,15 @@ namespace Sembium.ContentStorage.Replication.Replicator.CompleteMoment
 {
     public class CompleteMomentInfo : ICompleteMomentInfo
     {
-        public string SourceID { get; private set; }
-        public string DestinationID { get; private set; }
-        public DateTimeOffset Moment { get; private set; }
-        public DateTimeOffset OriginMoment { get; private set; }
+        public string SourceID { get; }
+        public string DestinationID { get; }
+        public DateTimeOffset Moment { get; }
+        public DateTimeOffset OriginMoment { get; }
+
+        private CompleteMomentInfo()
+        {
+            // do nothing
+        }
 
         public CompleteMomentInfo(string sourceID, string destinationID, DateTimeOffset moment, DateTimeOffset originMoment)
         {

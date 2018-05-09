@@ -8,9 +8,14 @@ namespace Sembium.ContentStorage.Storage.HostingResults
 {
     public class DownloadInfo : IDownloadInfo
     {
-        public string Url { get; private set; }
+        public string Url { get; }
 
-        public long Size { get; private set; }
+        public long Size { get; }
+
+        private DownloadInfo()
+        {
+            // do nothing
+        }
 
         public DownloadInfo(string url, long size)
         {

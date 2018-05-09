@@ -8,9 +8,14 @@ namespace Sembium.ContentStorage.Storage.HostingResults
 {
     public class HttpPartUploadInfo : IHttpPartUploadInfo
     {
-        public string Identifier { get; private set; }
-        public string URL { get; private set; }
-        public IEnumerable<KeyValuePair<string, string>> RequestHttpHeaders { get; private set; }
+        public string Identifier { get; }
+        public string URL { get; }
+        public IEnumerable<KeyValuePair<string, string>> RequestHttpHeaders { get; }
+
+        private HttpPartUploadInfo()
+        {
+            // do nothing
+        }
 
         public HttpPartUploadInfo(string identifier, string url, IEnumerable<KeyValuePair<string, string>> requestHttpHeaders)
         {

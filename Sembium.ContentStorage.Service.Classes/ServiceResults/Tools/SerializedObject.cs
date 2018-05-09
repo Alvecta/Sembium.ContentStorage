@@ -8,8 +8,13 @@ namespace Sembium.ContentStorage.Service.ServiceResults.Tools
 {
     public class SerializedObject : ISerializedObject
     {
-        public string DataTypeName { get; set; }
-        public string Data { get; set; }
+        public string DataTypeName { get; }
+        public string Data { get; }
+
+        private SerializedObject()
+        {
+            // do nothing
+        }
 
         public SerializedObject(string dataTypeName, string data)
         {

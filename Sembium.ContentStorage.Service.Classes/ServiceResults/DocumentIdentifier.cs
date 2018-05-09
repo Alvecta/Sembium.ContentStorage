@@ -8,8 +8,13 @@ namespace Sembium.ContentStorage.Service.ServiceResults
 {
     public class DocumentIdentifier : IDocumentIdentifier
     {
-        public string Hash { get; private set; }
-        public string Extension { get; private set; }
+        public string Hash { get; }
+        public string Extension { get; }
+
+        private DocumentIdentifier()
+        {
+            // do nothing
+        }
 
         public DocumentIdentifier(string hash, string extension)
         {

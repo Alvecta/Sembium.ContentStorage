@@ -6,10 +6,5 @@ using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Service.Results
 {
-    public interface IContainerState
-    {
-        string ContainerName { get; }
-        bool IsReadOnly { get; }
-        bool IsMaintained { get; }
-    }
+    public delegate IContainerState IContainerStateFactory(string containerName, bool isReadOnly, bool isMaintained);
 }

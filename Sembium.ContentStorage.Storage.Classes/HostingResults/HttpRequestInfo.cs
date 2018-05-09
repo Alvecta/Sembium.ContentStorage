@@ -12,6 +12,11 @@ namespace Sembium.ContentStorage.Storage.HostingResults
         public string Method { get;  }
         public IEnumerable<KeyValuePair<string, string>> Headers { get; }
 
+        private HttpRequestInfo()
+        {
+            // do nothing
+        }
+
         public HttpRequestInfo(string url, string method, IEnumerable<KeyValuePair<string, string>> headers)
         {
             URL = url;

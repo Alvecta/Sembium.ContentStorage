@@ -18,15 +18,18 @@ namespace Sembium.ContentStorage.Service
 
         private readonly IContentIdentifierGenerator _contentIdentifierGenerator;
         private readonly ISystemContainerProvider _systemContainerProvider;
+        private readonly IContainerStateFactory _containerStateFactory;
         private readonly ISerializer _serializer;
 
         public ContainerStateRepository(
             IContentIdentifierGenerator contentIdentifierGenerator,
             ISystemContainerProvider systemContainerProvider,
+            IContainerStateFactory containerStateFactory,
             ISerializer serializer)
         {
             _contentIdentifierGenerator = contentIdentifierGenerator;
             _systemContainerProvider = systemContainerProvider;
+            _containerStateFactory = containerStateFactory;
             _serializer = serializer;
         }
 
@@ -47,22 +50,14 @@ namespace Sembium.ContentStorage.Service
 
         public async Task SetContainerStateAsync(string containerName, bool? isReadOnly, bool? isMaintained)
         {
-            var containerState = await GetContainerStateAsync(containerName) ?? new ContainerState(containerName, false, false);  // todo factory ???
+            var oldContainerState = await GetContainerStateAsync(containerName);
 
-            if (isReadOnly.HasValue)
-            {
-                containerState.IsReadOnly = isReadOnly.Value;
-            }
-
-            if (isMaintained.HasValue)
-            {
-                containerState.IsMaintained = isMaintained.Value;
-            }
+            var newContainerState = _containerStateFactory(containerName, isReadOnly ?? oldContainerState?.IsReadOnly ?? false, isMaintained ?? oldContainerState?.IsMaintained ?? false);
 
             var newContainerStates =
                 LoadContainerStates()
                 .Where(x => !x.ContainerName.Equals(containerName, StringComparison.InvariantCultureIgnoreCase))
-                .Union(new[] { containerState });
+                .Union(new[] { newContainerState });
 
             await SaveContainerStatesAsync(newContainerStates);
         }

@@ -9,9 +9,14 @@ namespace Sembium.ContentStorage.Service.Results
     public class ContainerState : IContainerState
     {
         public string ContainerName { get; }
-        public bool IsReadOnly { get; set; }
+        public bool IsReadOnly { get; }
 
-        public bool IsMaintained { get; set; }
+        public bool IsMaintained { get; }
+
+        private ContainerState()
+        {
+            // do nothing
+        }
 
         public ContainerState(string containerName, bool isReadOnly, bool isMaintained)
         {

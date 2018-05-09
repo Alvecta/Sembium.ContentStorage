@@ -8,10 +8,15 @@ namespace Sembium.ContentStorage.Storage.HostingResults
 {
     public class UploadIdentifier : IUploadIdentifier
     {
-        public string Hash { get; private set; }
-        public string Extension { get; private set; }
-        public string Guid { get; private set; }
-        public string HostIdentifier { get; private set; }
+        public string Hash { get; }
+        public string Extension { get; }
+        public string Guid { get; }
+        public string HostIdentifier { get; }
+
+        private UploadIdentifier()
+        {
+            // do nothing
+        }
 
         public UploadIdentifier(string hash, string extension, string guid, string hostIdentifier)
         {

@@ -8,11 +8,16 @@ namespace Sembium.ContentStorage.Storage.Common
 {
     public class ContentIdentifier : IContentIdentifier
     {
-        public string Hash { get; private set; }
-        public string Extension { get; private set; }
-        public string Guid { get; private set; }
-        public DateTimeOffset ModifiedMoment { get; private set; }
-        public bool Uncommitted { get; private set; }
+        public string Hash { get; }
+        public string Extension { get; }
+        public string Guid { get; }
+        public DateTimeOffset ModifiedMoment { get; }
+        public bool Uncommitted { get; }
+
+        private ContentIdentifier()
+        {
+            // do nothing
+        }
 
         public ContentIdentifier(string hash, string extension, string guid, DateTimeOffset modifiedMoment, bool uncommitted)
         {
