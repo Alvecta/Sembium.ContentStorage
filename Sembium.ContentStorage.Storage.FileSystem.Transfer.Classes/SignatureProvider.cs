@@ -50,9 +50,10 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Transfer
             var encoding = new UnicodeEncoding();
             var dataBytes = encoding.GetBytes(data);
 
-            var sha1 = new SHA1Managed();
-
-            return sha1.ComputeHash(dataBytes);
+            using (var sha1 = new SHA1Managed())
+            {
+                return sha1.ComputeHash(dataBytes);
+            }
         }
 
         private enum KeyType { Private, Public }

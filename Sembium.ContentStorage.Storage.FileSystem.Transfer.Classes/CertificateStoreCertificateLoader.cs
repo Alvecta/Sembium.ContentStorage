@@ -29,19 +29,20 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Transfer
             if (string.IsNullOrEmpty(CertificateSubject))
                 return null;
 
-            var store = new X509Store(StoreName.AuthRoot, StoreLocation.LocalMachine);
-
-            store.Open(OpenFlags.ReadOnly);
-            try
+            using (var store = new X509Store(StoreName.AuthRoot, StoreLocation.LocalMachine))
             {
-                return
-                    store.Certificates.Cast<X509Certificate2>()
-                    .Where(c => c.Subject.Contains(CertificateSubject))
-                    .FirstOrDefault();
-            }
-            finally
-            {
-                store.Close();
+                store.Open(OpenFlags.ReadOnly);
+                try
+                {
+                    return
+                        store.Certificates.Cast<X509Certificate2>()
+                        .Where(c => c.Subject.Contains(CertificateSubject))
+                        .FirstOrDefault();
+                }
+                finally
+                {
+                    store.Close();
+                }
             }
         }
     }

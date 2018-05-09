@@ -38,39 +38,40 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Common
 
             locatorURLs = locatorURLs.Replace("{ContainerName}", containerName);
 
-            var httpClient = new System.Net.Http.HttpClient();
-
-            var errorMsg = string.Empty;
-
-            var RetryCount = 2;
-            for (var i = 0; i < RetryCount; i++)
+            using (var httpClient = new System.Net.Http.HttpClient())
             {
-                foreach (var url in locatorURLs.Split(';'))
+                var errorMsg = string.Empty;
+
+                var RetryCount = 2;
+                for (var i = 0; i < RetryCount; i++)
                 {
-                    try
+                    foreach (var url in locatorURLs.Split(';'))
                     {
-                        return httpClient.GetStringAsync(url).Result;
-                    }
-                    catch (AggregateException e)
-                    {
-                        if (string.IsNullOrEmpty(errorMsg))
+                        try
                         {
-                            errorMsg = string.Join("\n", e.Flatten().InnerExceptions.Select(x => x.Message));
+                            return httpClient.GetStringAsync(url).Result;
+                        }
+                        catch (AggregateException e)
+                        {
+                            if (string.IsNullOrEmpty(errorMsg))
+                            {
+                                errorMsg = string.Join("\n", e.Flatten().InnerExceptions.Select(x => x.Message));
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            if (string.IsNullOrEmpty(errorMsg))
+                            {
+                                errorMsg = e.Message;
+                            }
                         }
                     }
-                    catch (Exception e)
-                    {
-                        if (string.IsNullOrEmpty(errorMsg))
-                        {
-                            errorMsg = e.Message;
-                        }
-                    }
+
+                    Task.Delay(3000).Wait();
                 }
 
-                Task.Delay(3000).Wait();
+                throw new UserException(string.Format("Could not obtain content storage service for container \"{0}\":\r\n{1}", containerName, errorMsg));
             }
-
-            throw new UserException(string.Format("Could not obtain content storage service for container \"{0}\":\r\n{1}", containerName, errorMsg));
         }
 
         public string GetContainerName(string containerName)

@@ -148,15 +148,20 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
                 contentBuilder.AppendLine("</BlockList>");
                 var contentString = contentBuilder.ToString();
 
-                HttpContent content = new StringContent(contentString);
-                content.Headers.ContentType = new MediaTypeHeaderValue(MediaTypeNames.Text.Plain);
-                content.Headers.ContentLength = contentString.Length;
+                using (HttpContent content = new StringContent(contentString))
+                {
+                    content.Headers.ContentType = new MediaTypeHeaderValue(MediaTypeNames.Text.Plain);
+                    content.Headers.ContentLength = contentString.Length;
 
-                var commitUrl = hostIdentifier + "&comp=blocklist";
+                    var commitUrl = hostIdentifier + "&comp=blocklist";
 
-                var result = client.PutAsync(commitUrl, content);
+                    var result = client.PutAsync(commitUrl, content);
 
-                ProcessResult(result);
+                    using (ProcessResult(result))
+                    {
+                        // do nothing
+                    }
+                }
             }
         }
 
