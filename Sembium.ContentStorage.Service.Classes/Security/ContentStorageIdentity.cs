@@ -13,11 +13,11 @@ namespace Sembium.ContentStorage.Service.Security
             get { return "Membership"; }
         }
 
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public string ContainerName { get; private set; }
+        public string ContainerName { get; }
 
-        public bool IsAuthenticated { get; private set; }
+        public bool IsAuthenticated { get; }
 
         public ContentStorageIdentity(string name, string containerName, bool isAuthenticated)
         {

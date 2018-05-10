@@ -9,8 +9,8 @@ namespace Sembium.ContentStorage.Service.Results
 {
     public class DocumentUploadInfo : IDocumentUploadInfo
     {
-        public IUploadInfo UploadInfo { get; private set; }
-        public IDocumentIdentifier DocumentIdentifier { get; private set; }
+        public IUploadInfo UploadInfo { get; }
+        public IDocumentIdentifier DocumentIdentifier { get; }
 
         public DocumentUploadInfo(IUploadInfo uploadInfo, IDocumentIdentifier documentIdentifier)
         {

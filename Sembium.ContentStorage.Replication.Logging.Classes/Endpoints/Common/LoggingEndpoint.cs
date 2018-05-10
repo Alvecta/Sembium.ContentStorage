@@ -11,8 +11,8 @@ namespace Sembium.ContentStorage.Replication.Logging.Endpoints.Common
 {
     public abstract class LoggingEndpoint : IEndpoint
     {
-        protected IEndpoint Endpoint { get; private set; }
-        protected ILogger Logger { get; private set; }
+        protected IEndpoint Endpoint { get; }
+        protected ILogger Logger { get; }
 
         public LoggingEndpoint(IEndpoint endpoint, ILogger logger)
         {

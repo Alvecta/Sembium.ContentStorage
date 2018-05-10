@@ -8,8 +8,8 @@ namespace Sembium.ContentStorage.Service.Results
 {
     public class DocumentIDUploadInfo : IDocumentIDUploadInfo
     {
-        public IIDUploadInfo IDUploadInfo { get; private set; }
-        public string DocumentID { get; private set; }
+        public IIDUploadInfo IDUploadInfo { get; }
+        public string DocumentID { get; }
 
         public DocumentIDUploadInfo(IIDUploadInfo idUploadInfo, string documentID)
         {

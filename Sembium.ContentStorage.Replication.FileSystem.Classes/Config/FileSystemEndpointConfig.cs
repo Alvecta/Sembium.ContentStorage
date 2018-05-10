@@ -8,7 +8,7 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Config
 {
     public class FileSystemEndpointConfig : IFileSystemEndpointConfig
     {
-        public string DirectoryName { get; private set; }
+        public string DirectoryName { get; }
 
         public FileSystemEndpointConfig(string directoryName)
         {

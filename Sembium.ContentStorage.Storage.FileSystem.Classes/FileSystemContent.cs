@@ -13,9 +13,9 @@ namespace Sembium.ContentStorage.Storage.FileSystem
     {
         private readonly IFileSystemFullFileNameProvider _fileSystemFullFileNameProvider;
 
-        protected string Root { get; private set; }
-        protected string DirName { get; private set; }
-        protected string FileName { get; private set; }
+        protected string Root { get; }
+        protected string DirName { get; }
+        protected string FileName { get; }
 
         private string FullFileName 
         { 

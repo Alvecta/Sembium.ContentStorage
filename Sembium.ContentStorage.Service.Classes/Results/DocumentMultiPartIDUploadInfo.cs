@@ -9,8 +9,8 @@ namespace Sembium.ContentStorage.Service.Results
 {
     public class DocumentMultiPartIDUploadInfo : IDocumentMultiPartIDUploadInfo
     {
-        public IMultiPartIDUploadInfo MultiPartIDUploadInfo { get; private set; }
-        public string DocumentID { get; private set; }
+        public IMultiPartIDUploadInfo MultiPartIDUploadInfo { get; }
+        public string DocumentID { get; }
 
         public DocumentMultiPartIDUploadInfo(IMultiPartIDUploadInfo multiPartIDUploadInfo, string documentID)
         {

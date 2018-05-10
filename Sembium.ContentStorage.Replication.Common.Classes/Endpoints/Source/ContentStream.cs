@@ -9,9 +9,9 @@ namespace Sembium.ContentStorage.Replication.Common.Endpoints.Source
 {
     public class ContentStream : IContentStream
     {
-        public long Size { get; private set; }
+        public long Size { get; }
 
-        public Stream Stream { get; private set; }
+        public Stream Stream { get; }
 
         public ContentStream(long size, System.IO.Stream stream)
         {

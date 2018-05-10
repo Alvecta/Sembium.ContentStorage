@@ -9,10 +9,10 @@ namespace Sembium.ContentStorage.Service.Results
 {
     public class UploadInfo : IUploadInfo
     {
-        public string URL { get; private set; }
-        public string HttpMethod { get; private set; }
-        public IEnumerable<KeyValuePair<string, string>> HttpHeaders { get; private set; }
-        public IUploadIdentifier UploadIdentifier { get; private set; }
+        public string URL { get; }
+        public string HttpMethod { get; }
+        public IEnumerable<KeyValuePair<string, string>> HttpHeaders { get; }
+        public IUploadIdentifier UploadIdentifier { get; }
 
         public UploadInfo(string url, string httpMethod, IEnumerable<KeyValuePair<string, string>> httpHeaders, IUploadIdentifier uploadIdentifier)
         {

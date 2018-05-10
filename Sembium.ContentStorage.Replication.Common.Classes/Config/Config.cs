@@ -8,8 +8,8 @@ namespace Sembium.ContentStorage.Replication.Common.Config
 {
     public class Config : IConfig
     {
-        public IEnumerable<IRouteConfig> RouteConfigs { get; private set; }
-        public string LogFileName { get; private set; }
+        public IEnumerable<IRouteConfig> RouteConfigs { get; }
+        public string LogFileName { get; }
 
         public Config(IEnumerable<IRouteConfig> routeConfigs, string logFileName)
         {

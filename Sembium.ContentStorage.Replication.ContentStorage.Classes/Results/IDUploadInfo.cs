@@ -8,10 +8,10 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Results
 {
     public class IDUploadInfo
     {
-        public string URL { get; private set; }
-        public string HttpMethod { get; private set; }
-        public IEnumerable<KeyValuePair<string, string>> HttpHeaders { get; private set; }
-        public string UploadID { get; private set; }
+        public string URL { get; }
+        public string HttpMethod { get; }
+        public IEnumerable<KeyValuePair<string, string>> HttpHeaders { get; }
+        public string UploadID { get; }
 
         public IDUploadInfo(string url, string httpMethod, IEnumerable<KeyValuePair<string, string>> httpHeaders, string uploadID)
         {

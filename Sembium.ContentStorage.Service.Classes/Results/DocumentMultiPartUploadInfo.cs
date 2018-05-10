@@ -10,8 +10,8 @@ namespace Sembium.ContentStorage.Service.Results
 {
     public class DocumentMultiPartUploadInfo : IDocumentMultiPartUploadInfo
     {
-        public IMultiPartUploadInfo MultiPartUploadInfo { get; private set; }
-        public IDocumentIdentifier DocumentIdentifier { get; private set; }
+        public IMultiPartUploadInfo MultiPartUploadInfo { get; }
+        public IDocumentIdentifier DocumentIdentifier { get; }
 
         public DocumentMultiPartUploadInfo(IMultiPartUploadInfo multiPartUploadInfo, IDocumentIdentifier documentIdentifier)
         {

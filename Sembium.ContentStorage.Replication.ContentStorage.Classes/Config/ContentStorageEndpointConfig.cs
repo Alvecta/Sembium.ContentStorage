@@ -8,8 +8,8 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Config
 {
     public class ContentStorageEndpointConfig : IContentStorageEndpointConfig
     {
-        public string ContainerName { get; private set; }
-        public string AuthenticationToken { get; private set; }
+        public string ContainerName { get; }
+        public string AuthenticationToken { get; }
 
         public ContentStorageEndpointConfig(string containerName, string authenticationToken)
         {

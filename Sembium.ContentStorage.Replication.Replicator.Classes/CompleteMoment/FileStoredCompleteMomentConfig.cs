@@ -8,8 +8,8 @@ namespace Sembium.ContentStorage.Replication.Replicator.CompleteMoment
 {
     public class FileStoredCompleteMomentConfig : IFileStoredCompleteMomentConfig
     {
-        public string FileName { get; private set; }
-        public int ExpiryMinutes { get; private set; }
+        public string FileName { get; }
+        public int ExpiryMinutes { get; }
 
         public FileStoredCompleteMomentConfig(string fileName, int expiryMinutes)
         {

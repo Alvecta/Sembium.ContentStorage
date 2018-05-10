@@ -4,13 +4,13 @@ namespace Sembium.ContentStorage.Storage.HostingResults
 {
     public class MultiPartUploadInfo : IMultiPartUploadInfo
     {
-        public string HttpMethod { get; private set; }
-        public long PartSize { get; private set; }
+        public string HttpMethod { get; }
+        public long PartSize { get; }
 
-        public IEnumerable<IHttpPartUploadInfo> PartUploadInfos { get; private set; }
+        public IEnumerable<IHttpPartUploadInfo> PartUploadInfos { get; }
 
-        public string MultiPartUploadResultHeaderName { get; private set; }
-        public IUploadIdentifier UploadIdentifier { get; private set; }
+        public string MultiPartUploadResultHeaderName { get; }
+        public IUploadIdentifier UploadIdentifier { get; }
 
         public MultiPartUploadInfo(string httpMethod, long partSize, IEnumerable<IHttpPartUploadInfo> partUploadInfos, string multiPartUploadResultHeaderName, IUploadIdentifier uploadIdentifier)
         {
