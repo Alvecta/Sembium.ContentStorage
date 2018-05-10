@@ -1,5 +1,4 @@
 ﻿using Sembium.ContentStorage.Storage.Common;
-using Sembium.ContentStorage.Storage.Common.Factories;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.HostingResults.Factories;
@@ -14,16 +13,13 @@ namespace Sembium.ContentStorage.Storage.Tools
     public class UploadIdentifierProvider : IUploadIdentifierProvider
     {
         private readonly IUploadIdentifierFactory _uploadIdentifierFactory;
-        private readonly IContentIdentifierFactory _contentIdentifierFactory;
         private readonly IContentIdentifiersProvider _contentIdentifiersProvider;
 
         public UploadIdentifierProvider(
             IUploadIdentifierFactory uploadIdentifierFactory,
-            IContentIdentifierFactory contentIdentifierFactory,
             IContentIdentifiersProvider contentIdentifiersProvider)
         {
             _uploadIdentifierFactory = uploadIdentifierFactory;
-            _contentIdentifierFactory = contentIdentifierFactory;
             _contentIdentifiersProvider = contentIdentifiersProvider;
         }
 
