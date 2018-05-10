@@ -1,5 +1,5 @@
 ﻿using Sembium.ContentStorage.Client;
-using Sembium.ContentStorage.Common;
+using Sembium.ContentStorage.Misc;
 using Sembium.ContentStorage.Replication.Common.Endpoints.Source;
 using Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Common;
 using Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Source;

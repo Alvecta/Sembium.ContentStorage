@@ -24,7 +24,7 @@ namespace Sembium.ContentStorage.TransferService.Library
 
         public static void RegisterFor(ContainerBuilder builder, IConfiguration configuration)
         {
-            Sembium.ContentStorage.Common.AutofacRegistrations.RegisterFor(builder);
+            Sembium.ContentStorage.Misc.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Storage.FileSystem.AutofacRegistrations.RegisterFor(builder, configuration);
             Sembium.ContentStorage.Storage.FileSystem.Transfer.AutofacRegistrations.RegisterFor(builder);
         }

@@ -1,10 +1,8 @@
-﻿using Sembium.ContentStorage.Common;
-using Sembium.ContentStorage.Common.Utils;
+﻿using Sembium.ContentStorage.Misc.Utils;
 using Sembium.ContentStorage.Service.Results;
 using Sembium.ContentStorage.Service.Security;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
-using Sembium.ContentStorage.Storage.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,27 +17,18 @@ namespace Sembium.ContentStorage.Service
         private const string SystemContainerName = "system";
 
         private readonly IContentStorageHost _contentStorageHost;
-        private readonly IContentIdentifierGenerator _contentIdentifierGenerator;
-        private readonly ISystemContainerProvider _systemContainerProvider;
         private readonly IContentStorageContainerFactory _contentStorageContainerFactory;
-        private readonly ISerializer _serializer;
         private readonly IContainerStateRepository _containerStateRepository;
         private readonly IAuthorizationChecker _authorizationChecker;
 
         public ContentStorage(
             IContentStorageHost contentStorageHost,
-            IContentIdentifierGenerator contentIdentifierGenerator,
-            ISystemContainerProvider systemContainerProvider,
             IContentStorageContainerFactory contentStorageContainerFactory,
-            ISerializer serializer,
             IContainerStateRepository containerStateRepository,
             IAuthorizationChecker authorizationChecker)
         {
             _contentStorageHost = contentStorageHost;
-            _contentIdentifierGenerator = contentIdentifierGenerator;
-            _systemContainerProvider = systemContainerProvider;
             _contentStorageContainerFactory = contentStorageContainerFactory;
-            _serializer = serializer;
             _containerStateRepository = containerStateRepository;
             _authorizationChecker = authorizationChecker;
         }

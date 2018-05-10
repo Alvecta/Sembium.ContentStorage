@@ -24,7 +24,7 @@ namespace Sembium.ContentStorage.Service.Library
 
         public static void RegisterFor(ContainerBuilder builder, IConfiguration configuration)
         {
-            Sembium.ContentStorage.Common.AutofacRegistrations.RegisterFor(builder);
+            Sembium.ContentStorage.Misc.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Service.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Storage.AutofacRegistrations.RegisterFor(builder);
 

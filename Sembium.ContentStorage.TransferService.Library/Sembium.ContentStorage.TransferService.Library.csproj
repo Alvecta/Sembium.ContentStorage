@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sembium.ContentStorage.Common.Classes\Sembium.ContentStorage.Common.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Misc.Classes\Sembium.ContentStorage.Misc.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Classes\Sembium.ContentStorage.Storage.FileSystem.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Transfer.Classes\Sembium.ContentStorage.Storage.FileSystem.Transfer.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Utils.AspNetCore\Sembium.ContentStorage.Utils.AspNetCore.csproj" />

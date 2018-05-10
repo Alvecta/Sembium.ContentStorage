@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Common.Utils
+namespace Sembium.ContentStorage.Misc.Utils
 {
     public class UserAuthenticationException : UserException
     {

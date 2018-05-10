@@ -1,5 +1,5 @@
 ﻿using Sembium.ContentStorage.Client;
-using Sembium.ContentStorage.Common;
+using Sembium.ContentStorage.Misc;
 using Sembium.ContentStorage.Replication.Common.Endpoints.Common;
 using Sembium.ContentStorage.Storage.Common;
 using Sembium.ContentStorage.Storage.Tools;
@@ -16,12 +16,12 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Common
     {
         private bool _sslDisabled;
 
-        protected string ContainerName { get; private set; }
-        protected string AuthenticationToken { get; private set; }
-        protected string ContentStorageServiceURL { get; private set; }
-        protected IContentStorageServiceURLProvider ContentStorageServiceURLProvider { get; private set; }
-        protected IContentIdentifierSerializer ContentIdentifierSerializer { get; private set; }
-        protected ISerializer Serializer { get; private set; }
+        protected string ContainerName { get; }
+        protected string AuthenticationToken { get; }
+        protected string ContentStorageServiceURL { get; }
+        protected IContentStorageServiceURLProvider ContentStorageServiceURLProvider { get; }
+        protected IContentIdentifierSerializer ContentIdentifierSerializer { get; }
+        protected ISerializer Serializer { get; }
 
         public ContentStorageEndpoint(string containerName, string authenticationToken, 
             string contentStorageServiceURL,

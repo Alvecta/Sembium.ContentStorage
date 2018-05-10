@@ -1,6 +1,5 @@
-﻿using Sembium.ContentStorage.Common;
-using Sembium.ContentStorage.Common.Utils;
-using Sembium.ContentStorage.Storage.ContentsMonthHash;
+﻿using Sembium.ContentStorage.Misc;
+using Sembium.ContentStorage.Misc.Utils;
 using Sembium.ContentStorage.Storage.Hosting;
 using System;
 using System.Collections.Generic;

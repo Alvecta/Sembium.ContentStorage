@@ -1,5 +1,4 @@
-﻿using Sembium.ContentStorage.Common;
-using Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Source;
+﻿using Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Source;
 using Sembium.ContentStorage.Replication.Logging.Endpoints.Source;
 using Sembium.ContentStorage.Storage.Common;
 using Sembium.ContentStorage.Storage.HostingResults;

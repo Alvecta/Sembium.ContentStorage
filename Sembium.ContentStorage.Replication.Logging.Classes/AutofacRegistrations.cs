@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Sembium.ContentStorage.Common;
 using Sembium.ContentStorage.Replication.Common.Config;
 using Sembium.ContentStorage.Replication.Common.Endpoints.Destination;
 using Sembium.ContentStorage.Replication.Common.Endpoints.Source;

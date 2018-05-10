@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Sembium.ContentStorage.Common;
+using Sembium.ContentStorage.Misc;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.HostingResults.Factories;
 using Sembium.ContentStorage.Utils;

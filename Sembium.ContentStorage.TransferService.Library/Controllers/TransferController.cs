@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using Sembium.ContentStorage.Common;
+using Sembium.ContentStorage.Misc;
 using Sembium.ContentStorage.Storage.FileSystem;
 using Sembium.ContentStorage.Storage.FileSystem.Transfer;
 using Sembium.ContentStorage.Utils;

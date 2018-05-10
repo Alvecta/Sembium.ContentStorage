@@ -1,4 +1,4 @@
-﻿using Sembium.ContentStorage.Common.Utils;
+﻿using Sembium.ContentStorage.Misc.Utils;
 using Sembium.ContentStorage.Replication.Common.Config;
 using Sembium.ContentStorage.Storage.Common;
 using System;

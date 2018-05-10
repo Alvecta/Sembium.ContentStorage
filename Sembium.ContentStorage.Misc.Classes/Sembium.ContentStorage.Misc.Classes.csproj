@@ -2,17 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Sembium.ContentStorage.Storage.FileSystem.Transfer</RootNamespace>
+    <RootNamespace>Sembium.ContentStorage.Misc</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sembium.ContentStorage.Misc.Interfaces\Sembium.ContentStorage.Misc.Interfaces.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Misc.Utils\Sembium.ContentStorage.Misc.Utils.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces\Sembium.ContentStorage.Storage.FileSystem.Transfer.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

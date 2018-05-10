@@ -1,4 +1,4 @@
-﻿using Sembium.ContentStorage.Common.Utils;
+﻿using Sembium.ContentStorage.Misc.Utils;
 using Sembium.ContentStorage.Storage.ContentsMonthHash;
 using Sembium.ContentStorage.Storage.Tools;
 using Sembium.ContentStorage.Utils;

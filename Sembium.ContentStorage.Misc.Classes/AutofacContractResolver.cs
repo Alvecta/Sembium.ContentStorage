@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Misc
 {
     // copied from https://www.newtonsoft.com/json/help/html/DeserializeWithDependencyInjection.htm
     // and changed to use IComponentContext instead of IContainer
