@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Logging
 {
-    public class LoggerLogger : Sembium.ContentStorage.Common.ILogger
+    public class LoggerLogger : Sembium.ContentStorage.Replication.Logging.ILogger
     {
         private readonly Microsoft.Extensions.Logging.ILogger<LoggerLogger> _logger;
 

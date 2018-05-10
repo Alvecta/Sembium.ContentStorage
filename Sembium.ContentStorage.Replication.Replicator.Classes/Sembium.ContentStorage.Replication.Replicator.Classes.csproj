@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.Common.Utils\Sembium.ContentStorage.Replication.Common.Utils.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.ContentStorage.Interfaces\Sembium.ContentStorage.Replication.ContentStorage.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.FileSystem.Interfaces\Sembium.ContentStorage.Replication.FileSystem.Interfaces.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Replication.Logging.Interfaces\Sembium.ContentStorage.Replication.Logging.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.Replicator.Interfaces\Sembium.ContentStorage.Replication.Replicator.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Utils\Sembium.ContentStorage.Utils.csproj" />
   </ItemGroup>
