@@ -1,4 +1,5 @@
-﻿using Sembium.ContentStorage.Storage.Hosting;
+﻿using Amazon.S3;
+using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.HostingResults.Factories;
 using Sembium.ContentStorage.Storage.Tools;
@@ -100,11 +101,23 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
             }
         }
 
-        public System.IO.Stream GetReadStream()
+        public System.IO.Stream GetReadStream(bool emptyIfMissing)
         {
-            var request = new Amazon.S3.Model.GetObjectRequest { BucketName = _bucketName, Key = _keyName };
-            var response = _amazonS3.GetObjectAsync(request).Result;
-            return response.ResponseStream;
+            try
+            {
+                var request = new Amazon.S3.Model.GetObjectRequest { BucketName = _bucketName, Key = _keyName };
+                var response = _amazonS3.GetObjectAsync(request).Result;
+                return response.ResponseStream;
+            }
+            catch (AggregateException e)
+            {
+                if (emptyIfMissing && (e.InnerException != null) && (e.InnerException.Message.StartsWith("The specified key does not exist")))
+                {
+                    return new System.IO.MemoryStream();
+                }
+
+                throw;
+            }
         }
 
         public async Task DeleteAsync(CancellationToken cancellationToken)

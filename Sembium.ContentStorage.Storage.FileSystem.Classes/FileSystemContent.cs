@@ -1,6 +1,7 @@
 ﻿using Sembium.ContentStorage.Storage.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -45,9 +46,21 @@ namespace Sembium.ContentStorage.Storage.FileSystem
             }
         }
 
-        public System.IO.Stream GetReadStream()
+        public System.IO.Stream GetReadStream(bool emptyIfMissing)
         {
-            return System.IO.File.OpenRead(FullFileName);
+            try
+            {
+                return System.IO.File.OpenRead(FullFileName);
+            }
+            catch (FileNotFoundException)
+            {
+                if (emptyIfMissing)
+                {
+                    return new System.IO.MemoryStream();
+                }
+
+                throw;
+            }
         }
 
         public  long GetSize()

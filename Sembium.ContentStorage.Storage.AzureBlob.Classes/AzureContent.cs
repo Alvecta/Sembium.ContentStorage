@@ -120,9 +120,21 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             _delegateContent.UploadFromStreamAsync(stream).Wait();
         }
 
-        public System.IO.Stream GetReadStream()
+        public System.IO.Stream GetReadStream(bool emptyIfMissing)
         {
-            return _delegateContent.OpenReadAsync().Result;
+            try
+            {
+                return _delegateContent.OpenReadAsync().Result;
+            }
+            catch (AggregateException e)
+            {
+                if (emptyIfMissing && (e.InnerException != null) && (e.InnerException.Message.StartsWith("The specified blob does not exist")))
+                {
+                    return new System.IO.MemoryStream();
+                }
+
+                throw;
+            }
         }
 
         public async Task DeleteAsync(CancellationToken cancellationToken)

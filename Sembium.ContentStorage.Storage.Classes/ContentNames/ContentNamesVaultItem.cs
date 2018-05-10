@@ -40,7 +40,7 @@ namespace Sembium.ContentStorage.Storage.ContentNames
             }
             else
             {
-                return _content.GetReadStream();
+                return _content.GetReadStream(true);
             }
         }
 
