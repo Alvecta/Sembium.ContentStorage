@@ -1,7 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using Sembium.ContentStorage.Common.Utils;
 using Sembium.ContentStorage.Storage.Common;
-using Sembium.ContentStorage.Storage.ContentsMonthHash;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.Tools;
 using System;
@@ -26,7 +25,6 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
         private readonly IContentNameProvider _contentNameProvider;
         private readonly IContentIdentifierGenerator _contentIdentifierGenerator;
         private readonly IContentHashValidator _contentHashValidator;
-        private readonly IHashProvider _hashProvider;
 
         public AzureContainer(
             Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer delegateContainer,
@@ -34,8 +32,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             IAzureContentFactory azureContentFactory,
             IContentNameProvider contentNameProvider,
             IContentIdentifierGenerator contentIdentifierGenerator,
-            IContentHashValidator contentHashValidator,
-            IHashProvider hashProvider)
+            IContentHashValidator contentHashValidator)
         {
             _delegateContainer = delegateContainer;
             _rootPath = rootPath;
@@ -43,7 +40,6 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             _contentNameProvider = contentNameProvider;
             _contentIdentifierGenerator = contentIdentifierGenerator;
             _contentHashValidator = contentHashValidator;
-            _hashProvider = hashProvider;
         }
 
         private bool ContentExists(string contentName)

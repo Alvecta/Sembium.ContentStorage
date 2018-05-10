@@ -62,7 +62,7 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Endpoints.Common
                                 _contentIdentifiersProvider.GetChronologicallyOrderedContentIdentifiers(Container, beforeMoment, null)
                             );
 
-                    var hashResult = _hashProvider.GetHashAndCount(monthHashAndCounts);
+                    var hashResult = _hashProvider.GetHashAndCount(monthHashAndCounts.Select(x => (x.Hash, x.Count)));
 
                     return _hashStringProvider.GetHashString(hashResult.Hash, hashResult.Count);
                 });

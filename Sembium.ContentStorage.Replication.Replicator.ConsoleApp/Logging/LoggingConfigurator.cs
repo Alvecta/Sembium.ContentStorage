@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Sembium.ContentStorage.Common;
+using Sembium.ContentStorage.Replication.Logging;
 using Sembium.ContentStorage.Replication.Replicator.ConsoleApp.Initialization;
 using Serilog;
 using System;

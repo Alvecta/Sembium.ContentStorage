@@ -20,7 +20,6 @@
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Common.Utils\Sembium.ContentStorage.Common.Utils.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.AmazonS3.Interfaces\Sembium.ContentStorage.Storage.AmazonS3.Interfaces.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Storage.Interfaces\Sembium.ContentStorage.Storage.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

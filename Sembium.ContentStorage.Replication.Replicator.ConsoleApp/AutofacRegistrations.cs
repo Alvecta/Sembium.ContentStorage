@@ -21,7 +21,7 @@ namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp
 
             builder.RegisterType<LoggingConfigurator>().As<ILoggingConfigurator>();
             builder.RegisterType<MainService>().As<IMainService>();
-            builder.RegisterType<LoggerLogger>().As<Sembium.ContentStorage.Common.ILogger>();
+            builder.RegisterType<LoggerLogger>().As<Sembium.ContentStorage.Replication.Logging.ILogger>();
         }
     }
 }

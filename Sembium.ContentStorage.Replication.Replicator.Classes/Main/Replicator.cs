@@ -1,8 +1,8 @@
-﻿using Sembium.ContentStorage.Common;
-using Sembium.ContentStorage.Common.Utils;
+﻿using Sembium.ContentStorage.Common.Utils;
 using Sembium.ContentStorage.Replication.Common.Config;
 using Sembium.ContentStorage.Replication.Common.Main;
 using Sembium.ContentStorage.Replication.Common.Utils;
+using Sembium.ContentStorage.Replication.Logging;
 using Sembium.ContentStorage.Utils;
 using System;
 using System.Collections.Generic;

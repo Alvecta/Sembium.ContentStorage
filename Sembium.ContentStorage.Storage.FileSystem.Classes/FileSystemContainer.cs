@@ -1,6 +1,5 @@
 ﻿using Sembium.ContentStorage.Common.Utils;
 using Sembium.ContentStorage.Storage.Common;
-using Sembium.ContentStorage.Storage.ContentsMonthHash;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.Tools;
 using System;
@@ -23,17 +22,13 @@ namespace Sembium.ContentStorage.Storage.FileSystem
         private readonly IContentIdentifierGenerator _contentIdentifierGenerator;
         private readonly IContentHashValidator _contentHashValidator;
         private readonly IFileSystemFullFileNameProvider _fileSystemFullFileNameProvider;
-        private readonly IContentsMonthHashProvider _contentsMonthHashProvider;
-        private readonly IHashProvider _hashProvider;
 
         public FileSystemContainer(string root, string dirName, 
             IFileSystemContentFactory fileSystemContentFactory,
             IContentNameProvider contentNameProvider,
             IContentIdentifierGenerator contentIdentifierGenerator,
             IContentHashValidator contentHashValidator,
-            IFileSystemFullFileNameProvider fileSystemFullFileNameProvider,
-            IContentsMonthHashProvider contentsMonthHashProvider,
-            IHashProvider hashProvider)
+            IFileSystemFullFileNameProvider fileSystemFullFileNameProvider)
         {
             _root = root;
             _dirName = dirName;
@@ -42,9 +37,6 @@ namespace Sembium.ContentStorage.Storage.FileSystem
             _contentIdentifierGenerator = contentIdentifierGenerator;
             _contentHashValidator = contentHashValidator;
             _fileSystemFullFileNameProvider = fileSystemFullFileNameProvider;
-            _hashProvider = hashProvider;
-            _contentsMonthHashProvider = contentsMonthHashProvider;
-            _hashProvider = hashProvider;
         }
 
         private string GetContentFullFileName(string contentName)

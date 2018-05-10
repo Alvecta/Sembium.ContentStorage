@@ -700,7 +700,7 @@ namespace Sembium.ContentStorage.Service
 
             var allMonthHashAndCounts = persistedPastMonthHashAndCounts.Concat(nextMonthHashAndCounts);
 
-            return _hashProvider.GetHashAndCount(allMonthHashAndCounts);
+            return _hashProvider.GetHashAndCount(allMonthHashAndCounts.Select(x => (x.Hash, x.Count)));
         }
 
         private void AddMissingMonthHashAndCounts(IEnumerable<IMonthHashAndCount> monthHashAndCounts)
