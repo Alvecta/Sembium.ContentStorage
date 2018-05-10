@@ -23,6 +23,7 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
         private readonly IConfigurationSettings _configurationSettings;
         private readonly IAmazonS3 _amazonS3;
         private readonly IHttpRequestInfoFactory _httpRequestInfoFactory;
+
         private string _contentStorageBucketName;
 
         public string ContentStorageBucketName

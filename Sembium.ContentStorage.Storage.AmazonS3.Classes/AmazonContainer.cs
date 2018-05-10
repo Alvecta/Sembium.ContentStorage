@@ -1,6 +1,5 @@
 ﻿using Sembium.ContentStorage.Common.Utils;
 using Sembium.ContentStorage.Storage.Common;
-using Sembium.ContentStorage.Storage.ContentsMonthHash;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.Tools;
 using System;
@@ -21,17 +20,13 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
         private readonly IContentNameProvider _contentNameProvider;
         private readonly IContentIdentifierGenerator _contentIdentifierGenerator;
         private readonly IContentHashValidator _contentHashValidator;
-        private readonly IContentsMonthHashProvider _contentsMonthHashProvider;
-        private readonly IHashProvider _hashProvider;
 
         public AmazonContainer(string bucketName, string directoryName,
             Amazon.S3.IAmazonS3 amazonS3,
             IAmazonContentFactory amazonContentFactory,
             IContentNameProvider contentNameProvider,
             IContentIdentifierGenerator contentIdentifierGenerator,
-            IContentHashValidator contentHashValidator,
-            IContentsMonthHashProvider contentsMonthHashProvider,
-            IHashProvider hashProvider)
+            IContentHashValidator contentHashValidator)
         {
             _bucketName = bucketName;
             _directoryName = directoryName;
@@ -40,8 +35,6 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
             _contentNameProvider = contentNameProvider;
             _contentIdentifierGenerator = contentIdentifierGenerator;
             _contentHashValidator = contentHashValidator;
-            _contentsMonthHashProvider = contentsMonthHashProvider;
-            _hashProvider = hashProvider;
         }
 
         private bool ContentExists(string contentName)
