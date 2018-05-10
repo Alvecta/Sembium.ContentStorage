@@ -14,6 +14,6 @@
     "template"      : "serverless.template",
     "template-parameters" : "\"ShouldCreateBucket\"=\"false\";\"BucketName\"=\"\"",
     "s3-bucket"           : "elasticbeanstalk-eu-central-1-661082269794",
-    "stack-name"          : "awseb-sembiumcontentstorage-stack",
+    "stack-name"          : "aws-sembiumcontentstorageuploader-stack",
     "stack-wait"          : false
 }
