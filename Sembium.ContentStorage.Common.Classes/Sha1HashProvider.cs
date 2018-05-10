@@ -1,11 +1,10 @@
-﻿using Sembium.ContentStorage.Storage.HostingResults;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.ContentsMonthHash
+namespace Sembium.ContentStorage.Common
 {
     public class Sha1HashProvider : IHashProvider
     {
@@ -27,6 +26,11 @@ namespace Sembium.ContentStorage.Storage.ContentsMonthHash
 
         public (byte[] Hash, int Count) GetHashAndCount(IEnumerable<byte[]> datas)
         {
+            return GetHashAndCount(datas.Select(x => (x, 1)));
+        }
+
+        public (byte[] Hash, int Count) GetHashAndCount(IEnumerable<(byte[], int)> datas)
+        {
             using (var sha1 = new System.Security.Cryptography.SHA1Managed())
             {
                 var count = 0;
@@ -34,22 +38,13 @@ namespace Sembium.ContentStorage.Storage.ContentsMonthHash
                 sha1.Initialize();
                 foreach (var data in datas)
                 {
-                    sha1.TransformBlock(data, 0, data.Length, data, 0);
-                    count++;
+                    sha1.TransformBlock(data.Item1, 0, data.Item1.Length, data.Item1, 0);
+                    count+= data.Item2;
                 }
                 sha1.TransformFinalBlock(new byte[0], 0, 0);
 
                 return (sha1.Hash, count);
             }
-        }
-
-        public (byte[] Hash, int Count) GetHashAndCount(IEnumerable<IMonthHashAndCount> monthHashAndCounts)
-        {
-            monthHashAndCounts = monthHashAndCounts.ToList();  // enumerate once
-
-            var hashResult = GetHashAndCount(monthHashAndCounts.Select(x => x.Hash));
-
-            return (hashResult.Hash, monthHashAndCounts.Sum(x => x.Count));
         }
     }
 }

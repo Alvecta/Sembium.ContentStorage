@@ -36,7 +36,6 @@ namespace Sembium.ContentStorage.Storage
             builder.RegisterType<ContentsMonthHashRepository>().As<IContentsMonthHashRepository>();
             builder.RegisterType<SystemContainerProvider>().As<ISystemContainerProvider>();
 
-            builder.RegisterType<Sha1HashProvider>().As<IHashProvider>();
             builder.RegisterType<ContentMonthProvider>().As<IContentMonthProvider>();
             builder.RegisterType<ContentsMonthHashProvider>().As<IContentsMonthHashProvider>();
             builder.RegisterType<ContentNamesRepository>().As<IContentNamesRepository>();

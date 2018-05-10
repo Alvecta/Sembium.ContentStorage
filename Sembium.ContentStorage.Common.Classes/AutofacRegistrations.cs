@@ -14,6 +14,7 @@ namespace Sembium.ContentStorage.Common
             builder.RegisterType<ConfigurationSettings>().As<IConfigurationSettings>();
             builder.RegisterType<JavaScriptSerializer>().As<ISerializer>();
             builder.RegisterType<HashStringProvider>().As<IHashStringProvider>();
+            builder.RegisterType<Sha1HashProvider>().As<IHashProvider>();
             builder.RegisterType<AutofacContractResolver>().As<Newtonsoft.Json.Serialization.IContractResolver>();
         }
     }
