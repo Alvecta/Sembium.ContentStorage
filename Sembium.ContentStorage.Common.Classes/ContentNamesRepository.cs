@@ -1,5 +1,5 @@
 ﻿using Sembium.ContentStorage.Misc.Utils;
-using Sembium.ContentStorage.Storage.ContentsMonthHash;
+using Sembium.ContentStorage.Storage.ContentNames;
 using Sembium.ContentStorage.Storage.Tools;
 using Sembium.ContentStorage.Utils;
 using System;
@@ -10,17 +10,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.ContentNames
+namespace Sembium.ContentStorage.Common
 {
     public class ContentNamesRepository : IContentNamesRepository
     {
-        private readonly ContentNamesRepositorySettings _contentNamesRepositorySettings;
+        private readonly IContentNamesRepositorySettings _contentNamesRepositorySettings;
         private readonly IContentNameProvider _contentNameProvider;
         private readonly IContentMonthProvider _contentMonthProvider;
         private readonly IContentNamesVault _contentNamesVault;
 
         public ContentNamesRepository(
-            ContentNamesRepositorySettings contentNamesRepositorySettings,
+            IContentNamesRepositorySettings contentNamesRepositorySettings,
             IContentNameProvider contentNameProvider,
             IContentMonthProvider contentMonthProvider,
             IContentNamesVault contentNamesVault)

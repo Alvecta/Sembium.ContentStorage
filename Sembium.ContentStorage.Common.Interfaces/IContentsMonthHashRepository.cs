@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.Hosting
+namespace Sembium.ContentStorage.Common
 {
     public interface IContentsMonthHashRepository
     {

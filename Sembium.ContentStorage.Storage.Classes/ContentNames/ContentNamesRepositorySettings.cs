@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sembium.ContentStorage.Storage.ContentNames
 {
-    public class ContentNamesRepositorySettings
+    public class ContentNamesRepositorySettings : IContentNamesRepositorySettings
     {
         public int MonthActiveVaultItemCount { get; set; }
         public long MaxActiveVaultItemSize { get; set; }

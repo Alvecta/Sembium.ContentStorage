@@ -7,8 +7,6 @@ using Sembium.ContentStorage.Service.Security;
 using Sembium.ContentStorage.Service.ServiceResults;
 using Sembium.ContentStorage.Service.ServiceResults.Tools;
 using Sembium.ContentStorage.Storage.Common;
-using Sembium.ContentStorage.Storage.ContentNames;
-using Sembium.ContentStorage.Storage.ContentsMonthHash;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.Tools;
@@ -27,7 +25,9 @@ namespace Sembium.ContentStorage.Service
         private const string URLExpirySecondsAppSettingName = "URLExpirySeconds";
         private const int DefaultURLExpirySeconds = 10 * 60;
         private const string ReadOnlySubcontainersContainerName = "subcontainers";
+
         private readonly string _containerName;
+
         private readonly IContentStorageHost _contentStorageHost;
         private readonly IContentNameProvider _contentNameProvider;
         private readonly IConfigurationSettings _configurationSettings;

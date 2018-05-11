@@ -11,14 +11,14 @@ namespace Sembium.ContentStorage.Storage.ContentNames
     public class ContentNamesVaultItem : IContentNamesVaultItem
     {
         private readonly IContent _content;
-        private readonly ContentNamesRepositorySettings _contentNamesRepositorySettings;
+        private readonly IContentNamesRepositorySettings _contentNamesRepositorySettings;
 
         public string Name { get; }
 
         private readonly bool _isNew;
 
         public ContentNamesVaultItem(IContent content, string name, bool isNew,
-            ContentNamesRepositorySettings contentNamesRepositorySettings)
+            IContentNamesRepositorySettings contentNamesRepositorySettings)
         {
             _content = content;
             Name = name;

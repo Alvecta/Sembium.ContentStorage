@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.ContentNames
+namespace Sembium.ContentStorage.Common
 {
     public interface IContentNamesRepository
     {

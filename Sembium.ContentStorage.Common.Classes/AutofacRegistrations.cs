@@ -12,6 +12,11 @@ namespace Sembium.ContentStorage.Common
         public static void RegisterFor(ContainerBuilder builder)
         {
             builder.RegisterType<MultiPartIDUploadInfo>().As<IMultiPartIDUploadInfo>();
+            builder.RegisterType<ContentIdentifierSerializer>().As<IContentIdentifierSerializer>();
+            builder.RegisterType<ContentsMonthHashRepository>().As<IContentsMonthHashRepository>();
+            builder.RegisterType<ContentMonthProvider>().As<IContentMonthProvider>();
+            builder.RegisterType<ContentsMonthHashProvider>().As<IContentsMonthHashProvider>();
+            builder.RegisterType<ContentNamesRepository>().As<IContentNamesRepository>();
         }
     }
 }
