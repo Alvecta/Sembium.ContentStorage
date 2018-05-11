@@ -14,7 +14,9 @@ namespace Sembium.ContentStorage.Replication.Replicator.ConsoleApp
             Sembium.ContentStorage.Replication.ContentStorage.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Replication.Replicator.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Replication.Logging.AutofacRegistrations.RegisterFor(builder);
+
             Sembium.ContentStorage.Client.AutofacRegistrations.RegisterFor(builder);
+            Sembium.ContentStorage.Common.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Misc.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Storage.AutofacRegistrations.RegisterFor(builder);
             Sembium.ContentStorage.Storage.FileSystem.AutofacRegistrations.RegisterFor(builder, configuration);

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using Sembium.ContentStorage.Common;
 using Sembium.ContentStorage.Service.Results;
-using Sembium.ContentStorage.Service.Security;
 using Sembium.ContentStorage.Service.ServiceModels;
-using Sembium.ContentStorage.Storage.Common;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Utils;
 using Sembium.ContentStorage.Utils.AspNetCore;

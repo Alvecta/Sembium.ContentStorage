@@ -1,7 +1,7 @@
 ﻿using Sembium.ContentStorage.Storage.HostingResults;
 using System.Collections.Generic;
 
-namespace Sembium.ContentStorage.Storage.Common
+namespace Sembium.ContentStorage.Common
 {
     public class MultiPartIDUploadInfo : IMultiPartIDUploadInfo
     {

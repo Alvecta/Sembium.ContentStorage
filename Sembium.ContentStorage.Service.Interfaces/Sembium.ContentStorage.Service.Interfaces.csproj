@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sembium.ContentStorage.Common.Interfaces\Sembium.ContentStorage.Common.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.Interfaces\Sembium.ContentStorage.Storage.Interfaces.csproj" />
   </ItemGroup>
 

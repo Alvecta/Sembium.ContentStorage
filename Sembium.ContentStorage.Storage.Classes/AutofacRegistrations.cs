@@ -19,7 +19,6 @@ namespace Sembium.ContentStorage.Storage
         public static void RegisterFor(ContainerBuilder builder)
         {
             builder.RegisterType<MultiPartUploadInfo>().As<IMultiPartUploadInfo>();
-            builder.RegisterType<MultiPartIDUploadInfo>().As<IMultiPartIDUploadInfo>();
             builder.RegisterType<UploadIdentifier>().As<IUploadIdentifier>();
             builder.RegisterType<DownloadInfo>().As<IDownloadInfo>();
             builder.RegisterType<HttpPartUploadInfo>().As<IHttpPartUploadInfo>();

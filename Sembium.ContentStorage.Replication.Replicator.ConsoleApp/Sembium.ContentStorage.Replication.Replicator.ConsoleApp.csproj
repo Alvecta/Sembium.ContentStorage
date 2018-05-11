@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sembium.ContentStorage.Client.Classes\Sembium.ContentStorage.Client.Classes.csproj" />
+    <ProjectReference Include="..\Sembium.ContentStorage.Common.Classes\Sembium.ContentStorage.Common.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Misc.Classes\Sembium.ContentStorage.Misc.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.Common.Classes\Sembium.ContentStorage.Replication.Common.Classes.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Replication.ContentStorage.Classes\Sembium.ContentStorage.Replication.ContentStorage.Classes.csproj" />
