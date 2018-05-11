@@ -10,7 +10,7 @@ using Sembium.ContentStorage.Misc;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Utils;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Common.MonthHash
 {
     public class ContentsMonthHashRepository : IContentsMonthHashRepository
     {

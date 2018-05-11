@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sembium.ContentStorage.Storage.ContentNames
+namespace Sembium.ContentStorage.Common.ContentNames
 {
     public class ContentNamesRepositorySettings : IContentNamesRepositorySettings
     {

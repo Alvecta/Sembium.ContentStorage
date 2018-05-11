@@ -1,10 +1,8 @@
 ﻿using Autofac;
 using Sembium.ContentStorage.Storage.Common;
-using Sembium.ContentStorage.Storage.ContentNames;
 using Sembium.ContentStorage.Storage.Hosting;
 using Sembium.ContentStorage.Storage.HostingResults;
 using Sembium.ContentStorage.Storage.Tools;
-using Sembium.ContentStorage.Utils.Autofac;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +29,7 @@ namespace Sembium.ContentStorage.Storage
             builder.RegisterType<ContentHashValidator>().As<IContentHashValidator>();
             builder.RegisterType<SystemContainerProvider>().As<ISystemContainerProvider>();
 
-            builder.RegisterType<ContentNamesVault>().As<IContentNamesVault>();
-            builder.RegisterType<ContentNamesVaultItem>().As<IContentNamesVaultItem>();
-
             builder.RegisterType<HttpRequestInfo>().As<IHttpRequestInfo>();
-
-            builder.RegisterOptionsAdapter<ContentNamesRepositorySettings>().As<IContentNamesRepositorySettings>();
         }
     }
 }

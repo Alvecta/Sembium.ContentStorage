@@ -1,5 +1,5 @@
-﻿using Sembium.ContentStorage.Misc.Utils;
-using Sembium.ContentStorage.Storage.ContentNames;
+﻿using Sembium.ContentStorage.Common.ContentNames.Vault;
+using Sembium.ContentStorage.Misc.Utils;
 using Sembium.ContentStorage.Storage.Tools;
 using Sembium.ContentStorage.Utils;
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Common
+namespace Sembium.ContentStorage.Common.ContentNames
 {
     public class ContentNamesRepository : IContentNamesRepository
     {

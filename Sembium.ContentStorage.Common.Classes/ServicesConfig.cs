@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sembium.ContentStorage.Storage.ContentNames;
+using Sembium.ContentStorage.Common.ContentNames;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sembium.ContentStorage.Storage
+namespace Sembium.ContentStorage.Common
 {
     public static class ServicesConfig
     {

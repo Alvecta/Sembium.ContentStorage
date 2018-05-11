@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
-using Sembium.ContentStorage.Storage.ContentNames;
+using Sembium.ContentStorage.Common.ContentNames.Vault;
 using Sembium.ContentStorage.Storage.Hosting;
 using System;
 using System.Collections.Generic;

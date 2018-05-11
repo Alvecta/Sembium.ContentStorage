@@ -7,16 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sembium.ContentStorage.Misc.Interfaces\Sembium.ContentStorage.Misc.Interfaces.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Misc.Utils\Sembium.ContentStorage.Misc.Utils.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Storage.Interfaces\Sembium.ContentStorage.Storage.Interfaces.csproj" />
-    <ProjectReference Include="..\Sembium.ContentStorage.Utils.Autofac\Sembium.ContentStorage.Utils.Autofac.csproj" />
     <ProjectReference Include="..\Sembium.ContentStorage.Utils\Sembium.ContentStorage.Utils.csproj" />
   </ItemGroup>
 

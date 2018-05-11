@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
+using Sembium.ContentStorage.Common.ContentNames.Vault;
 using Sembium.ContentStorage.Misc;
-using Sembium.ContentStorage.Storage.ContentNames;
 using System;
 using System.Collections.Generic;
 using System.IO;

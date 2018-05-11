@@ -1,4 +1,4 @@
-﻿using Sembium.ContentStorage.Storage.ContentNames;
+﻿using Sembium.ContentStorage.Common.ContentNames.Vault;
 using System;
 using System.Collections.Generic;
 using System.Text;
