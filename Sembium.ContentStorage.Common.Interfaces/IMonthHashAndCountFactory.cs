@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.HostingResults.Factories
+namespace Sembium.ContentStorage.Common
 {
     public delegate IMonthHashAndCount IMonthHashAndCountFactory(DateTimeOffset month, byte[] hash, int count, DateTimeOffset? lastModifiedMoment);
 }

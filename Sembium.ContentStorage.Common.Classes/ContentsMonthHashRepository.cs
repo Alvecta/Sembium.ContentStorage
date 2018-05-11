@@ -8,8 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Sembium.ContentStorage.Misc;
 using Sembium.ContentStorage.Storage.Hosting;
-using Sembium.ContentStorage.Storage.HostingResults;
-using Sembium.ContentStorage.Storage.HostingResults.Factories;
 using Sembium.ContentStorage.Utils;
 
 namespace Sembium.ContentStorage.Common

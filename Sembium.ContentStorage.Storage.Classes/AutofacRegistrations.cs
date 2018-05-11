@@ -23,7 +23,6 @@ namespace Sembium.ContentStorage.Storage
             builder.RegisterType<HttpPartUploadInfo>().As<IHttpPartUploadInfo>();
 
             builder.RegisterType<UploadIdentifierProvider>().As<IUploadIdentifierProvider>();
-            builder.RegisterType<MonthHashAndCount>().As<IMonthHashAndCount>();
 
             builder.RegisterType<ContentNameProvider>().As<IContentNameProvider>();
             builder.RegisterType<ContentIdentifier>().As<IContentIdentifier>();

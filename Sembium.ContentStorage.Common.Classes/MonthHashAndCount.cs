@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sembium.ContentStorage.Storage.HostingResults
+namespace Sembium.ContentStorage.Common
 {
     public class MonthHashAndCount : IMonthHashAndCount
     {
