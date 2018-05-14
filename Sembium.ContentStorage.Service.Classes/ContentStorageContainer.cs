@@ -27,6 +27,7 @@ namespace Sembium.ContentStorage.Service
         private const string URLExpirySecondsAppSettingName = "URLExpirySeconds";
         private const string MaxGetContentIDsItemCountAppSettingName = "MaxGetContentIDsItemCount";
         private const int DefaultURLExpirySeconds = 10 * 60;
+        private const int DefaultMaxGetContentIDsItemCount = 5000;
         private const string ReadOnlySubcontainersContainerName = "subcontainers";
 
         private readonly string _containerName;
@@ -123,11 +124,21 @@ namespace Sembium.ContentStorage.Service
         {
             get
             {
-                int result;
-                if (int.TryParse(_configurationSettings.GetAppSetting(URLExpirySecondsAppSettingName), out result))
+                if (int.TryParse(_configurationSettings.GetAppSetting(URLExpirySecondsAppSettingName, ""), out int result))
                     return result;
                 else
                     return DefaultURLExpirySeconds;
+            }
+        }
+
+        private int MaxGetContentIDsItemCount
+        {
+            get
+            {
+                if (int.TryParse(_configurationSettings.GetAppSetting(MaxGetContentIDsItemCountAppSettingName, ""), out int result))
+                    return result;
+                else
+                    return DefaultMaxGetContentIDsItemCount;
             }
         }
 
@@ -410,8 +421,6 @@ namespace Sembium.ContentStorage.Service
 
         public IEnumerable<string> GetContentIDs(DateTimeOffset? afterMoment, int? maxCount, string afterContentID)
         {
-            var defaultMaxCount = int.Parse(_configurationSettings.GetAppSetting(MaxGetContentIDsItemCountAppSettingName));
-
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Replicator, Security.Roles.Backup);
 
             Contract.Assert(afterMoment.HasValue == string.IsNullOrEmpty(afterContentID));
@@ -419,7 +428,7 @@ namespace Sembium.ContentStorage.Service
             var afterContentIdentifier = string.IsNullOrEmpty(afterContentID) ? null : _contentIdentifierSerializer.Deserialize(afterContentID);
 
             var useAfterMoment = afterMoment ?? afterContentIdentifier?.ModifiedMoment.AddTicks(-1);
-            var useMaxCount = maxCount.HasValue ? Math.Min(maxCount.Value, defaultMaxCount) : defaultMaxCount;
+            var useMaxCount = maxCount.HasValue ? Math.Min(maxCount.Value, MaxGetContentIDsItemCount) : MaxGetContentIDsItemCount;
 
             return
                 GetChronologicallyOrderedContentIdentifiers(null, null, useAfterMoment)

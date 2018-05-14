@@ -8,7 +8,7 @@ namespace Sembium.ContentStorage.Misc
 {
     public interface IConfigurationSettings
     {
-        string GetAppSetting(string settingName);
+        string GetAppSetting(string settingName, string defaultValue = null);
         string GetConnectionString(string connectionStringName);
     }
 }

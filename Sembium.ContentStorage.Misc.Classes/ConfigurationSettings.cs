@@ -16,12 +16,17 @@ namespace Sembium.ContentStorage.Misc
             _configuration = configuration;
         }
 
-        public string GetAppSetting(string settingName)
+        public string GetAppSetting(string settingName, string defaultValue = null)
         {
             var result = _configuration.GetSection("AppSettings")?.GetValue<string>(settingName);
 
             if (string.IsNullOrEmpty(result))
             {
+                if (defaultValue != null)
+                {
+                    return defaultValue;
+                }
+
                 throw new Exception($"AppSetting '{settingName}' not found or has no value");
             }
 
