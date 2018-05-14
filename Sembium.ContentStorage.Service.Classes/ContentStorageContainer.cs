@@ -25,6 +25,7 @@ namespace Sembium.ContentStorage.Service
     {
         private const string ReadOnlySubcontainersContentName = "subcontainers.json";
         private const string URLExpirySecondsAppSettingName = "URLExpirySeconds";
+        private const string MaxGetContentIDsItemCountAppSettingName = "MaxGetContentIDsItemCount";
         private const int DefaultURLExpirySeconds = 10 * 60;
         private const string ReadOnlySubcontainersContainerName = "subcontainers";
 
@@ -409,7 +410,7 @@ namespace Sembium.ContentStorage.Service
 
         public IEnumerable<string> GetContentIDs(DateTimeOffset? afterMoment, int? maxCount, string afterContentID)
         {
-            const int defaultMaxCount = 5000;
+            var defaultMaxCount = int.Parse(_configurationSettings.GetAppSetting(MaxGetContentIDsItemCountAppSettingName));
 
             _authorizationChecker.CheckUserIsInRole(Security.Roles.Replicator, Security.Roles.Backup);
 

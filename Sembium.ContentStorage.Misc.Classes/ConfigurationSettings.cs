@@ -18,7 +18,14 @@ namespace Sembium.ContentStorage.Misc
 
         public string GetAppSetting(string settingName)
         {
-            return _configuration.GetSection("AppSettings").GetValue<string>(settingName);
+            var result = _configuration.GetSection("AppSettings")?.GetValue<string>(settingName);
+
+            if (string.IsNullOrEmpty(result))
+            {
+                throw new Exception($"AppSetting '{settingName}' not found or has no value");
+            }
+
+            return result;
         }
 
         public string GetConnectionString(string connectionStringName)
