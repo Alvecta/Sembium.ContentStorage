@@ -19,14 +19,12 @@ namespace Sembium.ContentStorage.Service.Library
 
         public static void Configure(ILoggerFactory loggerFactory, IConfiguration configuration)
         {
-            Sembium.ContentStorage.Storage.AmazonS3.ServicesConfig.Configure(loggerFactory, configuration);
+
         }
 
         public static void ConfigureConfigurationBuilder(IConfigurationBuilder configurationBuilder)
         {
             configurationBuilder.AddEnvironmentVariablesAsSettings();
-
-            Sembium.ContentStorage.Storage.AmazonS3.ServicesConfig.ConfigureConfigurationBuilder(configurationBuilder);
         }
     }
 }
