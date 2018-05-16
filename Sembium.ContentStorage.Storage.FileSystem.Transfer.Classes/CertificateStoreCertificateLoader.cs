@@ -21,7 +21,7 @@ namespace Sembium.ContentStorage.Storage.FileSystem.Transfer
 
         private string CertificateSubject
         {
-            get { return _configurationSettings.GetAppSetting(CertificateSubjectAppSetting); }
+            get { return _configurationSettings.GetAppSetting(CertificateSubjectAppSetting, ""); }
         }
 
         public X509Certificate2 Load()
