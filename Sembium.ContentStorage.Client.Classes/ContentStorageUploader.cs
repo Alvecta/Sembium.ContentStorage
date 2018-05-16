@@ -147,12 +147,26 @@ namespace Sembium.ContentStorage.Client
 
         public void UploadContent(string contentUrl, string contentStorageServiceURL, string containerName, string contentID, long size, string authenticationToken)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
-                using (var contentStream = httpClient.GetStreamAsync(contentUrl).Result)
+                using (var response = httpClient.GetAsync(contentUrl, HttpCompletionOption.ResponseHeadersRead).Result)
                 {
-                    UploadContent(contentStream, contentStorageServiceURL, containerName, contentID, size, authenticationToken);
+                    CheckResponseSuccess(response);
+
+                    using (var contentStream = response.Content.ReadAsStreamAsync().Result)
+                    {
+                        UploadContent(contentStream, contentStorageServiceURL, containerName, contentID, size, authenticationToken);
+                    }
                 }
+            }
+        }
+
+        private void CheckResponseSuccess(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = response.Content.ReadAsStringAsync().Result;
+                throw new HttpRequestException(response.ReasonPhrase + " " + (int)response.StatusCode + Environment.NewLine + errorMessage);
             }
         }
     }
