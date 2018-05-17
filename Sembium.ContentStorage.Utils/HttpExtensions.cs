@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,6 +14,13 @@ namespace Sembium.ContentStorage.Utils
         {
             var response = await httpClient.SendAsync(request);
 
+            await response.CheckSuccessAsync();
+
+            return response;
+        }
+
+        public static async Task CheckSuccessAsync(this HttpResponseMessage response)
+        {
             if (!response.IsSuccessStatusCode)
             {
                 var newExceptionMessage = response.ReasonPhrase + " " + (int)response.StatusCode;
@@ -26,23 +34,26 @@ namespace Sembium.ContentStorage.Utils
 
                 throw new HttpRequestException(newExceptionMessage);
             }
-
-            return response;
         }
 
         public static async Task<HttpResponseMessage> CheckedGetAsync(this HttpClient httpClient, string url, HttpCompletionOption httpCompletionOption = HttpCompletionOption.ResponseContentRead, IEnumerable<KeyValuePair<string, string>> headers = null)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
-
-            if (headers != null)
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                foreach (var header in headers)
-                {
-                    request.Headers.Add(header.Key, header.Value);
-                }
-            }
+                request.SetHeaders(headers);
 
-            return await httpClient.CheckedSendAsync(request, httpCompletionOption);
+                return await httpClient.CheckedSendAsync(request, httpCompletionOption);
+            }
+        }
+
+        public static async Task<HttpResponseMessage> GetAsync(this HttpClient httpClient, string url, HttpCompletionOption httpCompletionOption = HttpCompletionOption.ResponseContentRead, IEnumerable<KeyValuePair<string, string>> headers = null)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
+            {
+                request.SetHeaders(headers);
+
+                return await httpClient.SendAsync(request, httpCompletionOption);
+            }
         }
 
         public static async Task<string> CheckedGetStringAsync(this HttpClient httpClient, string url, IEnumerable<KeyValuePair<string, string>> headers = null)
