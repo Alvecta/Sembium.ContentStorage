@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -91,9 +92,23 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Destinatio
                             new KeyValuePair<string, string>("ContentStorageServiceUrl", ContentStorageServiceURL)
                         };
 
-                var stringResult = httpClient.CheckedGetStringAsync(urlForGetUrlContentUploadInfo, headers).Result;
-
-                return Serializer.Deserialize<IHttpRequestInfo>(stringResult);
+                using (var response = httpClient.GetAsync(urlForGetUrlContentUploadInfo, headers: headers).Result)
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var stringResult = response.Content.ReadAsStringAsync().Result;
+                        return Serializer.Deserialize<IHttpRequestInfo>(stringResult);
+                    }
+                    else if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        response.CheckSuccessAsync().Wait();
+                        return null;
+                    }
+                }
             }
         }
     }
