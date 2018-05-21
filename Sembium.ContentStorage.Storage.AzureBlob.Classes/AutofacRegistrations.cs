@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
-using Sembium.ContentStorage.Common.ContentNames.Vault;
 using Sembium.ContentStorage.Storage.Hosting;
 using System;
 using System.Collections.Generic;
@@ -18,8 +17,6 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             {
                 builder.RegisterType<AzureContainer>().As<Sembium.ContentStorage.Storage.Hosting.IContainer>();
                 builder.RegisterType<AzureContent>().As<IContent>();
-                builder.RegisterType<AzureContentNamesVault>().As<IContentNamesVault>();
-                builder.RegisterType<AzureContentNamesVaultItem>().As<IAzureContentNamesVaultItem>();
 
                 builder.RegisterType<AzureContentStorageHost>().As<IContentStorageHost>();
             }
