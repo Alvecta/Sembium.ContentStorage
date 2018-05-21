@@ -98,14 +98,6 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Common
                         {
                             break;
                         }
-
-                        // todo: remove this when deployed everywhere
-                        var supportsContinuation = requestURL.StartsWith("https");
-
-                        if (!supportsContinuation)
-                        {
-                            break;
-                        }
                     }
                 }
             }
