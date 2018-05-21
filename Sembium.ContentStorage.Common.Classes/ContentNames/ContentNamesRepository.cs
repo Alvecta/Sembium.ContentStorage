@@ -111,31 +111,16 @@ namespace Sembium.ContentStorage.Common.ContentNames
 
         private int AddContents(string contentsContainerName, IEnumerable<string> contentNames, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting, CancellationToken cancellationToken)
         {
-            var result = 0;
-            string text = "";
-            foreach (var contentName in contentNames)
-            {
-                var newText = text + contentName + Environment.NewLine;
+            var contentNamesList = contentNames.ToList();
 
-                if (Encoding.UTF8.GetByteCount(newText) > 4 * 1024 * 1024)  // todo: config???
-                {
-                    AddBlock(contentsContainerName, text, contentMonth, forbiddenVaultItemNames, compacting, cancellationToken);
-                    text = contentName + Environment.NewLine;
-                }
-                else
-                {
-                    text = newText;
-                }
+            var text = string.Join(Environment.NewLine, contentNamesList);
 
-                result++;
-            }
-
-            if (text != "")
+            if (!string.IsNullOrEmpty(text))
             {
                 AddBlock(contentsContainerName, text, contentMonth, forbiddenVaultItemNames, compacting, cancellationToken);
             }
-
-            return result;
+            
+            return contentNamesList.Count;
         }
 
         public void AddContent(string contentsContainerName, string contentName, DateTimeOffset contentDate, CancellationToken cancellationToken)
