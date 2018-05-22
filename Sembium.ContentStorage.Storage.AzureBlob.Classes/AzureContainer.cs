@@ -68,9 +68,16 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             return _azureContentFactory(blockBlobReference);
         }
 
+        private string AddRootPath(string path)
+        {
+            var result = _rootPath + "/" + path;
+
+            return result.Trim('/');
+        }
+
         private CloudBlockBlob GetBlockBlobReference(string contentName)
         {
-            return _delegateContainer.GetBlockBlobReference(contentName);
+            return _delegateContainer.GetBlockBlobReference(AddRootPath(contentName));
         }
 
         public IContent GetContent(IContentIdentifier contentIdentifier)
@@ -85,8 +92,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
 
         public IContent GetContent(string contentName)
         {
-            var contentFullName = string.IsNullOrEmpty(_rootPath) ? contentName : _rootPath + "/" + contentName;
-            var blockBlobReference = GetBlockBlobReference(contentFullName);
+            var blockBlobReference = GetBlockBlobReference(contentName);
             return _azureContentFactory(blockBlobReference);
         }
 
@@ -106,7 +112,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
 
             while (true)
             {
-                var result = _delegateContainer.ListBlobsSegmentedAsync(prefix, true, BlobListingDetails.None, null, continuationToken, null, null).Result;
+                var result = _delegateContainer.ListBlobsSegmentedAsync(AddRootPath(prefix), true, BlobListingDetails.None, null, continuationToken, null, null).Result;
 
                 var blobs = result.Results.OfType<CloudBlob>();
 
@@ -220,7 +226,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
 
-                var blobs = _delegateContainer.ListBlobsSegmentedAsync(newContentName, true, BlobListingDetails.Copy, 1, null, null, null);
+                var blobs = _delegateContainer.ListBlobsSegmentedAsync(AddRootPath(newContentName), true, BlobListingDetails.Copy, 1, null, null, null);
 
                 var blob = blobs.Result.Results.FirstOrDefault() as CloudBlob;
 
