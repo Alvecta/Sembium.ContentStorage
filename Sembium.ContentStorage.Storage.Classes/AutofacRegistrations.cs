@@ -27,7 +27,11 @@ namespace Sembium.ContentStorage.Storage
             builder.RegisterType<ContentIdentifierGenerator>().As<IContentIdentifierGenerator>();
             builder.RegisterType<ContentIdentifiersProvider>().As<IContentIdentifiersProvider>();
             builder.RegisterType<ContentHashValidator>().As<IContentHashValidator>();
-            builder.RegisterType<SystemContainerProvider>().As<ISystemContainerProvider>();
+
+            builder.RegisterType<SystemContainerProvider>().Named<ISystemContainerProvider>("base");
+            builder.RegisterType<CachingSystemContainerProvider>().Named<ISystemContainerProvider>("caching");
+
+            builder.RegisterDecorator<ISystemContainerProvider>((x, inner) => x.ResolveNamed<ISystemContainerProvider>("caching", TypedParameter.From(inner)), "base").As<ISystemContainerProvider>();
 
             builder.RegisterType<HttpRequestInfo>().As<IHttpRequestInfo>();
         }
