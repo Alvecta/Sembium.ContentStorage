@@ -70,9 +70,7 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
 
         private string AddRootPath(string path)
         {
-            var result = _rootPath + "/" + path;
-
-            return result.Trim('/');
+            return (string.IsNullOrEmpty(_rootPath) ? path : _rootPath + "/" + path);            
         }
 
         private CloudBlockBlob GetBlockBlobReference(string contentName)
