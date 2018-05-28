@@ -13,22 +13,13 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Endpoints.Common
 {
     public abstract class FileSystemEndpoint : IEndpoint
     {
-        private readonly string _id;
-        private readonly IContainer _container;
         private readonly IHashProvider _hashProvider;
         private readonly IHashStringProvider _hashStringProvider;
         private readonly IContentsMonthHashProvider _contentsMonthHashProvider;
         private readonly IContentIdentifiersProvider _contentIdentifiersProvider;
 
-        public string ID
-        {
-            get { return _id; }
-        }
-
-        protected IContainer Container
-        {
-            get { return _container; }
-        }
+        public string ID { get; }
+        protected IContainer Container { get; }
 
         public FileSystemEndpoint(string id, 
             IContainer container,
@@ -37,8 +28,8 @@ namespace Sembium.ContentStorage.Replication.FileSystem.Endpoints.Common
             IContentsMonthHashProvider contentsMonthHashProvider,
             IContentIdentifiersProvider contentIdentifiersProvider)
         {
-            _id = id;
-            _container = container;
+            ID = id;
+            Container = container;
             _hashProvider = hashProvider;
             _hashStringProvider = hashStringProvider;
             _contentsMonthHashProvider = contentsMonthHashProvider;
