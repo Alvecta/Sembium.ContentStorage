@@ -12,7 +12,7 @@ namespace Sembium.ContentStorage.Utils
     {
         public static async Task<HttpResponseMessage> CheckedSendAsync(this HttpClient httpClient, HttpRequestMessage request, HttpCompletionOption httpCompletionOption = HttpCompletionOption.ResponseContentRead)
         {
-            var response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request, httpCompletionOption);
 
             await response.CheckSuccessAsync();
 
