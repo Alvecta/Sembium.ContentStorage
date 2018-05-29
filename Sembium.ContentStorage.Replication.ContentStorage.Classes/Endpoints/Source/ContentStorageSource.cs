@@ -35,11 +35,9 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Source
 
             using (var httpClient = GetHttpClient())
             {
-                return
-                    _contentStreamFactory(
-                        downloadInfo.Size,
-                        httpClient.CheckedGetStreamAsync(downloadInfo.Url).Result
-                    );
+                var stream = httpClient.CheckedGetStreamAsync(downloadInfo.Url).Result;
+
+                return _contentStreamFactory(downloadInfo.Size, stream);
             }
         }
 
