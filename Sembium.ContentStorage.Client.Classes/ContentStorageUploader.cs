@@ -46,7 +46,7 @@ namespace Sembium.ContentStorage.Client
             }
         }
 
-        private System.Net.Http.HttpClient GetHttpClient()
+        private System.Net.Http.HttpClient GetHttpClient(TimeSpan? timeout = null)
         {
             if (!_sslDisabled)
             {
@@ -55,7 +55,7 @@ namespace Sembium.ContentStorage.Client
             }
 
             var httpClient = new HttpClient();
-            httpClient.Timeout = TimeSpan.FromMinutes(5);
+            httpClient.Timeout = (timeout ?? TimeSpan.FromMinutes(5));
 
             return httpClient;
         }
@@ -107,7 +107,7 @@ namespace Sembium.ContentStorage.Client
 
         private string UploadPart(string httpMethod, Stream stream, long partSize, IHttpPartUploadInfo httpPartUploadInfo, string resultHeaderName)
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = GetHttpClient(TimeSpan.FromMinutes(15)))  // todo: config
             {
                 var httpMethodInfo = httpMethod.Split('/');
                 var formFile = (httpMethodInfo.Length == 2) && (httpMethodInfo[1].Equals("FORMFILE", StringComparison.InvariantCultureIgnoreCase));
