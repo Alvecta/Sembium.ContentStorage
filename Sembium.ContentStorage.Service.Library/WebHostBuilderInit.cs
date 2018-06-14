@@ -12,6 +12,10 @@ namespace Sembium.ContentStorage.Service.Library
             return
                 builder
                     .UseStartup<Library.Startup>()
+                    .UseKestrel(options =>
+                    {
+                        options.Limits.MinResponseDataRate = null;
+                    })
                     .ConfigureAppConfiguration((builderContext, config) =>
                     {
                         Library.ServicesConfig.ConfigureConfigurationBuilder(config);
