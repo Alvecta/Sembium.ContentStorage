@@ -111,7 +111,7 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Common
 
             using (var httpClient = GetHttpClient())
             {
-                var result = await httpClient.CheckedGetStringAsync(requestURL);
+                var result = await TryGetHashAsync(requestURL, httpClient);
 
                 if (!string.IsNullOrEmpty(result))
                 {
@@ -120,6 +120,36 @@ namespace Sembium.ContentStorage.Replication.ContentStorage.Endpoints.Common
 
                 return result;
             }
+        }
+
+        private async Task<string> TryGetHashAsync(string requestURL, System.Net.Http.HttpClient httpClient)
+        {
+            var tryCount = 2;
+            while (true)
+            {
+                try
+                {
+                    return await httpClient.CheckedGetStringAsync(requestURL);
+                }
+                catch (Exception e)
+                {
+                    if ( (tryCount > 1) &&
+                        ((IsExceptionForRetry(e) || 
+                         ((e is AggregateException) && (e as AggregateException).InnerExceptions.Any(x => IsExceptionForRetry(x))))))
+                    {
+                        tryCount--;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
+
+        private bool IsExceptionForRetry(Exception e)
+        {
+            return e.Message.Contains("The request timed out");
         }
     }
 }
