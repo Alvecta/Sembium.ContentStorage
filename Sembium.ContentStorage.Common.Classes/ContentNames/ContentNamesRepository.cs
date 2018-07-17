@@ -117,7 +117,7 @@ namespace Sembium.ContentStorage.Common.ContentNames
 
             if (!string.IsNullOrEmpty(text))
             {
-                AddBlock(contentsContainerName, text, contentMonth, forbiddenVaultItemNames, compacting, cancellationToken);
+                AddBlock(contentsContainerName, (text + Environment.NewLine), contentMonth, forbiddenVaultItemNames, compacting, cancellationToken);
             }
             
             return contentNamesList.Count;
