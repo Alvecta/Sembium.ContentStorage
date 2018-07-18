@@ -7,6 +7,8 @@
     <LangVersion>latest</LangVersion>
     <AssemblyName>ContentStorageReplicator</AssemblyName>
     <TargetLatestRuntimePatch>True</TargetLatestRuntimePatch>
+    <Authors />
+    <Company>Sembium</Company>
   </PropertyGroup>
 
   <ItemGroup>
