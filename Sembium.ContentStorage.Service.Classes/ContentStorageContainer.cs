@@ -723,7 +723,8 @@ namespace Sembium.ContentStorage.Service
                     .Where(x =>
                         monthHashAndCounts
                         .Any(y => (y.Month > x.Month) && (y.LastModifiedMoment > x.Month.AddMonths(1).AddDays(15)))
-                    );
+                    )
+                    .Where(x => x.Month.AddMonths(2) < DateTimeOffset.Now);
             _contentsMonthHashRepository.AddMonthHashAndCounts(_containerName, missingMonthHashAndCounts);
         }
 
