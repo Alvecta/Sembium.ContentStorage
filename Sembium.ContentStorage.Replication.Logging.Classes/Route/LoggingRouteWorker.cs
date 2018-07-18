@@ -28,6 +28,8 @@ namespace Sembium.ContentStorage.Replication.Logging.Route
         {
             try
             {
+                _logger.LogInfo($"Hash check until {routeConfig.HashCheckMoment}");
+
                 _routeWorker.HashCheckRoute(routeConfig);
 
                 _logger.LogInfo("Hash check succeeded.");
