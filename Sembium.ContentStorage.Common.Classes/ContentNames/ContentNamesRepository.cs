@@ -14,6 +14,7 @@ namespace Sembium.ContentStorage.Common.ContentNames
 {
     public class ContentNamesRepository : IContentNamesRepository
     {
+        private const int AddBlockContentNamesCount = 1000;
         private readonly IContentNamesRepositorySettings _contentNamesRepositorySettings;
         private readonly IContentNameProvider _contentNameProvider;
         private readonly IContentMonthProvider _contentMonthProvider;
@@ -41,24 +42,32 @@ namespace Sembium.ContentStorage.Common.ContentNames
             return prefix + GenerateGuid() + ".txt";
         }
 
+        private int NewRandom(int maxValue)
+        {
+            return new Random().Next(maxValue);
+        }
+
         private IContentNamesVaultItem GetAppendContentNamesVaultItem(string contentsContainerName, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting)
         {
             var prefix = MonthToPrefix(contentMonth);
+
+            var isActiveMonth = contentMonth.AddMonths(1) > DateTimeOffset.Now;
+            var monthCompacting = compacting && !isActiveMonth;
 
             var availableContentNamesVaultItems =
                     _contentNamesVault
                     .GetItems(contentsContainerName, prefix)
                     .Where(x => (forbiddenVaultItemNames == null) || (!forbiddenVaultItemNames.Contains(x.Name)))
-                    .Where(x => x.CanAppend(compacting))
+                    .Where(x => x.CanAppend(monthCompacting))
                     .ToList();
 
-            if (availableContentNamesVaultItems.Count() < (compacting ? 1 : _contentNamesRepositorySettings.MonthActiveVaultItemCount))
+            if (availableContentNamesVaultItems.Count() < (monthCompacting ? 1 : _contentNamesRepositorySettings.MonthActiveVaultItemCount))
             {
                 return _contentNamesVault.GetNewItem(contentsContainerName, GenerateContentNamesVaultItemName(prefix));
             }
             else
             {
-                return availableContentNamesVaultItems[new Random().Next(availableContentNamesVaultItems.Count())];
+                return availableContentNamesVaultItems[NewRandom(availableContentNamesVaultItems.Count())];
             }
         }
 
@@ -150,13 +159,22 @@ namespace Sembium.ContentStorage.Common.ContentNames
         {
             var contentNamesList = contentNames.ToList();
 
-            var text = string.Join(Environment.NewLine, contentNamesList);
+            var contentNamesGroups = 
+                    contentNamesList
+                    .Select((x, i) => (Name: x, Index: i))
+                    .GroupBy(y => y.Index / AddBlockContentNamesCount)
+                    .Select(z => z.Select(q => q.Name));
 
-            if (!string.IsNullOrEmpty(text))
+            foreach (var contentNameGroup in contentNamesGroups)
             {
-                AddBlock(contentsContainerName, (text + Environment.NewLine), contentMonth, forbiddenVaultItemNames, compacting, cancellationToken);
+                var text = string.Join(Environment.NewLine, contentNameGroup);
+
+                if (!string.IsNullOrEmpty(text))
+                {
+                    AddBlock(contentsContainerName, (text + Environment.NewLine), contentMonth, forbiddenVaultItemNames, compacting, cancellationToken);
+                }
             }
-            
+
             return contentNamesList.Count;
         }
 
