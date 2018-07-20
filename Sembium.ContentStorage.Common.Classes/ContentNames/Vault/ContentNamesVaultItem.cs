@@ -14,6 +14,7 @@ namespace Sembium.ContentStorage.Common.ContentNames.Vault
         private readonly IContentNamesRepositorySettings _contentNamesRepositorySettings;
 
         public string Name { get; }
+        public bool IsNew { get { return _isNew;  } }
 
         private readonly bool _isNew;
 

@@ -11,6 +11,7 @@ namespace Sembium.ContentStorage.Common.ContentNames.Vault
     public interface IContentNamesVaultItem
     {
         string Name { get; }
+        bool IsNew { get; }
         Stream OpenReadStream();
         void LoadFromStream(Stream stream);
         bool CanAppend(bool compacting);

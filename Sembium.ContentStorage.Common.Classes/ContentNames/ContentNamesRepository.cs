@@ -62,21 +62,51 @@ namespace Sembium.ContentStorage.Common.ContentNames
             }
         }
 
+        private void TryAction(int tryCount, TimeSpan delay, Func<bool> action, Action failureAction)
+        {
+            while (tryCount > 0)
+            {
+                if (action())
+                {
+                    return;
+                }
+
+                tryCount--;
+
+                if (tryCount > 0)
+                {
+                    Task.Delay(delay).Wait();
+                }
+            }
+
+            failureAction();
+        }
+
         private void AddBlock(string contentsContainerName, string blockText, DateTimeOffset contentMonth, IEnumerable<string> forbiddenVaultItemNames, bool compacting, CancellationToken cancellationToken)
         {
             using (var stream = new MemoryStream())
             {
                 var bytes = Encoding.UTF8.GetBytes(blockText);
                 stream.Write(bytes, 0, bytes.Length);
-                stream.Position = 0;
 
-                var contentNamesVaultItem = GetAppendContentNamesVaultItem(contentsContainerName, contentMonth, forbiddenVaultItemNames, compacting);
+                TryAction(3, TimeSpan.FromMilliseconds(300),
+                    () =>
+                    {
+                        stream.Position = 0;
 
-                AppendToVaultItem(contentNamesVaultItem, contentsContainerName, contentMonth, stream, cancellationToken);
+                        var contentNamesVaultItem = GetAppendContentNamesVaultItem(contentsContainerName, contentMonth, forbiddenVaultItemNames, compacting);
+
+                        return AppendToVaultItem(contentNamesVaultItem, contentsContainerName, contentMonth, stream, cancellationToken);
+                    },
+                    () =>
+                    {
+                        throw new Exception("Could not find available names index file");
+                    }
+                );
             }
         }
 
-        private void AppendToVaultItem(IContentNamesVaultItem contentNamesVaultItem, string contentsContainerName, DateTimeOffset contentMonth, MemoryStream stream, CancellationToken cancellationToken)
+        private bool AppendToVaultItem(IContentNamesVaultItem contentNamesVaultItem, string contentsContainerName, DateTimeOffset contentMonth, MemoryStream stream, CancellationToken cancellationToken)
         {
             using (var ms = new MemoryStream())
             {
@@ -84,6 +114,11 @@ namespace Sembium.ContentStorage.Common.ContentNames
                 {
                     rs.CopyTo(ms);
                     stream.CopyTo(ms);
+                }
+
+                if ((!contentNamesVaultItem.IsNew) && (ms.Length == stream.Length))
+                {
+                    return false;
                 }
 
                 ms.Position = 0;
@@ -101,6 +136,8 @@ namespace Sembium.ContentStorage.Common.ContentNames
                 {
                     // do nothing, duplicates are not a problem, delete on compact
                 }
+
+                return true;
             }
         }
 
