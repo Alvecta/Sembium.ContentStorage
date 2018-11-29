@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -41,7 +42,7 @@ namespace Sembium.ContentStorage.Utils.AspNetCore
 
             public Task ExecuteAsync(ActionContext context, FileCallbackResult result)
             {
-                SetHeadersAndLog(context, result, null);
+                SetHeadersAndLog(context, result, null, false);
                 return result._callback(context.HttpContext.Response.Body, context);
             }
         }
