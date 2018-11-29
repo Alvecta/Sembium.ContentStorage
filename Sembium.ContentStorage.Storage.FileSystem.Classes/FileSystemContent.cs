@@ -46,11 +46,22 @@ namespace Sembium.ContentStorage.Storage.FileSystem
             }
         }
 
-        public System.IO.Stream GetReadStream(bool emptyIfMissing)
+        public System.IO.Stream GetReadStream()
+        {
+            return System.IO.File.OpenRead(FullFileName);
+        }
+
+        public System.IO.Stream GetContents(bool emptyIfMissing)
         {
             try
             {
-                return System.IO.File.OpenRead(FullFileName);
+                var readStream = GetReadStream();
+
+                var result = new System.IO.MemoryStream();
+                readStream.CopyTo(result);
+                result.Position = 0;
+
+                return result;
             }
             catch (FileNotFoundException)
             {
@@ -63,7 +74,7 @@ namespace Sembium.ContentStorage.Storage.FileSystem
             }
         }
 
-        public  long GetSize()
+        public long GetSize()
         {
             return new System.IO.FileInfo(FullFileName).Length;
         }

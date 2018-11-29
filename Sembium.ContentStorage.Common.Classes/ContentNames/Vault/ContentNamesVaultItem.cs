@@ -41,7 +41,7 @@ namespace Sembium.ContentStorage.Common.ContentNames.Vault
             }
             else
             {
-                return _content.GetReadStream(true);
+                return _content.GetContents(true);
             }
         }
 

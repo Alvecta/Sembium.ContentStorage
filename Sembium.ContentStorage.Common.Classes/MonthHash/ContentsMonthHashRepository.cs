@@ -77,7 +77,7 @@ namespace Sembium.ContentStorage.Common.MonthHash
 
         private IEnumerable<IMonthHashAndCount> GetAllMonthHashAndCounts(IContent content)
         {
-            using (var stream = content.GetReadStream(true))
+            using (var stream = content.GetContents(true))
             {
                 foreach (var line in stream.ReadAllLines(Encoding.UTF8))  // to prevent stream disposal
                 {

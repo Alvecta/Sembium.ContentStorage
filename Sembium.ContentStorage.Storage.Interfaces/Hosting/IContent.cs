@@ -11,6 +11,7 @@ namespace Sembium.ContentStorage.Storage.Hosting
         string SimpleName { get; }
         long GetSize();
         void LoadFromStream(System.IO.Stream stream);
-        System.IO.Stream GetReadStream(bool emptyIfMissing = false);
+        System.IO.Stream GetReadStream();
+        System.IO.Stream GetContents(bool emptyIfMissing);
     }
 }

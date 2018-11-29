@@ -101,13 +101,24 @@ namespace Sembium.ContentStorage.Storage.AmazonS3
             }
         }
 
-        public System.IO.Stream GetReadStream(bool emptyIfMissing)
+        public System.IO.Stream GetReadStream()
+        {
+            var request = new Amazon.S3.Model.GetObjectRequest { BucketName = _bucketName, Key = _keyName };
+            var response = _amazonS3.GetObjectAsync(request).Result;
+            return response.ResponseStream;
+        }
+
+        public System.IO.Stream GetContents(bool emptyIfMissing)
         {
             try
             {
-                var request = new Amazon.S3.Model.GetObjectRequest { BucketName = _bucketName, Key = _keyName };
-                var response = _amazonS3.GetObjectAsync(request).Result;
-                return response.ResponseStream;
+                var readStream = GetReadStream();
+
+                var result = new System.IO.MemoryStream();
+                readStream.CopyTo(result);
+                result.Position = 0;
+
+                return result;
             }
             catch (AggregateException e)
             {

@@ -120,11 +120,22 @@ namespace Sembium.ContentStorage.Storage.AzureBlob
             _delegateContent.UploadFromStreamAsync(stream).Wait();
         }
 
-        public System.IO.Stream GetReadStream(bool emptyIfMissing)
+        public System.IO.Stream GetReadStream()
+        {
+            return _delegateContent.OpenReadAsync().Result;
+        }
+
+        public System.IO.Stream GetContents(bool emptyIfMissing)
         {
             try
             {
-                return _delegateContent.OpenReadAsync().Result;
+                var readStream = GetReadStream();
+
+                var result = new System.IO.MemoryStream();
+                readStream.CopyTo(result);
+                result.Position = 0;
+
+                return result;
             }
             catch (AggregateException e)
             {
