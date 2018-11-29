@@ -1,5 +1,4 @@
-﻿using Sembium.ContentStorage.Client.Utils;
-using Sembium.ContentStorage.Common;
+﻿using Sembium.ContentStorage.Common;
 using Sembium.ContentStorage.Misc;
 using Sembium.ContentStorage.Storage.Common;
 using Sembium.ContentStorage.Storage.HostingResults;
@@ -10,7 +9,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sembium.ContentStorage.Client
 {
@@ -74,6 +76,8 @@ namespace Sembium.ContentStorage.Client
 
         private IEnumerable<KeyValuePair<string, string>> MultiPartUpload(IMultiPartIDUploadInfo multiPartIDUploadInfo, Stream stream, long streamSize)
         {
+            var result = new List<KeyValuePair<string, string>>();
+
             if (multiPartIDUploadInfo.PartSize <= 0)
             {
                 System.Diagnostics.Debug.Assert(multiPartIDUploadInfo.PartUploadInfos.Count() == 1);
@@ -81,27 +85,67 @@ namespace Sembium.ContentStorage.Client
             }
             else
             {
-                foreach (var partUploadInfo in multiPartIDUploadInfo.PartUploadInfos)
-                {
-                    var result = UploadPart(multiPartIDUploadInfo.HttpMethod, stream, multiPartIDUploadInfo.PartSize, partUploadInfo, multiPartIDUploadInfo.MultiPartUploadResultHeaderName);
-                    yield return new KeyValuePair<string, string>(partUploadInfo.Identifier, result);
-                }
+                int writePartIndex = 0;
+
+                CopyUtils.CopyAsync(
+                    async (buffer, cancellationToken) =>
+                    {
+                        return await CopyUtils.FillBufferAsync(buffer,
+                            async (buf, offset, ct) =>
+                            {
+                                return await stream.ReadAsync(buf, offset, (int)multiPartIDUploadInfo.PartSize - offset);
+                            },
+                            cancellationToken
+                        );
+                    },
+                    (buffer, size, cancellationToken) =>
+                    {
+                        var partUploadInfo = multiPartIDUploadInfo.PartUploadInfos.ElementAt(writePartIndex);
+
+                        var uploadPartResult = UploadPart(multiPartIDUploadInfo.HttpMethod, new MemoryStream(buffer), size, partUploadInfo, multiPartIDUploadInfo.MultiPartUploadResultHeaderName);
+
+                        result.Add(new KeyValuePair<string, string>(partUploadInfo.Identifier, uploadPartResult));
+
+                        writePartIndex++;
+
+                        return Task.CompletedTask;
+                    },
+                    (int)multiPartIDUploadInfo.PartSize,
+                    CancellationToken.None
+                )
+                .Wait();
+
+                //foreach (var partUploadInfo in multiPartIDUploadInfo.PartUploadInfos)
+                //{
+                //    var uploadPartResult = UploadPart(multiPartIDUploadInfo.HttpMethod, stream, multiPartIDUploadInfo.PartSize, partUploadInfo, multiPartIDUploadInfo.MultiPartUploadResultHeaderName);
+                //    yield return new KeyValuePair<string, string>(partUploadInfo.Identifier, uploadPartResult);
+                //}
             }
+
+            return result;
         }
 
         private HttpContent GetHttpContent(Stream stream, long size, bool formFile)
         {
-            var streamContent = new ExplicitLengthStreamContent(stream, size);
-
             if (formFile)
             {
+                var streamContent = new StreamContent(stream);
+
                 var content = new MultipartFormDataContent();
                 content.Add(streamContent, "dummyname", "dummyfilename");
+
                 return content;
             }
             else
             {
-                return streamContent;
+                using (var br = new BinaryReader(stream, Encoding.UTF8, true))
+                {
+                    var bytes = br.ReadBytes((int)size);
+
+                    var content = new ByteArrayContent(bytes);
+
+                    return content;
+                }
             }
         }
 
